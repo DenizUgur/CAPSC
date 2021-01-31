@@ -53,6 +53,9 @@ export default function Home() {
     //   performance.measure("t", "t_prev");
     //   performance.mark("t_prev");
     // }, 40);
+    player.on("manifestUpdated", (e) => {
+      console.warn("frame_rate", eval(e.manifest.Period.AdaptationSet.find(e => e.contentType === "video").frameRate))
+    });
 
     performance.mark("data_loaded_prev");
     player.on("loadingDataProgress", (e) => {
