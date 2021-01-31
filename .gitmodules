@@ -1,0 +1,9 @@
+[submodule "FFmpeg/x264"]
+	path = FFmpeg/x264
+	url = https://code.videolan.org/videolan/x264.git
+[submodule "dashjs"]
+	path = dashjs
+	url = https://github.com/ofaladag/dash.js.git
+[submodule "FFmpeg/FFmpeg"]
+	path = FFmpeg/FFmpeg
+	url = https://github.com/ofaladag/FFmpeg.git
