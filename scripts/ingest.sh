@@ -7,5 +7,6 @@ $(pwd)/FFmpeg/bin/ffmpeg \
      -frag_type every_frame \
      -seg_duration 8 \
      -streaming 1 -ldash 1 -tune zerolatency \
+     -preset ultrafast \
      -remove_at_exit 1 \
-     -f dash content/app.mpd
+     -f dash development/content/app.mpd

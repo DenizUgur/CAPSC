@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { useEffect, useRef, useState } from "react";
-import { MediaPlayer } from "../dashjs";
+import { MediaPlayer } from "../../../dashjs";
 import {
   LineChart,
   Line,
@@ -12,7 +12,6 @@ import {
 } from "recharts";
 
 import styles from "../styles/Home.module.css";
-import DashJSError from "../dashjs/src/streaming/vo/DashJSError";
 
 export default function Home() {
   const [state, setState] = useState({

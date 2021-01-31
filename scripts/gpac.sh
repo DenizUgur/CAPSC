@@ -1,2 +1,3 @@
 #!/bin/bash
-node $(pwd)/development/gpac-dash.js -chunk-media-segments -cors -log debug-max
+cd $(pwd)/development
+node $(pwd)/gpac-dash.js -chunk-media-segments -cors -log debug-max

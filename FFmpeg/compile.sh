@@ -8,7 +8,7 @@ cd $BASE/FFmpeg
 ./configure \
     --prefix="$BASE/build" \
     --pkg-config-flags="--static" \
-    --extra-cflags="-I$BASE/build/include" \
+    --extra-cflags="-I$BASE/build/include -march=native" \
     --extra-ldflags="-L$BASE/build/lib" \
     --extra-libs="-lpthread -lm" \
     --bindir="$BASE/bin" \
