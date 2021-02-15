@@ -15,6 +15,7 @@ cd $BASE/FFmpeg
     --enable-gnutls \
     --enable-libass \
     --enable-libfreetype \
+    --enable-libfontconfig \
     --enable-libvorbis \
     --enable-gpl \
     --enable-libx264 \
