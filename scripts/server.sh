@@ -1,7 +1,7 @@
 #!/bin/bash
 # Start NGINX
-nginx -c $(pwd)/config/nginx.conf -s stop >> /dev/null
-nginx -c $(pwd)/config/nginx.conf
+sudo nginx -c $(pwd)/config/nginx.conf -s stop >> /dev/null
+sudo nginx -c $(pwd)/config/nginx.conf
 
 # Start Next.js
 echo http://localhost/tv
