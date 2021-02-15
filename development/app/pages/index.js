@@ -19,6 +19,7 @@ export default function Home() {
         lowLatencyEnabled: true,
         liveDelay: 2.0,
         liveCatchup: {
+          mode: "liveCatchupModeAPR",
           minDrift: 0.2,
           playbackRate: 0.8,
         },
