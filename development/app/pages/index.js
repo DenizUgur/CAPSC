@@ -18,6 +18,10 @@ export default function Home() {
       streaming: {
         lowLatencyEnabled: true,
         liveDelay: 2.0,
+        liveCatchup: {
+          minDrift: 0.2,
+          playbackRate: 0.8,
+        },
       },
     });
 

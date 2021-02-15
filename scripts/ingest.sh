@@ -2,7 +2,6 @@
 rm -rf development/content/*
 
 $(pwd)/FFmpeg/bin/ffmpeg \
-     -v trace \
      -flags2 +export_mvs \
      -stream_loop -1 -re -i $1 \
      -c:v libx264 \
@@ -10,7 +9,7 @@ $(pwd)/FFmpeg/bin/ffmpeg \
      -frag_type every_frame \
      -seg_duration 10 \
      -write_prft 1 \
-     -utc_timing_url "http://time.akamai.com/?iso&ms" \
+     -utc_timing_url "http://time.akamai.com/?iso" \
      -streaming 1 -ldash 1 -tune zerolatency \
      -preset ultrafast \
      -f dash development/content/app.mpd
