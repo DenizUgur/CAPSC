@@ -21,7 +21,7 @@ export default function Home() {
         liveCatchup: {
           mode: "liveCatchupModeAPR",
           minDrift: 0.2,
-          playbackRate: 0.8,
+          playbackRate: 0.3,
         },
       },
     });
