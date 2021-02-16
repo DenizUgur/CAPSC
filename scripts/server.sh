@@ -5,4 +5,4 @@ sudo nginx -c $(pwd)/config/nginx.conf
 
 # Start Next.js
 echo http://localhost/tv
-npm --prefix $(pwd)/development/app run dev
+npm --prefix $(pwd)/development/app run start
