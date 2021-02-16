@@ -4,7 +4,7 @@ rm -rf development/content/*
 $(pwd)/FFmpeg/bin/ffmpeg \
      -flags2 +export_mvs \
      -stream_loop -1 -re -i $1 \
-     -vf "settb=AVTB,setpts='trunc(PTS/1K)*1K+st(1,trunc(RTCTIME/1K))-1K*trunc(ld(1)/1K)',drawtext=fontcolor=white:text='%{localtime}.%{eif\:1M*t-1K*trunc(t*1K)\:d}'" \
+     -vf "settb=AVTB,setpts='trunc(PTS/1K)*1K+st(1,trunc(RTCTIME/1K))-1K*trunc(ld(1)/1K)',drawtext=fontsize=30:fontcolor=white:text='%{localtime}.%{eif\:1M*t-1K*trunc(t*1K)\:d}'" \
      -c:v libx264 \
      -use_template 1 -use_timeline 0 \
      -frag_type every_frame \
