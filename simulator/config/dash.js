@@ -21,6 +21,11 @@ export const DASHJS_PRESETS = {
 		},
 	},
 	DISABLED: {
-		streaming: {},
+		streaming: {
+		  liveDelay: 2.0,
+		  liveCatchup: {
+			enabled:false
+		  },
+		},
 	},
 };
