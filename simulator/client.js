@@ -1,6 +1,6 @@
 // Worker related
 import throng from "throng";
-import Queue from "bee-queue";
+import Queue from "bull";
 
 // Simulation
 import puppeteer from "puppeteer";
@@ -21,21 +21,29 @@ const queue = new Queue("work");
 async function master() {
 	const tests = [
 		{
-			videoFile: "video.mp4",
-			cases: [
-				{
-					start: 10,
-					length: 3,
-					newtorkPreset: NETWORK_PRESETS.Regular3G,
-				},
-			],
+			videoFile: "video_ss.mp4",
+			newtorkPreset: NETWORK_PRESETS.Regular3G,
+			dashPreset: DASHJS_PRESETS.ABR,
+		},
+		{
+			videoFile: "video_ss.mp4",
+			newtorkPreset: NETWORK_PRESETS.Good3G,
+			dashPreset: DASHJS_PRESETS.DEFAULT,
 		},
 	];
 
 	for (const test of tests) {
-		let job = queue.createJob(test);
-		job.save();
+		queue.add(test);
 	}
+
+	let completed = 0;
+	queue.on("global:completed", function (job, result) {
+		completed++;
+		if (tests.length == completed) {
+			console.info("All jobs has been processed!".bgGreen.bold.white);
+			process.exit(0);
+		}
+	});
 }
 
 async function worker() {
@@ -69,41 +77,12 @@ async function worker() {
 
 			await client.send(
 				"Network.emulateNetworkConditions",
-				NETWORK_PRESETS.WiFi
+				job.data.newtorkPreset
 			);
 			await page.evaluate(function (preset) {
 				window.player.updateSettings(preset);
-				console.log("Abr rules are applied.");
-			}, DASHJS_PRESETS.DEFAULT);
-
-			for (const testCase of job.data.cases) {
-				console.info(
-					`Sleeping for ${testCase.start} seconds`.bgRed.white
-				);
-				sleep.sleep(testCase.start);
-				await client.send(
-					"Network.emulateNetworkConditions",
-					testCase.newtorkPreset
-				);
-
-				console.log("Network throttling is started.");
-				await page.evaluate(function (preset) {
-					console.log("Network throttling is started.");
-				});
-				console.info(
-					`Sleeping for ${testCase.length} seconds`.bgRed.white
-				);
-				sleep.sleep(testCase.length);
-
-				await client.send(
-					"Network.emulateNetworkConditions",
-					NETWORK_PRESETS.WiFi
-				);
-				console.log("Network throttling is ended.");
-				await page.evaluate(function (preset) {
-					console.log("Network throttling is ended.");
-				});
-			}
+				console.log("Job preset rules are applied.");
+			}, job.data.dashPreset);
 
 			console.info(`Sleeping for ${10} seconds`.bgRed.white);
 			sleep.sleep(10);

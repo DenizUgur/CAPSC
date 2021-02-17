@@ -19,11 +19,9 @@ class FFmpeg {
 		]);
 
 		this.process.stdout.on("data", (data) => {
-			console.log(data?.toString());
 			this.state = "RUNNING";
 		});
 		this.process.stderr.on("data", (data) => {
-			console.log(data?.toString());
 			this.state = "CRASHED";
 		});
 		this.process.on("exit", async (data) => {
