@@ -1,6 +1,3 @@
-// OS Related
-import { promises as fs } from "fs";
-
 // Worker related
 import throng from "throng";
 import Queue from "bee-queue";
@@ -18,27 +15,30 @@ import sleep from "sleep";
 import dotenv from "dotenv";
 dotenv.config();
 
-const tests = [
-	{
-		videoFile: "video.mp4",
-		cases: [
-			{
-				start: 10,
-				length: 3,
-				newtorkPreset: NETWORK_PRESETS.Regular3G,
-			},
-		],
-	},
-];
-
 // Setup Queue
 const queue = new Queue("work");
-for (const test of tests) {
-	let job = queue.createJob(test);
-	job.save();
+
+async function master() {
+	const tests = [
+		{
+			videoFile: "video.mp4",
+			cases: [
+				{
+					start: 10,
+					length: 3,
+					newtorkPreset: NETWORK_PRESETS.Regular3G,
+				},
+			],
+		},
+	];
+
+	for (const test of tests) {
+		let job = queue.createJob(test);
+		job.save();
+	}
 }
 
-(async () => {
+async function worker() {
 	queue.process(async (job, done) => {
 		console.info(`Started on Job #${job.id}`.bold.green);
 		console.log(job.data);
@@ -61,7 +61,9 @@ for (const test of tests) {
 			const page = await browser.newPage();
 			await page.setCacheEnabled(false);
 
-			let url = new URL(`${process.env.BASE_URL}?mpd=${process.env.COMMON_HTTP_CONTEXT}/${encoder.name}/${encoder.name}.mpd`);
+			let url = new URL(
+				`${process.env.BASE_URL}?mpd=${process.env.COMMON_HTTP_CONTEXT}/${encoder.name}/${encoder.name}.mpd`
+			);
 			await page.goto(url.toString());
 			const client = await page.target().createCDPSession();
 
@@ -116,4 +118,6 @@ for (const test of tests) {
 
 		return done(null, "done");
 	});
-})();
+}
+
+throng({ master, worker, count: 4 });
