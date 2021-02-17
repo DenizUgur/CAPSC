@@ -453,7 +453,7 @@ var onRequest = function (req, res) {
 	var time = res.startTime = getTime();
 
 	if (allowCors) {
-		res.setHeader("Access-Control-Allow-Origin", "live.denizugur.dev");
+		res.setHeader("Access-Control-Allow-Origin", "*");
 		res.setHeader("Access-Control-Expose-Headers", "Date,'Content-Length'");
 	}
 
@@ -464,8 +464,9 @@ var onRequest = function (req, res) {
 
 	// we send the files as they come, except for segments for which we send fragment by fragment
 	if (filename === "") {
-		filename = "./content/";
+		filename = `${__dirname}${parsed_url.path.slice(0, parsed_url.path.lastIndexOf("/"))}`; 
 	}
+	filename = `${__dirname}/${filename}`;
 	try {
 		fStat = fs.statSync(filename);
 	} catch (e) {

@@ -47,6 +47,7 @@ for (const test of tests) {
 		const browser = await puppeteer.launch({
 			headless: false,
 			executablePath: "google-chrome",
+			devtools: true,
 		});
 
 		try {
@@ -60,16 +61,14 @@ for (const test of tests) {
 			const page = await browser.newPage();
 			await page.setCacheEnabled(false);
 
-			let url = new URL(process.env.BASE_URL);
-			url.searchParams.append(
-				"mpd",
-				`${process.env.COMMON_HTTP_CONTEXT}/${encoder.name}/${encoder.name}.mpd`
-			);
-
+			let url = new URL(`${process.env.BASE_URL}?mpd=${process.env.COMMON_HTTP_CONTEXT}/${encoder.name}/${encoder.name}.mpd`);
 			await page.goto(url.toString());
 			const client = await page.target().createCDPSession();
 
-			await client.send("Network.emulateNetworkConditions", NETWORK_PRESETS.WiFi);
+			await client.send(
+				"Network.emulateNetworkConditions",
+				NETWORK_PRESETS.WiFi
+			);
 			await page.evaluate(function (preset) {
 				window.player.updateSettings(preset);
 				console.log("Abr rules are applied.");
