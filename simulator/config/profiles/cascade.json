@@ -1,0 +1,22 @@
+[
+	{
+		"data": { "download": 675000, "upload": 675000, "latency": 0 },
+		"duration": 30
+	},
+	{
+		"data": { "download": 450000, "upload": 450000, "latency": 0 },
+		"duration": 30
+	},
+	{
+		"data": { "download": 225000, "upload": 225000, "latency": 0 },
+		"duration": 30
+	},
+	{
+		"data": { "download": 450000, "upload": 450000, "latency": 0 },
+		"duration": 30
+	},
+	{
+		"data": { "download": 675000, "upload": 675000, "latency": 0 },
+		"duration": 30
+	}
+]

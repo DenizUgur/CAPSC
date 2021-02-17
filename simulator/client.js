@@ -5,11 +5,10 @@ import Queue from "bull";
 // Simulation
 import puppeteer from "puppeteer";
 import { FFmpeg } from "./lib/index.js";
-import { DASHJS_PRESETS, NETWORK_PRESETS } from "./config/index.js";
+import { DASHJS_PRESETS, applyNetworkProfile } from "./config/index.js";
 
 // Misc
 import colors from "colors";
-import sleep from "sleep";
 
 // Configure
 import dotenv from "dotenv";
@@ -22,13 +21,8 @@ async function master() {
 	const tests = [
 		{
 			videoFile: "video_ss.mp4",
-			newtorkPreset: NETWORK_PRESETS.Regular3G,
+			newtorkPreset: "lte",
 			dashPreset: DASHJS_PRESETS.ABR,
-		},
-		{
-			videoFile: "video_ss.mp4",
-			newtorkPreset: NETWORK_PRESETS.Good3G,
-			dashPreset: DASHJS_PRESETS.DEFAULT,
 		},
 	];
 
@@ -64,7 +58,7 @@ async function worker() {
 			encoder.run();
 
 			console.info(`Sleeping for ${20} seconds`.bgRed.white);
-			sleep.sleep(20);
+			await sleep(20);
 
 			const page = await browser.newPage();
 			await page.setCacheEnabled(false);
@@ -73,19 +67,15 @@ async function worker() {
 				`${process.env.BASE_URL}?mpd=${process.env.COMMON_HTTP_CONTEXT}/${encoder.name}/${encoder.name}.mpd`
 			);
 			await page.goto(url.toString());
-			const client = await page.target().createCDPSession();
 
-			await client.send(
-				"Network.emulateNetworkConditions",
-				job.data.newtorkPreset
-			);
-			await page.evaluate(function (preset) {
+			await page.evaluate((preset) => {
 				window.player.updateSettings(preset);
-				console.log("Job preset rules are applied.");
+				console.log("DashJS preset rules are applied.");
 			}, job.data.dashPreset);
+			applyNetworkProfile(page, job.data.newtorkPreset);
 
 			console.info(`Sleeping for ${10} seconds`.bgRed.white);
-			sleep.sleep(10);
+			await sleep(10);
 
 			// Cleanup
 			await page.close();
@@ -98,5 +88,11 @@ async function worker() {
 		return done(null, "done");
 	});
 }
+
+const sleep = (duration) => {
+	return new Promise((resolve, _) => {
+		setTimeout(() => resolve(), duration * 1000);
+	});
+};
 
 throng({ master, worker, count: 4 });

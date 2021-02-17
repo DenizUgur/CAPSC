@@ -1,0 +1,2402 @@
+[
+	{
+		"data": { "download": 86625, "upload": 86625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 151000, "upload": 151000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 187000, "upload": 187000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 111375, "upload": 111375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 328000, "upload": 328000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 171250, "upload": 171250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 192125, "upload": 192125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 195750, "upload": 195750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 505750, "upload": 505750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 323750, "upload": 323750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 351625, "upload": 351625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 442375, "upload": 442375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 254125, "upload": 254125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 126750, "upload": 126750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 234375, "upload": 234375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 395375, "upload": 395375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 170250, "upload": 170250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 223375, "upload": 223375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 320750, "upload": 320750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 424000, "upload": 424000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 344750, "upload": 344750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 648500, "upload": 648500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 638250, "upload": 638250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 821875, "upload": 821875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 819625, "upload": 819625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 585500, "upload": 585500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 217125, "upload": 217125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 143500, "upload": 143500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 646000, "upload": 646000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 778000, "upload": 778000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 669750, "upload": 669750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 525000, "upload": 525000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 195375, "upload": 195375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 553500, "upload": 553500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 317625, "upload": 317625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 316500, "upload": 316500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 247125, "upload": 247125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 110875, "upload": 110875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 126875, "upload": 126875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 160125, "upload": 160125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 106250, "upload": 106250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 123875, "upload": 123875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 52125, "upload": 52125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 62875, "upload": 62875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 76625, "upload": 76625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 136000, "upload": 136000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 388375, "upload": 388375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 516625, "upload": 516625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 471000, "upload": 471000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 371250, "upload": 371250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 447250, "upload": 447250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 310000, "upload": 310000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 291250, "upload": 291250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 312625, "upload": 312625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 303125, "upload": 303125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 327375, "upload": 327375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 606125, "upload": 606125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 531000, "upload": 531000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 575500, "upload": 575500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 610250, "upload": 610250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 583625, "upload": 583625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 438250, "upload": 438250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 198625, "upload": 198625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 885750, "upload": 885750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 946125, "upload": 946125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 580250, "upload": 580250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 495125, "upload": 495125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 438125, "upload": 438125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 289500, "upload": 289500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 494625, "upload": 494625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 661250, "upload": 661250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 569250, "upload": 569250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 603750, "upload": 603750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 492750, "upload": 492750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 531625, "upload": 531625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 489625, "upload": 489625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 435125, "upload": 435125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 807125, "upload": 807125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 704250, "upload": 704250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 607500, "upload": 607500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 613250, "upload": 613250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 509125, "upload": 509125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 649625, "upload": 649625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 229875, "upload": 229875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 852750, "upload": 852750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 758500, "upload": 758500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 414125, "upload": 414125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 367875, "upload": 367875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 456000, "upload": 456000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 385625, "upload": 385625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 318750, "upload": 318750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 324500, "upload": 324500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 299125, "upload": 299125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 251875, "upload": 251875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 383625, "upload": 383625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 342125, "upload": 342125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 107000, "upload": 107000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 158000, "upload": 158000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 228375, "upload": 228375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 437875, "upload": 437875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 312125, "upload": 312125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 325125, "upload": 325125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 535875, "upload": 535875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 516250, "upload": 516250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 277375, "upload": 277375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 432500, "upload": 432500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 613250, "upload": 613250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 718250, "upload": 718250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 732875, "upload": 732875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 723250, "upload": 723250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 847125, "upload": 847125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 404750, "upload": 404750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 518875, "upload": 518875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 760125, "upload": 760125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 524750, "upload": 524750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 687125, "upload": 687125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 449625, "upload": 449625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 685625, "upload": 685625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 597125, "upload": 597125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 578125, "upload": 578125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 567625, "upload": 567625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 399250, "upload": 399250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 673625, "upload": 673625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 606125, "upload": 606125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 646250, "upload": 646250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 596500, "upload": 596500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 420375, "upload": 420375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 622750, "upload": 622750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 583875, "upload": 583875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 834875, "upload": 834875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 560125, "upload": 560125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 552500, "upload": 552500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 465875, "upload": 465875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 725000, "upload": 725000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 708250, "upload": 708250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 505500, "upload": 505500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 623000, "upload": 623000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 486875, "upload": 486875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 634375, "upload": 634375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 294375, "upload": 294375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 304875, "upload": 304875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 201000, "upload": 201000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 100000, "upload": 100000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 100000, "upload": 100000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 100000, "upload": 100000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 100000, "upload": 100000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 450125, "upload": 450125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 83000, "upload": 83000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 95500, "upload": 95500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 97625, "upload": 97625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 298750, "upload": 298750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 68000, "upload": 68000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 112375, "upload": 112375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 280875, "upload": 280875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 354625, "upload": 354625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 211125, "upload": 211125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 263250, "upload": 263250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 415125, "upload": 415125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 175125, "upload": 175125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 42500, "upload": 42500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 41125, "upload": 41125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37875, "upload": 37875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 48625, "upload": 48625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 115000, "upload": 115000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 653125, "upload": 653125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 477500, "upload": 477500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 596250, "upload": 596250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 451750, "upload": 451750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 604625, "upload": 604625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 616375, "upload": 616375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 502875, "upload": 502875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 529250, "upload": 529250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 537875, "upload": 537875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 267875, "upload": 267875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 272500, "upload": 272500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 384000, "upload": 384000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 103500, "upload": 103500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 272125, "upload": 272125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 236500, "upload": 236500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 106875, "upload": 106875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 292250, "upload": 292250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 219375, "upload": 219375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 289125, "upload": 289125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 190375, "upload": 190375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 53500, "upload": 53500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 91000, "upload": 91000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 41000, "upload": 41000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 487875, "upload": 487875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 312375, "upload": 312375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 483000, "upload": 483000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 418875, "upload": 418875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 540625, "upload": 540625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 493875, "upload": 493875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 234500, "upload": 234500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 197750, "upload": 197750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 203000, "upload": 203000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 108125, "upload": 108125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 59625, "upload": 59625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 59625, "upload": 59625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 59625, "upload": 59625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 59625, "upload": 59625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 86500, "upload": 86500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 674500, "upload": 674500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 483000, "upload": 483000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 664625, "upload": 664625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 442750, "upload": 442750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 797000, "upload": 797000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 489750, "upload": 489750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 537375, "upload": 537375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 500250, "upload": 500250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 584250, "upload": 584250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 718375, "upload": 718375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 365625, "upload": 365625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 187250, "upload": 187250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 502250, "upload": 502250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 525750, "upload": 525750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 436750, "upload": 436750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 271000, "upload": 271000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 536375, "upload": 536375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 480375, "upload": 480375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 442000, "upload": 442000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 557625, "upload": 557625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 751125, "upload": 751125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 856625, "upload": 856625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 497375, "upload": 497375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 683000, "upload": 683000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 629125, "upload": 629125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 480375, "upload": 480375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 381125, "upload": 381125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 395250, "upload": 395250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 406500, "upload": 406500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 358000, "upload": 358000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 370125, "upload": 370125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 308625, "upload": 308625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 254125, "upload": 254125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 259000, "upload": 259000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 109000, "upload": 109000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 300125, "upload": 300125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 310000, "upload": 310000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 565750, "upload": 565750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 400625, "upload": 400625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 320250, "upload": 320250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 354125, "upload": 354125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 239375, "upload": 239375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 227125, "upload": 227125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 105625, "upload": 105625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 41875, "upload": 41875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 383375, "upload": 383375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 383375, "upload": 383375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 425750, "upload": 425750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 102500, "upload": 102500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 61000, "upload": 61000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 291750, "upload": 291750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 141500, "upload": 141500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 84375, "upload": 84375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 110500, "upload": 110500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 380625, "upload": 380625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 361875, "upload": 361875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 98875, "upload": 98875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 77000, "upload": 77000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 42250, "upload": 42250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 52375, "upload": 52375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 72250, "upload": 72250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 101875, "upload": 101875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 90125, "upload": 90125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 74750, "upload": 74750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 112500, "upload": 112500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 159250, "upload": 159250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 109250, "upload": 109250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 175250, "upload": 175250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 213000, "upload": 213000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 270250, "upload": 270250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 196250, "upload": 196250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 277375, "upload": 277375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 427500, "upload": 427500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 489375, "upload": 489375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 571875, "upload": 571875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 484250, "upload": 484250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 329750, "upload": 329750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 173500, "upload": 173500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 201000, "upload": 201000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 346625, "upload": 346625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 155250, "upload": 155250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 153000, "upload": 153000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 259125, "upload": 259125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 403250, "upload": 403250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 304625, "upload": 304625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 413500, "upload": 413500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 245250, "upload": 245250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 96375, "upload": 96375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 50625, "upload": 50625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 109500, "upload": 109500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 112000, "upload": 112000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 165625, "upload": 165625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 198750, "upload": 198750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 103375, "upload": 103375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 167625, "upload": 167625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 180000, "upload": 180000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 180000, "upload": 180000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 431625, "upload": 431625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 613125, "upload": 613125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 461875, "upload": 461875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 275375, "upload": 275375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 408000, "upload": 408000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 364625, "upload": 364625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 351375, "upload": 351375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 648500, "upload": 648500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 606875, "upload": 606875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 363625, "upload": 363625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 242875, "upload": 242875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 405625, "upload": 405625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 189500, "upload": 189500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 272875, "upload": 272875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 165375, "upload": 165375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 281625, "upload": 281625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 279375, "upload": 279375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 239500, "upload": 239500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 206875, "upload": 206875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 332000, "upload": 332000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 539250, "upload": 539250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 401750, "upload": 401750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 495375, "upload": 495375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 367375, "upload": 367375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 641500, "upload": 641500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 291250, "upload": 291250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 194375, "upload": 194375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 335875, "upload": 335875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 530000, "upload": 530000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 334750, "upload": 334750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 674375, "upload": 674375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 607875, "upload": 607875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 523750, "upload": 523750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 560500, "upload": 560500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 476000, "upload": 476000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 393000, "upload": 393000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 562625, "upload": 562625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 434750, "upload": 434750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 552000, "upload": 552000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 388125, "upload": 388125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 503250, "upload": 503250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 577375, "upload": 577375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 369375, "upload": 369375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 600250, "upload": 600250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 506125, "upload": 506125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 655500, "upload": 655500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 885750, "upload": 885750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 561375, "upload": 561375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 511250, "upload": 511250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 893000, "upload": 893000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 684250, "upload": 684250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 546750, "upload": 546750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 450125, "upload": 450125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 629875, "upload": 629875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 497000, "upload": 497000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 471500, "upload": 471500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 484875, "upload": 484875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 454750, "upload": 454750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 502875, "upload": 502875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 459500, "upload": 459500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 421875, "upload": 421875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 331625, "upload": 331625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 219500, "upload": 219500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 239500, "upload": 239500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 101875, "upload": 101875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 101875, "upload": 101875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 141875, "upload": 141875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 385625, "upload": 385625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 227125, "upload": 227125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 340500, "upload": 340500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 248375, "upload": 248375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 109500, "upload": 109500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 297250, "upload": 297250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 248500, "upload": 248500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 297875, "upload": 297875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 293250, "upload": 293250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 252875, "upload": 252875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 438125, "upload": 438125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 447250, "upload": 447250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 244125, "upload": 244125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 238500, "upload": 238500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 336750, "upload": 336750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 299750, "upload": 299750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 296625, "upload": 296625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 322500, "upload": 322500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 353000, "upload": 353000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 259250, "upload": 259250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 326625, "upload": 326625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 281750, "upload": 281750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 316125, "upload": 316125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 188750, "upload": 188750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 121625, "upload": 121625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 65000, "upload": 65000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 97000, "upload": 97000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37625, "upload": 37625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 63500, "upload": 63500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 72000, "upload": 72000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 159375, "upload": 159375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 234500, "upload": 234500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 267250, "upload": 267250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 179125, "upload": 179125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 153000, "upload": 153000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 120000, "upload": 120000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 302750, "upload": 302750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 228375, "upload": 228375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 304125, "upload": 304125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 368125, "upload": 368125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 420000, "upload": 420000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 356125, "upload": 356125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 257000, "upload": 257000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 326375, "upload": 326375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 284250, "upload": 284250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 251500, "upload": 251500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 249750, "upload": 249750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 330875, "upload": 330875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 271500, "upload": 271500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 321875, "upload": 321875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 299750, "upload": 299750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 430250, "upload": 430250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 329125, "upload": 329125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 133625, "upload": 133625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 151500, "upload": 151500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 184000, "upload": 184000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 271250, "upload": 271250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 198875, "upload": 198875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 258625, "upload": 258625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 216625, "upload": 216625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 281750, "upload": 281750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 270875, "upload": 270875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 283000, "upload": 283000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 167875, "upload": 167875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 425250, "upload": 425250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 295625, "upload": 295625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 140625, "upload": 140625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 876000, "upload": 876000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 335500, "upload": 335500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 475500, "upload": 475500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 333750, "upload": 333750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 519250, "upload": 519250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 413875, "upload": 413875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 529625, "upload": 529625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 506875, "upload": 506875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 522750, "upload": 522750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 487375, "upload": 487375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 512000, "upload": 512000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 450875, "upload": 450875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 585875, "upload": 585875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 520625, "upload": 520625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 453750, "upload": 453750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 619875, "upload": 619875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 585000, "upload": 585000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 404625, "upload": 404625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 660000, "upload": 660000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 470500, "upload": 470500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 472000, "upload": 472000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 285000, "upload": 285000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 562000, "upload": 562000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 473875, "upload": 473875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 499250, "upload": 499250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 711500, "upload": 711500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 677750, "upload": 677750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 703625, "upload": 703625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 447250, "upload": 447250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 517500, "upload": 517500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 351125, "upload": 351125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 644875, "upload": 644875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 498750, "upload": 498750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 613000, "upload": 613000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 485250, "upload": 485250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 398750, "upload": 398750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 843250, "upload": 843250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 848125, "upload": 848125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 825625, "upload": 825625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 706000, "upload": 706000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 741875, "upload": 741875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 454500, "upload": 454500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 790000, "upload": 790000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 629625, "upload": 629625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 608500, "upload": 608500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 682000, "upload": 682000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 465000, "upload": 465000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 563875, "upload": 563875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 689000, "upload": 689000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 86625, "upload": 86625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 151000, "upload": 151000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 187000, "upload": 187000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 111375, "upload": 111375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 328000, "upload": 328000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 171250, "upload": 171250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 192125, "upload": 192125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 195750, "upload": 195750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 505750, "upload": 505750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 323750, "upload": 323750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 351625, "upload": 351625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 442375, "upload": 442375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 254125, "upload": 254125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 126750, "upload": 126750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 234375, "upload": 234375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 395375, "upload": 395375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 170250, "upload": 170250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 223375, "upload": 223375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 320750, "upload": 320750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 424000, "upload": 424000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 344750, "upload": 344750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 648500, "upload": 648500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 638250, "upload": 638250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 821875, "upload": 821875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 819625, "upload": 819625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 585500, "upload": 585500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 217125, "upload": 217125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 143500, "upload": 143500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 646000, "upload": 646000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 778000, "upload": 778000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 669750, "upload": 669750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 525000, "upload": 525000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 195375, "upload": 195375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 553500, "upload": 553500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 317625, "upload": 317625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 37500, "upload": 37500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 316500, "upload": 316500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 247125, "upload": 247125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 110875, "upload": 110875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 126875, "upload": 126875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 160125, "upload": 160125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 106250, "upload": 106250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 123875, "upload": 123875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 52125, "upload": 52125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 62875, "upload": 62875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 76625, "upload": 76625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 136000, "upload": 136000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 388375, "upload": 388375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 516625, "upload": 516625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 471000, "upload": 471000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 371250, "upload": 371250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 447250, "upload": 447250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 310000, "upload": 310000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 291250, "upload": 291250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 312625, "upload": 312625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 303125, "upload": 303125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 327375, "upload": 327375, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 606125, "upload": 606125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 531000, "upload": 531000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 575500, "upload": 575500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 610250, "upload": 610250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 583625, "upload": 583625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 438250, "upload": 438250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 198625, "upload": 198625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 885750, "upload": 885750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 946125, "upload": 946125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 580250, "upload": 580250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 495125, "upload": 495125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 438125, "upload": 438125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 289500, "upload": 289500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 494625, "upload": 494625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 661250, "upload": 661250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 569250, "upload": 569250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 603750, "upload": 603750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 492750, "upload": 492750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 531625, "upload": 531625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 489625, "upload": 489625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 435125, "upload": 435125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 807125, "upload": 807125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 704250, "upload": 704250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 607500, "upload": 607500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 613250, "upload": 613250, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 509125, "upload": 509125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 649625, "upload": 649625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 229875, "upload": 229875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 852750, "upload": 852750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 758500, "upload": 758500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 414125, "upload": 414125, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 367875, "upload": 367875, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 456000, "upload": 456000, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 385625, "upload": 385625, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 318750, "upload": 318750, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 324500, "upload": 324500, "latency": 0 },
+		"duration": 1
+	},
+	{
+		"data": { "download": 299125, "upload": 299125, "latency": 0 },
+		"duration": 1
+	}
+]
