@@ -467,10 +467,18 @@ var onRequest = function (req, res) {
 		filename = `${__dirname}${parsed_url.path.slice(0, parsed_url.path.lastIndexOf("/"))}`; 
 	}
 	filename = `${__dirname}/${filename}`;
+	let existingM4s=false;
 	try {
 		fStat = fs.statSync(filename);
 	} catch (e) {
-		notFound = true;
+		try{
+			let tmpFilename = filename.replace(".tmp","");
+			fStat = fs.statSync(tmpFilename);
+			existingM4s = true;
+			filename = tmpFilename;
+		}catch(e1){
+			notFound = true;
+		}
 	}
 	if (notFound || !fStat.isFile()) {
 		if (fStat && fStat.isDirectory()) {
@@ -505,6 +513,10 @@ var onRequest = function (req, res) {
 			sendFragmentedFile(res, filename, params);
 			// Sending the final 0-size chunk because the file won't change anymore
 			if (ext === "mp4") {
+				res.end();
+				reportMessage(logLevels.INFO, "file " + filename + " sent in " + (getTime() - time) + " ms");
+			}
+			if(ext==="m4s" && existingM4s){
 				res.end();
 				reportMessage(logLevels.INFO, "file " + filename + " sent in " + (getTime() - time) + " ms");
 			}
