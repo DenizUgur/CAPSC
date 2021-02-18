@@ -1,5 +1,5 @@
 export const DASHJS_PRESETS = {
-	ABR: {
+	APR: {
 		streaming: {
 			lowLatencyEnabled: true,
 			liveDelay: 2.0,

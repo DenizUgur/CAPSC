@@ -18,11 +18,13 @@ export const applyNetworkProfile = (page, preset) => {
 		};
 
 		try {
-			for (const step of data) {
-				if (page.isClosed()) break;
-				console.log(step.data)
-				await page.emulateNetworkConditions(step.data);
-				await sleep(step.duration);
+			while (!page.isClosed()) {
+				for (const step of data) {
+					if (page.isClosed()) break;
+					console.log(step.data)
+					await page.emulateNetworkConditions(step.data);
+					await sleep(step.duration);
+				}
 			}
 		} catch (_) {}
 	})(page, preset_data);
