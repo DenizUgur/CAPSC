@@ -1,3 +1,4 @@
+export const DASHJS_PRESETS_KEYS=["APR","DEFAULT","DISABLED"]
 export const DASHJS_PRESETS = {
 	APR: {
 		streaming: {

@@ -5,7 +5,7 @@ import Queue from "bull";
 // Simulation
 import puppeteer from "puppeteer";
 import { FFmpeg } from "./lib/index.js";
-import { DASHJS_PRESETS, applyNetworkProfile } from "./config/index.js";
+import { DASHJS_PRESETS,DASHJS_PRESETS_KEYS, applyNetworkProfile,NETWORK_PROFILES } from "./config/index.js";
 
 // Misc
 import colors from "colors";
@@ -35,21 +35,17 @@ async function master() {
 
 	const populatedTests = [];
 	for (const test of tests) {
-		populatedTests.push({
-			...test,
-			newtorkPreset:"lte",
-			dashPreset: DASHJS_PRESETS.APR
-		});
-		populatedTests.push({
-			...test,
-			newtorkPreset:"lte",
-			dashPreset: DASHJS_PRESETS.DEFAULT
-		});
-		populatedTests.push({
-			...test,
-			newtorkPreset:"lte",
-			dashPreset: DASHJS_PRESETS.DISABLED
-		});
+		for (const networkProfile of NETWORK_PROFILES) {
+			for (const dashjsProfileKey of DASHJS_PRESETS_KEYS) {
+				populatedTests.push({
+					...test,
+					newtorkPreset:networkProfile,
+					dashPreset: DASHJS_PRESETS[dashjsProfileKey],
+					dashPresetName: dashjsProfileKey
+				});
+				
+			}
+		}
 	}
 
 	//Load Populated Tests
@@ -118,7 +114,7 @@ async function worker() {
 			await browser.close();
 			await encoder.terminate();
 
-			let resultFileName = process.env.RESULT_OUTPUT_DIR+"/"+job.data.videoFile.split(".")[0]+"-"+job.data.newtorkPreset+"-"+jobStartDate.getTime()+".json"
+			let resultFileName = process.env.RESULT_OUTPUT_DIR+"/"+job.data.videoFile.split(".")[0]+"-"+job.data.newtorkPreset+"-"+job.data.dashPresetName+"-"+jobStartDate.getTime()+".json"
 			fs.writeFileSync(resultFileName,JSON.stringify(result));
 
 		} catch (error) {
@@ -135,4 +131,4 @@ const sleep = (duration) => {
 	});
 };
 
-throng({ master, worker, count: 4 });
+throng({ master, worker, count: 1 });
