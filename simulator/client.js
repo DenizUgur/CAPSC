@@ -5,9 +5,15 @@ import Queue from "bull";
 // Simulation
 import puppeteer from "puppeteer";
 import { FFmpeg } from "./lib/index.js";
-import { DASHJS_PRESETS,DASHJS_PRESETS_KEYS, applyNetworkProfile,NETWORK_PROFILES } from "./config/index.js";
+import {
+	DASHJS_PRESETS,
+	DASHJS_PRESETS_KEYS,
+	applyNetworkProfile,
+	NETWORK_PROFILES,
+} from "./config/index.js";
 
 // Misc
+import fs from "fs";
 import colors from "colors";
 
 // Configure
@@ -17,17 +23,23 @@ dotenv.config();
 // Setup Queue
 const queue = new Queue("work");
 
-import fs from "fs";
-
-if (!fs.existsSync(process.env.RESULT_OUTPUT_DIR)){
-    fs.mkdirSync(process.env.RESULT_OUTPUT_DIR);
+if (!fs.existsSync(process.env.RESULT_OUTPUT_DIR)) {
+	fs.mkdirSync(process.env.RESULT_OUTPUT_DIR);
 }
 
 async function master() {
 	const tests = [
 		{
-			videoFile: "video_ss.mp4",
-			testingDuration: 30
+			videoFile: "bcn.mp4",
+			testingDuration: 600,
+		},
+		{
+			videoFile: "bcn2.mp4",
+			testingDuration: 600,
+		},
+		{
+			videoFile: "bcn3.mp4",
+			testingDuration: 600,
 		},
 	];
 
@@ -39,24 +51,47 @@ async function master() {
 			for (const dashjsProfileKey of DASHJS_PRESETS_KEYS) {
 				populatedTests.push({
 					...test,
-					newtorkPreset:networkProfile,
+					newtorkPreset: networkProfile,
 					dashPreset: DASHJS_PRESETS[dashjsProfileKey],
-					dashPresetName: dashjsProfileKey
+					dashPresetName: dashjsProfileKey,
 				});
-				
 			}
 		}
 	}
 
 	//Load Populated Tests
 	for (const test of populatedTests) {
-		queue.add(test);
+		queue.add(test, { attempts: 3 });
 	}
 
 	let completed = 0;
+	let failed = 0;
+	queue.on("global:failed", function (job, err) {
+		failed++;
+		console.info(
+			`${failed} of the remeaning ${
+				populatedTests.length - completed
+			} job(s) has failed`.bgRed.bold.white
+		);
+		if (populatedTests.length == completed + failed) {
+			console.info("All jobs has been processed!".bgGreen.bold.white);
+			process.exit(0);
+		}
+	});
+
 	queue.on("global:completed", function (job, result) {
 		completed++;
-		if (populatedTests.length == completed) {
+		console.info(
+			`${completed} of ${populatedTests.length} job(s) has been completed`
+				.bgYellow.bold.black
+		);
+		if (failed > 0) {
+			console.info(
+				`${failed} of ${populatedTests.length} jobs has failed`.bgRed
+					.bold.white
+			);
+		}
+		if (populatedTests.length == completed + failed) {
 			console.info("All jobs has been processed!".bgGreen.bold.white);
 			process.exit(0);
 		}
@@ -81,30 +116,39 @@ async function worker() {
 			console.info("Starting encoding process".green);
 			encoder.run();
 
-			console.info(`Sleeping for ${20} seconds`.bgRed.white);
-			await sleep(20);
+			// Wait for second segment
+			console.info(`Waiting for second segment file`.bgRed.white);
+			let now = Date.now();
+			while (!fs.existsSync(`${encoder.outdir}/chunk0-00002.m4s`)) {
+				if (Date.now() - now > 40 * 1000) {
+					await encoder.terminate();
+					throw new Error("Manifest timeout!");
+				}
+			}
 
-			const page = await browser.newPage();
-			await page.setCacheEnabled(false);
-
-			let url = new URL(
+			const url = new URL(
 				`${process.env.BASE_URL}?mpd=${process.env.COMMON_HTTP_CONTEXT}/${encoder.name}/${encoder.name}.mpd`
 			);
+			const page = await browser.newPage();
+			await page.setCacheEnabled(false);
 			await page.goto(url.toString());
 
 			await page.evaluate((preset) => {
 				window.player.updateSettings(preset);
 				console.log("DashJS preset rules are applied.");
 			}, job.data.dashPreset);
-
 			applyNetworkProfile(page, job.data.newtorkPreset);
-			console.info(`Sleeping for ${job.data.testingDuration} seconds`.bgRed.white);
+
+			console.info(
+				`Waiting for ${job.data.testingDuration} seconds`.bgRed.white
+			);
 			await sleep(job.data.testingDuration);
-			//Retrieve Results
-			const result ={
-				job:job.data,
-				testResult:null
-			}
+
+			// Retrieve Results
+			const result = {
+				job: job.data,
+				testResult: null,
+			};
 			result.testResult = await page.evaluate(() => {
 				return window.experimentResults;
 			});
@@ -114,14 +158,24 @@ async function worker() {
 			await browser.close();
 			await encoder.terminate();
 
-			let resultFileName = process.env.RESULT_OUTPUT_DIR+"/"+job.data.videoFile.split(".")[0]+"-"+job.data.newtorkPreset+"-"+job.data.dashPresetName+"-"+jobStartDate.getTime()+".json"
-			fs.writeFileSync(resultFileName,JSON.stringify(result));
+			if (
+				result.testResult.errors.length > 0 ||
+				result.testResult.playbackStarted === null
+			)
+				throw new Error("Playback Error");
 
+			let resultFileName = `${process.env.RESULT_OUTPUT_DIR}/${
+				job.data.videoFile.split(".")[0]
+			}-${job.data.newtorkPreset}-${
+				job.data.dashPresetName
+			}-${jobStartDate.getTime()}.json`;
+			fs.writeFileSync(resultFileName, JSON.stringify(result));
+
+			return done(null, "done");
 		} catch (error) {
 			console.error(error);
+			return done(error, null);
 		}
-
-		return done(null, "done");
 	});
 }
 

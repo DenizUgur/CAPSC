@@ -6,7 +6,6 @@ export default function Home() {
   const ref = useRef(null);
 
   useEffect(() => {
-
     window.experimentResults = {
       playerTime: null,
       playbackStarted: null,
@@ -14,7 +13,7 @@ export default function Home() {
       playbackRateChanges: [],
       intervalMetrics: [],
       playbackEvents: [],
-      qualityEvents:[]
+      qualityEvents: [],
     };
     const intervalMetricsResolution = 1000;
     let intervalCounter = 0;
@@ -32,16 +31,18 @@ export default function Home() {
         playbackRateChanges: [
           {
             at: 0,
-            playbackRate: window.player.getPlaybackRate()
-          }
+            event: window.player.getPlaybackRate(),
+          },
         ],
         qualityEvents: [
           ...window.experimentResults.qualityEvents,
           {
             at: 0,
-            bitrateDetail: window.player.getBitrateInfoListFor("video")[window.player.getQualityFor("video")]
-          }
-        ]
+            bitrateDetail: window.player.getBitrateInfoListFor("video")[
+              window.player.getQualityFor("video")
+            ],
+          },
+        ],
       };
       setInterval(function () {
         intervalCounter++;
@@ -50,14 +51,14 @@ export default function Home() {
           intervalMetrics: [
             ...window.experimentResults.intervalMetrics,
             {
-              at: intervalCounter * intervalMetricsResolution / 1000,
+              at: (intervalCounter * intervalMetricsResolution) / 1000,
               liveLatency: window.player.getCurrentLiveLatency(),
-              mediaBuffer: window.player.getBufferLength()
-            }
-          ]
-        }
-      }, intervalMetricsResolution)
-    })
+              mediaBuffer: window.player.getBufferLength(),
+            },
+          ],
+        };
+      }, intervalMetricsResolution);
+    });
 
     window.player.on(MediaPlayer.events.PLAYBACK_WAITING, function (e) {
       console.log(e);
@@ -66,12 +67,15 @@ export default function Home() {
         playbackEvents: [
           ...window.experimentResults.playbackEvents,
           {
-            at: (new Date().getTime() - window.experimentResults.playbackStarted) / 1000,
-            event: e.type
-          }
-        ]
-      }
-    })
+            at:
+              (new Date().getTime() -
+                window.experimentResults.playbackStarted) /
+              1000,
+            event: e.type,
+          },
+        ],
+      };
+    });
 
     window.player.on(MediaPlayer.events.PLAYBACK_PLAYING, function (e) {
       console.log(e);
@@ -80,12 +84,15 @@ export default function Home() {
         playbackEvents: [
           ...window.experimentResults.playbackEvents,
           {
-            at: (new Date().getTime() - window.experimentResults.playbackStarted) / 1000,
-            event: e.type
-          }
-        ]
-      }
-    })
+            at:
+              (new Date().getTime() -
+                window.experimentResults.playbackStarted) /
+              1000,
+            event: e.type,
+          },
+        ],
+      };
+    });
 
     window.player.on(MediaPlayer.events.PLAYBACK_RATE_CHANGED, function (e) {
       console.log(e);
@@ -94,12 +101,15 @@ export default function Home() {
         playbackRateChanges: [
           ...window.experimentResults.playbackRateChanges,
           {
-            at: (new Date().getTime() - window.experimentResults.playbackStarted) / 1000,
-            event: e.playbackRate
-          }
-        ]
-      }
-    })
+            at:
+              (new Date().getTime() -
+                window.experimentResults.playbackStarted) /
+              1000,
+            event: e.playbackRate,
+          },
+        ],
+      };
+    });
 
     window.player.on(MediaPlayer.events.ERROR, function (e) {
       console.log(e);
@@ -108,37 +118,44 @@ export default function Home() {
         errors: [
           ...window.experimentResults.errors,
           {
-            at: (new Date().getTime() - window.experimentResults.playbackStarted) / 1000,
-            detail: e.error
-          }
-        ]
-      }
-    })
+            at:
+              (new Date().getTime() -
+                window.experimentResults.playbackStarted) /
+              1000,
+            detail: e.error,
+          },
+        ],
+      };
+    });
 
     player.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_RENDERED, function (e) {
-      if(e.mediaType==="video" && window.experimentResults.playbackStarted){
+      if (e.mediaType === "video" && window.experimentResults.playbackStarted) {
         console.log(e);
         window.experimentResults = {
           ...window.experimentResults,
           qualityEvents: [
             ...window.experimentResults.qualityEvents,
             {
-              at: (new Date().getTime() - window.experimentResults.playbackStarted) / 1000,
-              bitrateDetail: player.getBitrateInfoListFor("video")[e.newQuality]
-            }
-          ]
-        }
+              at:
+                (new Date().getTime() -
+                  window.experimentResults.playbackStarted) /
+                1000,
+              bitrateDetail: player.getBitrateInfoListFor("video")[
+                e.newQuality
+              ],
+            },
+          ],
+        };
       }
-    })
-
+    });
 
     window.player.on(MediaPlayer.events.CAN_PLAY, function (e) {
       console.log(e);
       if (window.experimentResults.playbackStarted == null) {
         window.player.play();
       }
-    })
-    return () => { };
+    });
+    return () => {};
   }, []);
 
   return <video ref={ref} muted></video>;

@@ -1,4 +1,4 @@
-export const DASHJS_PRESETS_KEYS=["APR","DEFAULT","DISABLED"]
+export const DASHJS_PRESETS_KEYS = ["APR", "DEFAULT", "DISABLED"];
 export const DASHJS_PRESETS = {
 	APR: {
 		streaming: {
@@ -23,10 +23,10 @@ export const DASHJS_PRESETS = {
 	},
 	DISABLED: {
 		streaming: {
-		  liveDelay: 2.0,
-		  liveCatchup: {
-			enabled:false
-		  },
+			liveDelay: 2.0,
+			liveCatchup: {
+				enabled: false,
+			},
 		},
 	},
 };
