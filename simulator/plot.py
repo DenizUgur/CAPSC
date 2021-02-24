@@ -1,9 +1,19 @@
 import matplotlib.pyplot as plt
+from PIL import Image
+import shutil
+import os
+import img2pdf
 import glob
 import json
 
+
 if __name__ == "__main__":
-    for file in glob.glob("results/*"):
+    if not os.path.exists("tmp/"):
+        os.mkdir("tmp/")
+
+    for fi, file in enumerate(glob.glob("results/*")):
+        print(f"Processing file #{fi}")
+
         with open(file, "r") as fp:
             data = json.load(fp)
 
@@ -57,4 +67,18 @@ if __name__ == "__main__":
                     data["job"]["dashPresetName"],
                 )
             )
-            plt.show()
+
+            file_name = f"tmp/img_{fi}.jpeg"
+            plt.savefig(file_name, dpi=200)
+
+            # Optimize
+            im = Image.open(file_name)
+            im.save(file_name, optimize=True, quality=30)
+
+            plt.close()
+
+    with open("results.pdf", "wb") as f:
+        f.write(img2pdf.convert(glob.glob("tmp/*.jpeg")))
+
+    shutil.rmtree("tmp/")
+    print("done")
