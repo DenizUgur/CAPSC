@@ -15,7 +15,6 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter.SseEvent
 
 import lombok.extern.slf4j.Slf4j;
 
-
 @RestController
 @CrossOrigin
 @Slf4j
@@ -24,24 +23,31 @@ public class HomeController {
 	@Autowired
 	@Qualifier("streamExec")
 	TaskExecutor taskExecutor;
-	
+
 	@GetMapping("/stream")
-	public SseEmitter getStream(@RequestParam(name = "media",required = false,defaultValue = "nomedia") String media) {
+	public SseEmitter getStream(@RequestParam(name = "media", required = false, defaultValue = "nomedia") String media,
+			@RequestParam(name = "t", required = false, defaultValue = "0") double t) {
 		SseEmitter sseEmitter = new SseEmitter();
 		log.info("Stream requested for " + media);
-		taskExecutor.execute(()->{
+		taskExecutor.execute(() -> {
 
-			long time = 0;
+			double time = t;
 			long sleep = 500;
-			for (long i = 0; i < 120; i++) {
+
+			while (time < t + 60) {
 				try {
-					sseEmitter.send(SseEmitter.event().id(String.valueOf(time)).name("periodic-event").data(new MetaDataDto(time, Long.valueOf(sleep).intValue() , Math.random())));
-					Thread.sleep(sleep);
+					sseEmitter.send(SseEmitter.event().id(String.valueOf(time)).name("periodic-event")
+							.data(new MetaDataDto(time, Long.valueOf(sleep).intValue(), Math.random())));
+					if (time > t + 2) {
+						Thread.sleep(sleep);
+					}
 				} catch (Exception e) {
 					log.error(e.getMessage(), e);
 					sseEmitter.completeWithError(e);
+					break;
 				}
-				time +=sleep;
+
+				time += Long.valueOf(sleep).doubleValue() / 1000;
 			}
 			sseEmitter.complete();
 		});

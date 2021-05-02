@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class MetaDataDto {
 
-	private long time;
+	private double time;
 	private int length;
 	private double density;
 
