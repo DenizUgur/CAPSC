@@ -16,6 +16,7 @@ export default function Home() {
     player.initialize(ref.current, "/content/app.mpd", true);
     player.updateSettings({
       streaming: {
+        videoEventSteamURL: "http://192.168.1.100:2323/stream",
         lowLatencyEnabled: true,
         liveDelay: 2.0,
         liveCatchup: {
