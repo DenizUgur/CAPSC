@@ -1,7 +1,8 @@
 #!/bin/bash
 rm -rf development/content/*
 
-$(pwd)/FFmpeg/bin/ffmpeg \
+# $(pwd)/FFmpeg/bin/ffmpeg \
+ffmpeg \
      -flags2 +export_mvs \
      -stream_loop -1 -re -i $1 \
      -vf "settb=AVTB,setpts='trunc(PTS/1K)*1K+st(1,trunc(RTCTIME/1K))-1K*trunc(ld(1)/1K)',drawtext=fontcolor=white:text='%{localtime}.%{eif\:1M*t-1K*trunc(t*1K)\:d}'" \
