@@ -5,7 +5,8 @@ import kill from "tree-kill";
 
 class FFmpeg {
 	constructor(infile) {
-		this.name = `${infile.split(".")[0]}_${nanoid()}`;
+		this.videoName = infile.split(".")[0];
+		this.name = `${this.videoName}_${nanoid()}`;
 		this.infile = `${process.env.INPUT_DIR}/${infile}`;
 		this.outdir = `${process.env.COMMON_OUTPUT_DIR}/${this.name}`;
 		this.state = "IDLE";
