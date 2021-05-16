@@ -15,7 +15,7 @@ import lombok.ToString;
 public class MetaDataDto {
 
 	private double time;
-	private int length;
+	private int duration;
 	private double density;
 
 }

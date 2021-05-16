@@ -42,14 +42,14 @@ public class CoreService {
                     if(metaDataDto.getTime()>time){
        
                         sleep = (long)((this.roundTwoDecimal(metaDataDto.getTime()-time))*1000);
-                        response.setLength((int)sleep);
+                        response.setDuration((int)sleep);
                         response.setTime(time);
                         sseEmitter.send(SseEmitter.event().id(String.valueOf(time)).name(coreProperties.getEventName())
                         .data(response));
                         closestEventIndex--;
                     }else{
-                        sleep = metaDataDto.getLength();
-                        response.setLength(metaDataDto.getLength());
+                        sleep = metaDataDto.getDuration();
+                        response.setDuration(metaDataDto.getDuration());
                         response.setDensity(metaDataDto.getDensity());
                         response.setTime(time);
                         sseEmitter.send(SseEmitter.event().id(String.valueOf(time)).name(coreProperties.getEventName())
