@@ -1,0 +1,13 @@
+server:
+  port: 2323
+
+core:
+  stream-interval: 500
+  stream-default-density: 0.0
+  event-name: periodic-event
+parser:
+  input-directory: ./in
+  event-densities:
+    -
+      name: PASS
+      density: 0.85
