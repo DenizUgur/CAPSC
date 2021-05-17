@@ -1,0 +1,47 @@
+core:
+  match-count: 3
+  match-length: 600
+  output-dir: ./out
+  events: 
+    goal:
+      name: GOAL
+      min-count: 1
+      max-count: 2
+      min-length: 6
+      max-length: 10
+    throw-in:
+      name: THROWIN
+      min-count: 4
+      max-count: 7
+      min-length: 3
+      max-length: 4
+    attackpass:
+      name: ATTACKPASS
+      min-count: 10
+      max-count: 20
+      min-length: 2
+      max-length: 4
+    defansepass:
+      name: DEFANSEPASS
+      min-count: 10
+      max-count: 20
+      min-length: 2
+      max-length: 4
+    corner:
+      name: CORNER
+      min-count: 1
+      max-count: 2
+      min-length: 5
+      max-length: 7
+    offside:
+      name: OFFSIDE
+      min-count: 1
+      max-count: 2
+      min-length: 3
+      max-length: 5
+    faul:
+      name: FAUL
+      min-count: 2
+      max-count: 3
+      min-length: 3
+      max-length: 6

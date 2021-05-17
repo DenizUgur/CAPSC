@@ -60,6 +60,7 @@ public class ParserService {
                 double at = Double.valueOf(line[0]);
                 System.out.println(String.valueOf(at));
                 int length = Integer.valueOf(line[1]);
+                log.info(line[2]);
                 double density = eventDensityMap.get(line[2]);
                 metaDataDtos.add(new MetaDataDto(at, length, density));
             }
