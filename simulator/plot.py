@@ -49,6 +49,20 @@ if __name__ == "__main__":
                 [e for _, e in playbackModified],
                 label="Playback Rate",
             )
+            tmp = data["testResult"]["intervalMetrics"]
+            for i in range(len(tmp)):
+                if not "latestEvent" in tmp[i]:
+                    tmp[i]["latestEvent"] = {
+                        "playerTime": 12.013568,
+                        "density": 0,
+                        "empty": True
+                    }
+            
+            playback.plot(
+                [d["at"] for d in data["testResult"]["intervalMetrics"]],
+                [d["latestEvent"]["density"] for d in data["testResult"]["intervalMetrics"]],
+                label="Event Density",
+            )
             playback.grid("on")
             playback.legend()
 
