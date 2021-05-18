@@ -38,13 +38,16 @@ export default function Home() {
           ...window.experimentResults.qualityEvents,
           {
             at: 0,
-            bitrateDetail: window.player.getBitrateInfoListFor("video")[
-              window.player.getQualityFor("video")
-            ],
+            bitrateDetail:
+              window.player.getBitrateInfoListFor("video")[
+                window.player.getQualityFor("video")
+              ],
           },
         ],
       };
-      setInterval(function () {
+    });
+    setInterval(function () {
+      if (window.experimentResults) {
         intervalCounter++;
         window.experimentResults = {
           ...window.experimentResults,
@@ -54,11 +57,12 @@ export default function Home() {
               at: (intervalCounter * intervalMetricsResolution) / 1000,
               liveLatency: window.player.getCurrentLiveLatency(),
               mediaBuffer: window.player.getBufferLength(),
+              latestEvent: window._globalLatestEvent,
             },
           ],
         };
-      }, intervalMetricsResolution);
-    });
+      }
+    }, intervalMetricsResolution);
 
     window.player.on(MediaPlayer.events.PLAYBACK_WAITING, function (e) {
       console.log(e);
@@ -140,9 +144,8 @@ export default function Home() {
                 (new Date().getTime() -
                   window.experimentResults.playbackStarted) /
                 1000,
-              bitrateDetail: player.getBitrateInfoListFor("video")[
-                e.newQuality
-              ],
+              bitrateDetail:
+                player.getBitrateInfoListFor("video")[e.newQuality],
             },
           ],
         };
