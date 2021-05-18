@@ -1,4 +1,4 @@
-export const DASHJS_PRESETS_KEYS = ["APR", "DEFAULT", "DISABLED"];
+export const DASHJS_PRESETS_KEYS = ["APR", "LOLP", "DEFAULT", "DISABLED"];
 export const DASHJS_PRESETS = {
 	APR: {
 		streaming: {
@@ -9,6 +9,17 @@ export const DASHJS_PRESETS = {
 				minDrift: 0.2,
 				playbackRate: 0.3,
 				respectVideoEvents: true,
+			},
+		},
+	},
+	LOLP: {
+		streaming: {
+			lowLatencyEnabled: true,
+			liveDelay: 2.0,
+			liveCatchup: {
+				mode: "liveCatchupModeLoLP",
+				minDrift: 0.2,
+				playbackRate: 0.3,
 			},
 		},
 	},

@@ -31,15 +31,15 @@ async function master() {
 	const tests = [
 		{
 			videoFile: "bcn.mp4",
-			testingDuration: 600,
+			testingDuration: 120,
 		},
 		{
 			videoFile: "bcn2.mp4",
-			testingDuration: 600,
+			testingDuration: 120,
 		},
 		{
 			videoFile: "bcn3.mp4",
-			testingDuration: 600,
+			testingDuration: 120,
 		},
 	];
 
@@ -186,4 +186,4 @@ const sleep = (duration) => {
 	});
 };
 
-throng({ master, worker, count: 1 });
+throng({ master, worker, count: 3 });

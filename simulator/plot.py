@@ -89,12 +89,12 @@ if __name__ == "__main__":
                 )
             )
 
-            file_name = f"tmp/img_{fi}.jpeg"
-            plt.savefig(file_name, dpi=200)
+            file_name = f"tmp/img_{fi}"
+            plt.savefig(file_name + ".png", dpi=200)
 
             # Optimize
-            im = Image.open(file_name)
-            im.save(file_name, optimize=True, quality=30)
+            im = Image.open(file_name + ".png").convert('RGB')
+            im.save(file_name + ".jpeg", optimize=True, quality=30)
 
             plt.close()
 
