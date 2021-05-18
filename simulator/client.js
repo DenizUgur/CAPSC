@@ -23,7 +23,17 @@ dotenv.config();
 // Setup Queue
 const queue = new Queue("work");
 
+if (!fs.existsSync(process.env.COMMON_OUTPUT_DIR)) {
+	fs.mkdirSync(process.env.COMMON_OUTPUT_DIR);
+} else {
+	fs.rmSync(process.env.COMMON_OUTPUT_DIR, { force: true, recursive: true });
+	fs.mkdirSync(process.env.COMMON_OUTPUT_DIR);
+}
+
 if (!fs.existsSync(process.env.RESULT_OUTPUT_DIR)) {
+	fs.mkdirSync(process.env.RESULT_OUTPUT_DIR);
+} else {
+	fs.rmSync(process.env.RESULT_OUTPUT_DIR, { force: true, recursive: true });
 	fs.mkdirSync(process.env.RESULT_OUTPUT_DIR);
 }
 
@@ -31,15 +41,15 @@ async function master() {
 	const tests = [
 		{
 			videoFile: "bcn.mp4",
-			testingDuration: 120,
+			testingDuration: 300,
 		},
 		{
 			videoFile: "bcn2.mp4",
-			testingDuration: 120,
+			testingDuration: 300,
 		},
 		{
 			videoFile: "bcn3.mp4",
-			testingDuration: 120,
+			testingDuration: 300,
 		},
 	];
 
@@ -55,6 +65,7 @@ async function master() {
 					dashPreset: DASHJS_PRESETS[dashjsProfileKey],
 					dashPresetName: dashjsProfileKey,
 				});
+				console.log(`Adding ${test.videoFile} ${networkProfile} ${dashjsProfileKey}`.yellow)
 			}
 		}
 	}
