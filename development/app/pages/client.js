@@ -23,7 +23,7 @@ export default function Home() {
     window.player.initialize(ref.current, params.mpd, false);
 
     window.player.on(MediaPlayer.events.PLAYBACK_STARTED, function (e) {
-      console.log(e);
+     //console.log(e);
       window.experimentResults = {
         ...window.experimentResults,
         playbackStarted: new Date().getTime(),
@@ -57,7 +57,8 @@ export default function Home() {
               at: (intervalCounter * intervalMetricsResolution) / 1000,
               liveLatency: window.player.getCurrentLiveLatency(),
               mediaBuffer: window.player.getBufferLength(),
-              latestEvent: window._globalLatestEvent,
+              latestEvent: window.getClosestEvent(),
+              videoTime: window.player.duration()
             },
           ],
         };
@@ -65,7 +66,7 @@ export default function Home() {
     }, intervalMetricsResolution);
 
     window.player.on(MediaPlayer.events.PLAYBACK_WAITING, function (e) {
-      console.log(e);
+     //console.log(e);
       window.experimentResults = {
         ...window.experimentResults,
         playbackEvents: [
@@ -82,7 +83,7 @@ export default function Home() {
     });
 
     window.player.on(MediaPlayer.events.PLAYBACK_PLAYING, function (e) {
-      console.log(e);
+     //console.log(e);
       window.experimentResults = {
         ...window.experimentResults,
         playbackEvents: [
@@ -99,7 +100,7 @@ export default function Home() {
     });
 
     window.player.on(MediaPlayer.events.PLAYBACK_RATE_CHANGED, function (e) {
-      console.log(e);
+     //console.log(e);
       window.experimentResults = {
         ...window.experimentResults,
         playbackRateChanges: [
@@ -116,7 +117,7 @@ export default function Home() {
     });
 
     window.player.on(MediaPlayer.events.ERROR, function (e) {
-      console.log(e);
+     //console.log(e);
       window.experimentResults = {
         ...window.experimentResults,
         errors: [
@@ -134,7 +135,7 @@ export default function Home() {
 
     player.on(dashjs.MediaPlayer.events.QUALITY_CHANGE_RENDERED, function (e) {
       if (e.mediaType === "video" && window.experimentResults.playbackStarted) {
-        console.log(e);
+       //console.log(e);
         window.experimentResults = {
           ...window.experimentResults,
           qualityEvents: [
@@ -153,7 +154,7 @@ export default function Home() {
     });
 
     window.player.on(MediaPlayer.events.CAN_PLAY, function (e) {
-      console.log(e);
+     //console.log(e);
       if (window.experimentResults.playbackStarted == null) {
         window.player.play();
       }

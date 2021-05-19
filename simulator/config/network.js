@@ -24,8 +24,8 @@ export const applyNetworkProfile = (page, preset) => {
 					//console.log(step.data)
 					step.data = {
 						...step.data,
-						download: step.data.download * 0.3,
-						upload: step.data.upload * 0.3,
+						download: step.data.download * 0.65,
+						upload: step.data.upload * 0.65,
 					};
 					await page.emulateNetworkConditions(step.data);
 					await sleep(step.duration);
