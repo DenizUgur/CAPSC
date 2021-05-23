@@ -11,6 +11,7 @@ export const DASHJS_PRESETS = {
 			liveCatchup: {
 				mode: "liveCatchupModeLoLP",
 				minDrift: 0.2,
+				playbackBufferMin: 0.5,
 				playbackRate: 0.3,
 				respectVideoEvents: true
 			},
@@ -27,17 +28,14 @@ export const DASHJS_PRESETS = {
 		},
 		streaming: {
 			lowLatencyEnabled: true,
-			buffer: {
-				stallThreshold: 0.05,
-			},
+			liveDelay: 3.0,
+			stallThreshold: 0.05,
 			liveCatchup: {
-				mode: "liveCatchupModeLoLP",
 				minDrift: 0.2,
 				playbackRate: 0.3,
 				playbackBufferMin: 0.5,
-			},
-			delay: {
-				liveDelay: 3.0
+				enabled: true,
+				mode: "liveCatchupModeLoLP",
 			},
 			abr: {
 				useDefaultABRRules: true,
@@ -56,6 +54,7 @@ export const DASHJS_PRESETS = {
 			liveCatchup: {
 				minDrift: 0.2,
 				playbackRate: 0.5,
+				mode: "liveCatchupModeDefault",
 			},
 			abr: {
 				useDefaultABRRules: true,
