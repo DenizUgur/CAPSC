@@ -41,16 +41,8 @@ async function master() {
 	const tests = [
 		{
 			videoFile: "bcn.mp4",
-			testingDuration: 300,
-		},
-		{
-			videoFile: "bcn2.mp4",
-			testingDuration: 300,
-		},
-		{
-			videoFile: "bcn3.mp4",
-			testingDuration: 300,
-		},
+			testingDuration: 120,
+		}
 	];
 
 	//Populate Tests
@@ -144,7 +136,7 @@ async function worker() {
 			await page.setCacheEnabled(false);
 			await page.goto(url.toString());
 
-			job.data.dashPreset.streaming.videoEventSteamURL = `http://192.168.1.100:2323/stream?media=${encoder.videoName}`;
+			job.data.dashPreset.streaming.videoEventSteamURL = `http://localhost:2323/stream?media=${encoder.videoName}`;
 			await page.evaluate((preset) => {
 				window.player.updateSettings(preset);
 				console.log("DashJS preset rules are applied.");
@@ -197,4 +189,4 @@ const sleep = (duration) => {
 	});
 };
 
-throng({ master, worker, count: 3 });
+throng({ master, worker, count: 1 });

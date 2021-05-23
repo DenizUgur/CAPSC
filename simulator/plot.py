@@ -31,7 +31,7 @@ if __name__ == "__main__":
                 [d["mediaBuffer"] for d in data["testResult"]["intervalMetrics"]],
                 label="Media Buffer",
             )
-            interval.axhline(data["job"]["dashPreset"]["streaming"]["liveDelay"])
+            interval.axhline(data["job"]["dashPreset"]["streaming"]["delay"]["liveDelay"])
             interval.grid("on")
             interval.legend()
 
@@ -103,14 +103,16 @@ if __name__ == "__main__":
                 )
             )
 
-            file_name = f"tmp/img_{fi}"
-            plt.savefig(file_name + ".png", dpi=200)
+            plt.show()
 
-            # Optimize
-            im = Image.open(file_name + ".png").convert('RGB')
-            im.save(file_name + ".jpeg", optimize=True, quality=30)
+            # file_name = f"tmp/img_{fi}"
+            # plt.savefig(file_name + ".png", dpi=200)
 
-            plt.close()
+            # # Optimize
+            # im = Image.open(file_name + ".png").convert('RGB')
+            # im.save(file_name + ".jpeg", optimize=True, quality=30)
+
+            # plt.close()
 
     with open("results.pdf", "wb") as f:
         f.write(img2pdf.convert(glob.glob("tmp/*.jpeg")))

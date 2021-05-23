@@ -16,7 +16,7 @@ V_SIZE_4=768x432
 V_SIZE_5=1280x720
 V_SIZE_6=1920x1080
 $FFMPEG \
-     -stream_loop -1 -i $SOURCE \
+     -stream_loop -1 -re -i $SOURCE \
      -vf "settb=AVTB,setpts='trunc(PTS/1K)*1K+st(1,trunc(RTCTIME/1K))-1K*trunc(ld(1)/1K)',drawtext=fontsize=30:fontcolor=white:text='%{localtime}.%{eif\:1M*t-1K*trunc(t*1K)\:d}'" \
      -c:v libx264 -keyint_min $GOP_SIZE -g $GOP_SIZE -pix_fmt yuv420p \
      -map v:0 -s:0 $V_SIZE_1 -b:v:0 1.5M -maxrate:0 1.6M -bufsize:0 2M \

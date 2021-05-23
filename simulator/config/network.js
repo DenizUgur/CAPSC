@@ -1,6 +1,6 @@
 import fs from "fs";
 
-export const NETWORK_PROFILES = ["twitch", "lte", "cascade"];
+export const NETWORK_PROFILES = ["cascade"];
 
 export const applyNetworkProfile = (page, preset) => {
 	if (!NETWORK_PROFILES.includes(preset)) {
@@ -24,8 +24,8 @@ export const applyNetworkProfile = (page, preset) => {
 					//console.log(step.data)
 					step.data = {
 						...step.data,
-						download: step.data.download * 0.65,
-						upload: step.data.upload * 0.65,
+						download: step.data.download * 0.5,
+						upload: step.data.upload * 0.5,
 					};
 					await page.emulateNetworkConditions(step.data);
 					await sleep(step.duration);
