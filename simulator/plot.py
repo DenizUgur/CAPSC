@@ -31,7 +31,7 @@ if __name__ == "__main__":
                 [d["mediaBuffer"] for d in data["testResult"]["intervalMetrics"]],
                 label="Media Buffer",
             )
-            interval.axhline(data["job"]["dashPreset"]["streaming"]["delay"]["liveDelay"])
+            interval.axhline(data["job"]["dashPreset"]["streaming"]["liveDelay"])
             interval.grid("on")
             interval.legend()
 
