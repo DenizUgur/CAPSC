@@ -40,7 +40,7 @@ export const DASHJS_PRESETS = {
 			abr: {
 				useDefaultABRRules: true,
 				ABRStrategy: 'abrLoLP',
-				fetchThroughputCalculationMode: 'abrFetchThroughputCalculationMoofParsing'
+				fetchThroughputCalculationMode: 'abrFetchThroughputCalculationDownloadedData'
 			}
 		},
 	},

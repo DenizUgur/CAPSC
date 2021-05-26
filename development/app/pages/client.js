@@ -45,6 +45,7 @@ export default function Home() {
           },
         ],
       };
+      window.networkConditions = null;
     });
     setInterval(function () {
       if (window.experimentResults) {
@@ -57,7 +58,9 @@ export default function Home() {
               at: (intervalCounter * intervalMetricsResolution) / 1000,
               liveLatency: window.player.getCurrentLiveLatency(),
               mediaBuffer: window.player.getBufferLength(),
-              videoTime: window.player.duration()
+              videoTime: window.player.duration(),
+              bitrate: window.networkConditions,
+              predictedBW: Math.round(player.getAverageThroughput('video')),
             },
           ],
         };

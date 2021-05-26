@@ -1,6 +1,7 @@
 import fs from "fs";
 
-export const NETWORK_PROFILES = ["cascade"];
+// Profiles are in bytes/sec
+export const NETWORK_PROFILES = ["twitch"];
 
 export const applyNetworkProfile = (page, preset) => {
 	if (!NETWORK_PROFILES.includes(preset)) {
@@ -24,10 +25,13 @@ export const applyNetworkProfile = (page, preset) => {
 					//console.log(step.data)
 					step.data = {
 						...step.data,
-						download: step.data.download * 0.5,
-						upload: step.data.upload * 0.5,
+						download: step.data.download,
+						upload: step.data.upload,
 					};
 					await page.emulateNetworkConditions(step.data);
+					await page.evaluate((data) => {
+						window.networkConditions = data;
+					}, step.data);
 					await sleep(step.duration);
 				}
 			}
