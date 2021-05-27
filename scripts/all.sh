@@ -1,13 +1,12 @@
 #!/bin/bash
 
-#* Kill previous sessions
-pkill screen
-
 #* Start GPAC
-screen -d -m -S gpac scripts/gpac.sh
+sudo gnome-terminal -t GPAC -- ./scripts/gpac.sh
 
 #* Start Ingest
-screen -d -m -S ingest scripts/ingest-single.sh video.mp4 app
+cd metadata-feeder/metadata
+sudo gnome-terminal -t Metadata Feeder -- ./mvnw spring-boot:run
+cd -
 
 #* Start Server
-screen -d -m -S server scripts/server.sh
+sudo gnome-terminal -t Server -- ./scripts/server.sh
