@@ -5,7 +5,7 @@ sudo gnome-terminal -t GPAC -- ./scripts/gpac.sh
 
 #* Start Ingest
 cd metadata-feeder/metadata
-sudo gnome-terminal -t Metadata Feeder -- ./mvnw spring-boot:run
+sudo gnome-terminal -t Metadata -- ./mvnw spring-boot:run
 cd -
 
 #* Start Server

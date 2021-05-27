@@ -59,6 +59,7 @@ export default function Home() {
               liveLatency: window.player.getCurrentLiveLatency(),
               mediaBuffer: window.player.getBufferLength(),
               videoTime: window.player.duration(),
+              latestEvent: window._globalLatestEvent,
               bitrate: window.networkConditions,
               predictedBW: Math.round(player.getAverageThroughput('video')),
             },
@@ -69,19 +70,19 @@ export default function Home() {
 
     window.player.on(MediaPlayer.events.PLAYBACK_WAITING, function (e) {
       let now = new Date().getTime();
-      console.log(MediaPlayer.events.PLAYBACK_WAITING +" " + now +" " +window.player.getBufferLength());
+      // console.log(MediaPlayer.events.PLAYBACK_WAITING +" " + now +" " +window.player.getBufferLength());
       window.lastWaiting=now;
     });
 
     window.player.getVideoElement().addEventListener("timeupdate", function () {
       let now = new Date().getTime() ;
-      console.log("timeupdate " + now);
+      // console.log("timeupdate " + now);
       let diff = now - window.lastWaiting;
       if(window.lastWaiting == null){
 
       }else{
         if(diff > 20){
-          console.log("long stall " + diff +" " + window.player.getBufferLength());
+          // console.log("long stall " + diff +" " + window.player.getBufferLength());
           window.experimentResults = {
             ...window.experimentResults,
             playbackEvents: [
@@ -114,7 +115,7 @@ export default function Home() {
       window.lastWaiting = null;
     });
     window.player.on(MediaPlayer.events.PLAYBACK_PLAYING, function (e) {
-     console.log(e);
+    //  console.log(e);
       window.experimentResults = {
         ...window.experimentResults,
         playbackEvents: [
@@ -131,7 +132,7 @@ export default function Home() {
     });
 
     window.player.on(MediaPlayer.events.PLAYBACK_RATE_CHANGED, function (e) {
-     console.log("playbackrate change "+ e.playbackRate+ " " +window.player.getBufferLength());
+    //  console.log("playbackrate change "+ e.playbackRate+ " " +window.player.getBufferLength());
       window.experimentResults = {
         ...window.experimentResults,
         playbackRateChanges: [
@@ -152,14 +153,14 @@ export default function Home() {
       window.experimentResults = {
         ...window.experimentResults,
         errors: [
-          // ...window.experimentResults.errors,
-          // {
-          //   at:
-          //     (new Date().getTime() -
-          //       window.experimentResults.playbackStarted) /
-          //     1000,
-          //   detail: e.error,
-          // },
+          ...window.experimentResults.errors,
+          {
+            at:
+              (new Date().getTime() -
+                window.experimentResults.playbackStarted) /
+              1000,
+            detail: e.error,
+          },
         ],
       };
     });
