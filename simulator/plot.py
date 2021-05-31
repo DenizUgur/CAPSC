@@ -8,11 +8,15 @@ import json
 
 
 if __name__ == "__main__":
-    if not os.path.exists("tmp/"):
-        os.mkdir("tmp/")
+    if os.path.exists("tmp/"):
+        shutil.rmtree("tmp/")
+    os.mkdir("tmp/")
+    os.mkdir("tmp/pdf")
 
     for fi, file in enumerate(glob.glob("results/*")):
-        print(f"Processing file #{fi}")
+        comps = file.split("/")[1].split("-")
+        video, network, method = comps[0], comps[1], comps[2]
+        print(f"Processing file #{fi} M:{method} N:{network}")
 
         with open(file, "r") as fp:
             data = json.load(fp)
@@ -87,14 +91,19 @@ if __name__ == "__main__":
             networkModified = []
             prev = None
             for datas in data["testResult"]["intervalMetrics"]:
-                current_bit = datas["bitrate"]
+                try:
+                    current_bit = datas["bitrate"]
+                except Exception:
+                    networkModified.append(None)
+                    continue
+
                 if current_bit is None:
                     if prev is None:
                         networkModified.append(0)
                     else:
                         networkModified.append(prev)
                 else:
-                    current = int(current_bit["download"])
+                    current = int(current_bit["download"]) * 8
                     networkModified.append(current)
                     prev = current
 
@@ -118,7 +127,7 @@ if __name__ == "__main__":
             )
             quality.plot(
                 [d["at"] for d in data["testResult"]["intervalMetrics"]],
-                [d * 8 for d in networkModified],
+                [d for d in networkModified],
                 label="Player Bitrate",
             )
             quality.plot(
@@ -152,12 +161,26 @@ if __name__ == "__main__":
 
             # Optimize
             im = Image.open(file_name + ".png").convert("RGB")
-            im.save(file_name + ".jpeg", optimize=True, quality=30)
+            im.save(file_name + f".{video}.{network}.{method}.jpeg", optimize=True, quality=30)
 
-            plt.show()
+            # plt.show()
+            plt.close()
 
-    with open("results.pdf", "wb") as f:
+    for m in ["APR", "DEFAULT", "LOLP", "DISABLED"]:
+        with open(f"tmp/pdf/results-{m}.pdf", "wb") as f:
+            f.write(img2pdf.convert(glob.glob(f"tmp/*{m}*.jpeg")))
+
+    for n in ["cascade", "twitch", "lte"]:
+        with open(f"tmp/pdf/results-{n}.pdf", "wb") as f:
+            f.write(img2pdf.convert(glob.glob(f"tmp/*{n}*.jpeg")))
+
+    for v in ["bcn", "bcn2", "bcn3"]:
+        with open(f"tmp/pdf/results-{v}.pdf", "wb") as f:
+            f.write(img2pdf.convert(glob.glob(f"tmp/*{v}*.jpeg")))
+
+    with open(f"tmp/pdf/results-all.pdf", "wb") as f:
         f.write(img2pdf.convert(glob.glob("tmp/*.jpeg")))
 
+    shutil.make_archive("results", "zip", "tmp/pdf")
     shutil.rmtree("tmp/")
     print("done")
