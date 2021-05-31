@@ -1,7 +1,7 @@
 import fs from "fs";
 
 // Profiles are in bytes/sec
-export const NETWORK_PROFILES = ["lte"];
+export const NETWORK_PROFILES = ["cascade", "lte", "twitch"];
 
 export const applyNetworkProfile = (page, preset) => {
 	if (!NETWORK_PROFILES.includes(preset)) {
@@ -20,13 +20,13 @@ export const applyNetworkProfile = (page, preset) => {
 		let scale = 1.0;
 		switch (preset) {
 			case "cascade":
-				scale=0.5;
+				scale = 0.5;
 				break;
 			case "lte":
-				scale=0.5;
+				scale = 0.5;
 				break;
 			case "twitch":
-				scale=0.5;
+				scale = 0.5;
 				break;
 		}
 		try {
@@ -36,8 +36,8 @@ export const applyNetworkProfile = (page, preset) => {
 					//console.log(step.data)
 					step.data = {
 						...step.data,
-						download: step.data.download*scale,
-						upload: step.data.upload*scale,
+						download: step.data.download * scale,
+						upload: step.data.upload * scale,
 					};
 					await page.emulateNetworkConditions(step.data);
 					await page.evaluate((data) => {

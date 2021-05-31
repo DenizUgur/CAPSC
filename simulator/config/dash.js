@@ -1,8 +1,8 @@
-export const DASHJS_PRESETS_KEYS = ["APR"];
+export const DASHJS_PRESETS_KEYS = ["APR", "LOLP", "DEFAULT", "DISABLED"];
 export const DASHJS_PRESETS = {
 	APR: {
 		debug: {
-			logLevel: 0
+			logLevel: 0,
 		},
 		streaming: {
 			lowLatencyEnabled: true,
@@ -14,18 +14,19 @@ export const DASHJS_PRESETS = {
 				playbackBufferMin: 0.5,
 				enabled: true,
 				mode: "liveCatchupModeLoLP",
-				respectVideoEvents: true
+				respectVideoEvents: true,
 			},
 			abr: {
 				useDefaultABRRules: true,
-				ABRStrategy: 'abrLoLP',
-				fetchThroughputCalculationMode: 'abrFetchThroughputCalculationDownloadedData'
-			}
+				ABRStrategy: "abrLoLP",
+				fetchThroughputCalculationMode:
+					"abrFetchThroughputCalculationDownloadedData",
+			},
 		},
 	},
 	LOLP: {
 		debug: {
-			logLevel: 0
+			logLevel: 0,
 		},
 		streaming: {
 			lowLatencyEnabled: true,
@@ -40,14 +41,15 @@ export const DASHJS_PRESETS = {
 			},
 			abr: {
 				useDefaultABRRules: true,
-				ABRStrategy: 'abrLoLP',
-				fetchThroughputCalculationMode: 'abrFetchThroughputCalculationDownloadedData'
-			}
+				ABRStrategy: "abrLoLP",
+				fetchThroughputCalculationMode:
+					"abrFetchThroughputCalculationDownloadedData",
+			},
 		},
 	},
 	DEFAULT: {
 		debug: {
-			logLevel: 0
+			logLevel: 0,
 		},
 		streaming: {
 			lowLatencyEnabled: true,
@@ -62,14 +64,15 @@ export const DASHJS_PRESETS = {
 			},
 			abr: {
 				useDefaultABRRules: true,
-				ABRStrategy: 'abrLoLP',
-				fetchThroughputCalculationMode: 'abrFetchThroughputCalculationDownloadedData'
-			}
+				ABRStrategy: "abrLoLP",
+				fetchThroughputCalculationMode:
+					"abrFetchThroughputCalculationDownloadedData",
+			},
 		},
 	},
 	DISABLED: {
 		debug: {
-			logLevel: 0
+			logLevel: 0,
 		},
 		streaming: {
 			lowLatencyEnabled: true,
@@ -77,7 +80,7 @@ export const DASHJS_PRESETS = {
 			liveCatchup: {
 				minDrift: 0.2,
 				playbackRate: 0,
-			}
+			},
 		},
 	},
 };

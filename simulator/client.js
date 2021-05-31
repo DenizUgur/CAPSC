@@ -42,6 +42,14 @@ async function master() {
 		{
 			videoFile: "bcn.mp4",
 			testingDuration: 300,
+		},
+		{
+			videoFile: "bcn2.mp4",
+			testingDuration: 300,
+		},
+		{
+			videoFile: "bcn3.mp4",
+			testingDuration: 300,
 		}
 	];
 
@@ -189,4 +197,4 @@ const sleep = (duration) => {
 	});
 };
 
-throng({ master, worker, count: 2 });
+throng({ master, worker, count: 3 });
