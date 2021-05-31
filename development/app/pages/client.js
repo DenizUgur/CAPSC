@@ -59,6 +59,7 @@ export default function Home() {
               mediaBuffer: window.player.getBufferLength(),
               videoTime: window.player.duration(),
               latestEvent: window._globalLatestEvent,
+              playbackRate: window.player.getPlaybackRate(),
               bitrate: window.networkConditions,
               predictedBW: Math.round(player.getAverageThroughput('video')),
             },
