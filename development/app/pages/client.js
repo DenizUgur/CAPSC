@@ -15,7 +15,7 @@ export default function Home() {
       playbackEvents: [],
       qualityEvents: [],
     };
-    const intervalMetricsResolution = 500;
+    const intervalMetricsResolution = 250;
     let intervalCounter = 0;
     let params = querystring.parse(window.location.search);
 
@@ -49,7 +49,6 @@ export default function Home() {
     });
     setInterval(function () {
       if (window.experimentResults) {
-        intervalCounter++;
         window.experimentResults = {
           ...window.experimentResults,
           intervalMetrics: [
@@ -65,6 +64,8 @@ export default function Home() {
             },
           ],
         };
+
+        intervalCounter++;
       }
     }, intervalMetricsResolution);
 
