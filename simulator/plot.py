@@ -5,18 +5,47 @@ import os
 import img2pdf
 import glob
 import json
+import yaml
+
+
+class Metadata:
+    def __init__(self, video):
+        self.data = []
+        with open(f"../metadata-feeder/metadata/in/{video}.csv") as fp:
+            for line in fp:
+                tmp = line.split("\n")[0].split(",")
+                self.data.append([float(tmp[0]), float(tmp[1]), tmp[2]])
+        self.config = yaml.load(
+            open("../metadata-feeder/metadata/src/main/resources/application.yml"),
+            Loader=yaml.FullLoader,
+        )["parser"]["event-densities"]
+
+    def __get_density__(self, type):
+        for event in self.config:
+            if event["name"] == type:
+                return event["density"]
+        return 0
+
+    def __call__(self, time):
+        for f, e, t in self.data:
+            if f <= time < f + e / 1000:
+                return self.__get_density__(t)
+        return 0
 
 
 if __name__ == "__main__":
     if os.path.exists("tmp/"):
         shutil.rmtree("tmp/")
     os.mkdir("tmp/")
-    os.mkdir("tmp/pdf")
+    os.mkdir("tmp/zip")
+    os.mkdir("tmp/zip/pdf")
+    os.mkdir("tmp/zip/csv")
 
     for fi, file in enumerate(glob.glob("results/*")):
         comps = file.split("/")[1].split("-")
         video, network, method = comps[0], comps[1], comps[2]
         print(f"Processing file #{fi} M:{method} N:{network}")
+        M = Metadata(video)
 
         with open(file, "r") as fp:
             data = json.load(fp)
@@ -51,27 +80,24 @@ if __name__ == "__main__":
             )
 
             playback.plot(
-                [p for p, _ in playbackModified],
-                [e for _, e in playbackModified],
+                [d["at"] for d in data["testResult"]["intervalMetrics"]],
+                [d["playbackRate"] for d in data["testResult"]["intervalMetrics"]],
                 label="Playback Rate",
             )
-            tmp = data["testResult"]["intervalMetrics"]
-            for i in range(len(tmp)):
-                if not "latestEvent" in tmp[i]:
-                    tmp[i]["latestEvent"] = {
-                        "playerTime": 12.013568,
-                        "density": 0,
-                        "empty": True,
-                    }
+
+            tmp = []
+            for at in data["testResult"]["intervalMetrics"]:
+                if "latestEvent" in at:
+                    tmp.append(M(at["latestEvent"]["playerTime"]))
+                else:
+                    tmp.append(0)
 
             playback.plot(
                 [d["at"] for d in data["testResult"]["intervalMetrics"]],
-                [
-                    d["latestEvent"]["density"]
-                    for d in data["testResult"]["intervalMetrics"]
-                ],
+                tmp,
                 label="Event Density",
             )
+
             playback.grid("on")
             playback.legend()
 
@@ -117,6 +143,7 @@ if __name__ == "__main__":
                     else:
                         bwModified.append(int(prev))
                 else:
+                    current_bw *= 1000
                     bwModified.append(int(current_bw))
                     prev = current_bw
 
@@ -132,7 +159,7 @@ if __name__ == "__main__":
             )
             quality.plot(
                 [d["at"] for d in data["testResult"]["intervalMetrics"]],
-                [d * 1000 for d in bwModified],
+                [d for d in bwModified],
                 label="Predicted Bandwidth",
             )
             quality.grid("on")
@@ -160,27 +187,74 @@ if __name__ == "__main__":
             plt.savefig(file_name + ".png", dpi=200)
 
             # Optimize
+            result_name = f"{file_name}.{video}.{network}.{method}"
             im = Image.open(file_name + ".png").convert("RGB")
-            im.save(file_name + f".{video}.{network}.{method}.jpeg", optimize=True, quality=30)
+            im.save(
+                f"{result_name}.jpeg",
+                optimize=True,
+                quality=30,
+            )
 
             # plt.show()
             plt.close()
 
+            tmp = []
+            with open(f"tmp/zip/csv/{video}.{network}.{method}.csv", "w") as result_fp:
+                for i, interval in enumerate(data["testResult"]["intervalMetrics"]):
+                    event = 0
+                    if "latestEvent" in at:
+                        event = M(at["latestEvent"]["playerTime"])
+
+                    result_fp.write(
+                        ",".join(
+                            [
+                                str(x)
+                                for x in [
+                                    interval["at"],
+                                    interval["liveLatency"],
+                                    interval["mediaBuffer"],
+                                    interval["playbackRate"],
+                                    event,
+                                    networkModified[i],
+                                    bwModified[i],
+                                ]
+                            ]
+                        )
+                    )
+                    result_fp.write("\n")
+            with open(
+                f"tmp/zip/csv/{video}.{network}.{method}.playbackevents.csv", "w"
+            ) as playback_fp:
+                for interval in data["testResult"]["playbackEvents"]:
+                    playback_fp.write(
+                        ",".join(
+                            [
+                                str(x)
+                                for x in [
+                                    interval["at"],
+                                    interval["event"],
+                                ]
+                            ]
+                        )
+                    )
+                    playback_fp.write("\n")
+
     for m in ["APR", "DEFAULT", "LOLP", "DISABLED"]:
-        with open(f"tmp/pdf/results-{m}.pdf", "wb") as f:
+        with open(f"tmp/zip/pdf/results-{m}.pdf", "wb") as f:
             f.write(img2pdf.convert(glob.glob(f"tmp/*{m}*.jpeg")))
 
     for n in ["cascade", "twitch", "lte"]:
-        with open(f"tmp/pdf/results-{n}.pdf", "wb") as f:
+        with open(f"tmp/zip/pdf/results-{n}.pdf", "wb") as f:
             f.write(img2pdf.convert(glob.glob(f"tmp/*{n}*.jpeg")))
 
     for v in ["bcn", "bcn2", "bcn3"]:
-        with open(f"tmp/pdf/results-{v}.pdf", "wb") as f:
+        with open(f"tmp/zip/pdf/results-{v}.pdf", "wb") as f:
             f.write(img2pdf.convert(glob.glob(f"tmp/*{v}*.jpeg")))
 
-    with open(f"tmp/pdf/results-all.pdf", "wb") as f:
+    with open(f"tmp/zip/pdf/results-all.pdf", "wb") as f:
         f.write(img2pdf.convert(glob.glob("tmp/*.jpeg")))
 
-    shutil.make_archive("results", "zip", "tmp/pdf")
+    shutil.copytree("results", "tmp/zip/results")
+    shutil.make_archive("results", "zip", "tmp/zip")
     shutil.rmtree("tmp/")
     print("done")
