@@ -222,27 +222,12 @@ if __name__ == "__main__":
                                     event,
                                     networkModified[i],
                                     bwModified[i],
+                                    interval["isPlaying"],
                                 ]
                             ]
                         )
                     )
                     result_fp.write("\n")
-            with open(
-                f"tmp/zip/csv/{video}.{network}.{method}.playbackevents.csv", "w"
-            ) as playback_fp:
-                for interval in data["testResult"]["playbackEvents"]:
-                    playback_fp.write(
-                        ",".join(
-                            [
-                                str(x)
-                                for x in [
-                                    interval["at"],
-                                    interval["event"],
-                                ]
-                            ]
-                        )
-                    )
-                    playback_fp.write("\n")
 
     for m in ["APR", "DEFAULT", "LOLP"]:
         with open(f"tmp/zip/pdf/results-{m}.pdf", "wb") as f:

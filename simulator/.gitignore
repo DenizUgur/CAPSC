@@ -2,4 +2,5 @@
 /videoset
 /results
 .prettierrc
+/tmp
 *.zip
