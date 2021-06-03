@@ -19,11 +19,13 @@ export default function Home() {
     let intervalCounter = 0;
     let params = querystring.parse(window.location.search);
 
+    window.isPlaying=1;
     window.player = MediaPlayer().create();
     window.player.initialize(ref.current, params.mpd, false);
     window.lastWaiting = null;
     window.player.on(MediaPlayer.events.PLAYBACK_STARTED, function (e) {
      //console.log(e);
+      window.isPlaying=1;
       window.experimentResults = {
         ...window.experimentResults,
         playbackStarted: new Date().getTime(),
@@ -61,6 +63,7 @@ export default function Home() {
               latestEvent: window._globalLatestEvent,
               playbackRate: window.player.getPlaybackRate(),
               bitrate: window.networkConditions,
+              isPlaying: window.isPlaying,
               predictedBW: Math.round(player.getAverageThroughput('video')),
             },
           ],
@@ -71,66 +74,15 @@ export default function Home() {
     }, intervalMetricsResolution);
 
     window.player.on(MediaPlayer.events.PLAYBACK_WAITING, function (e) {
-      let now = new Date().getTime();
-      // console.log(MediaPlayer.events.PLAYBACK_WAITING +" " + now +" " +window.player.getBufferLength());
-      window.lastWaiting=now;
+      window.isPlaying=0;
     });
 
     window.player.getVideoElement().addEventListener("timeupdate", function () {
-      let now = new Date().getTime() ;
-      // console.log("timeupdate " + now);
-      let diff = now - window.lastWaiting;
-      if(window.lastWaiting == null){
-
-      }else{
-        if(diff > 20){
-          // console.log("long stall " + diff +" " + window.player.getBufferLength());
-          window.experimentResults = {
-            ...window.experimentResults,
-            playbackEvents: [
-              ...window.experimentResults.playbackEvents,
-              {
-                at:
-                  (window.lastWaiting  -
-                    window.experimentResults.playbackStarted) /
-                  1000,
-                event: "playbackWaiting",
-              },
-            ],
-          };
-          window.experimentResults = {
-            ...window.experimentResults,
-            playbackEvents: [
-              ...window.experimentResults.playbackEvents,
-              {
-                at:
-                  (now-
-                    window.experimentResults.playbackStarted) /
-                  1000,
-                event: "playbackPlaying",
-              },
-            ],
-          };
-
-        }
-      }
-      window.lastWaiting = null;
+      window.isPlaying=1;
     });
     window.player.on(MediaPlayer.events.PLAYBACK_PLAYING, function (e) {
     //  console.log(e);
-      window.experimentResults = {
-        ...window.experimentResults,
-        playbackEvents: [
-          ...window.experimentResults.playbackEvents,
-          {
-            at:
-              (new Date().getTime() -
-                window.experimentResults.playbackStarted) /
-              1000,
-            event: e.type,
-          },
-        ],
-      };
+      window.isPlaying=1;
     });
 
     window.player.on(MediaPlayer.events.PLAYBACK_RATE_CHANGED, function (e) {

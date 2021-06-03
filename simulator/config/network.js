@@ -1,7 +1,7 @@
 import fs from "fs";
 
 // Profiles are in bytes/sec
-export const NETWORK_PROFILES = ["cascade", "lte", "twitch"];
+export const NETWORK_PROFILES = [ "lte","twitch"];
 
 export const applyNetworkProfile = (page, preset) => {
 	if (!NETWORK_PROFILES.includes(preset)) {

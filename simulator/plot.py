@@ -64,6 +64,11 @@ if __name__ == "__main__":
                 [d["mediaBuffer"] for d in data["testResult"]["intervalMetrics"]],
                 label="Media Buffer",
             )
+            interval.plot(
+                [d["at"] for d in data["testResult"]["intervalMetrics"]],
+                [d["isPlaying"] for d in data["testResult"]["intervalMetrics"]],
+                label="Playing",
+            )
             interval.axhline(data["job"]["dashPreset"]["streaming"]["liveDelay"])
             interval.grid("on")
             interval.legend()
@@ -202,8 +207,8 @@ if __name__ == "__main__":
             with open(f"tmp/zip/csv/{video}.{network}.{method}.csv", "w") as result_fp:
                 for i, interval in enumerate(data["testResult"]["intervalMetrics"]):
                     event = 0
-                    if "latestEvent" in at:
-                        event = M(at["latestEvent"]["playerTime"])
+                    if "latestEvent" in interval:
+                        event = M(interval["latestEvent"]["playerTime"])
 
                     result_fp.write(
                         ",".join(
@@ -239,11 +244,11 @@ if __name__ == "__main__":
                     )
                     playback_fp.write("\n")
 
-    for m in ["APR", "DEFAULT", "LOLP", "DISABLED"]:
+    for m in ["APR", "DEFAULT", "LOLP"]:
         with open(f"tmp/zip/pdf/results-{m}.pdf", "wb") as f:
             f.write(img2pdf.convert(glob.glob(f"tmp/*{m}*.jpeg")))
 
-    for n in ["cascade", "twitch", "lte"]:
+    for n in ["twitch", "lte"]:
         with open(f"tmp/zip/pdf/results-{n}.pdf", "wb") as f:
             f.write(img2pdf.convert(glob.glob(f"tmp/*{n}*.jpeg")))
 

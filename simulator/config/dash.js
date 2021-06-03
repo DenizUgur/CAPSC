@@ -1,4 +1,4 @@
-export const DASHJS_PRESETS_KEYS = ["APR", "LOLP", "DEFAULT", "DISABLED"];
+export const DASHJS_PRESETS_KEYS = [ "LOLP" ,"APR","DEFAULT"];
 export const DASHJS_PRESETS = {
 	APR: {
 		debug: {
@@ -11,7 +11,7 @@ export const DASHJS_PRESETS = {
 			liveCatchup: {
 				minDrift: 0.2,
 				playbackRate: 0.3,
-				playbackBufferMin: 0.5,
+				playbackBufferMin: 1.0,
 				enabled: true,
 				mode: "liveCatchupModeLoLP",
 				respectVideoEvents: true,
@@ -35,7 +35,7 @@ export const DASHJS_PRESETS = {
 			liveCatchup: {
 				minDrift: 0.2,
 				playbackRate: 0.3,
-				playbackBufferMin: 0.5,
+				playbackBufferMin: 1.0,
 				enabled: true,
 				mode: "liveCatchupModeLoLP",
 			},
@@ -58,7 +58,7 @@ export const DASHJS_PRESETS = {
 			liveCatchup: {
 				minDrift: 0.2,
 				playbackRate: 0.3,
-				playbackBufferMin: 0.5,
+				playbackBufferMin: 1.0,
 				enabled: true,
 				mode: "liveCatchupModeDefault",
 			},
