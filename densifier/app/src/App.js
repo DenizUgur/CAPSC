@@ -1,82 +1,142 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from "react";
 import ReactPlayer from "react-player";
 import "./App.css";
 
-const MODES = ["PASS", "SHOOT", "THROW"];
-
-function Mode(props) {
-	const { title, keyState, trigger, video } = props;
-	const [modeState, setModeState] = useState({
-		start: null,
-		end: null,
-		isOnGoing: false,
-	});
-
-	useEffect(() => {
-		if (video.current.getCurrentTime() !== null) {
-			// eslint-disable-next-line eqeqeq
-			if (keyState == trigger) {
-				setModeState({
-					start: video.current.getCurrentTime(),
-					end: null,
-					isOnGoing: true,
-				});
-			} else {
-				setModeState({
-					start: null,
-					end: video.current.getCurrentTime().toFixed(2),
-					isOnGoing: false,
-				});
-			}
-		}
-		return () => {};
-	}, [keyState, trigger, video]);
-
-	return (
-		<table className={modeState.isOnGoing ? "ongoing" : ""}>
-			<caption>
-				{title} <b>{trigger}</b>
-			</caption>
-			<thead>
-				<tr>
-					<th>Key</th>
-					<th>State</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>start</td>
-					<td>
-						<b>{modeState.start}</b>
-					</td>
-				</tr>
-				<tr>
-					<td>end</td>
-					<td>
-						<b>{modeState.end}</b>
-					</td>
-				</tr>
-				<tr>
-					<td>isOnGoing</td>
-					<td>
-						<b>{modeState.isOnGoing ? "yes" : "no"}</b>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	);
-}
+const MODES = [
+	"ATTACKPASS",
+	"DEFANSEPASS",
+	"SHOOT",
+	"THROWIN",
+	"GOAL",
+	"CORNER",
+	"OFFSIDE",
+	"FAUL",
+];
 
 function App() {
-	const [keyState, setKeyState] = useState({ key: null, time: null });
+	const [keyState, setKeyState] = useState({
+		key: null,
+		time: null,
+	});
+	const [time, setTime] = useState({ now: 0, duration: 0 });
+	const [log, setLog] = useState([]);
 	const videoRef = useRef(null);
 
+	const download = (data, filename, type) => {
+		var file = new Blob([data], { type: type });
+		if (window.navigator.msSaveOrOpenBlob)
+			// IE10+
+			window.navigator.msSaveOrOpenBlob(file, filename);
+		else {
+			// Others
+			var a = document.createElement("a"),
+				url = URL.createObjectURL(file);
+			a.href = url;
+			a.download = filename;
+			document.body.appendChild(a);
+			a.click();
+			setTimeout(function () {
+				document.body.removeChild(a);
+				window.URL.revokeObjectURL(url);
+			}, 0);
+		}
+	};
+
+	const handleKeyDown = (e) => {
+		console.log(e);
+		setKeyState({ key: e.key, time: Date.now() });
+	};
+
 	useEffect(() => {
-		document.addEventListener("keydown", (e) => {
-			setKeyState({ key: e.key, time: Date.now() });
-		});
-		return () => {};
+		window.addEventListener("keydown", handleKeyDown);
+		window.setInterval(() => {
+			setTime({
+				now: videoRef.current.getCurrentTime(),
+				duration: videoRef.current.getDuration(),
+			});
+		}, 200);
+		return () => {
+			window.removeEventListener("keydown", handleKeyDown);
+		};
 	}, []);
+
+	const updateLog = (log, mode) => {
+		let playerTime = videoRef.current.getCurrentTime().toFixed(3);
+		if (
+			log.length > 0 &&
+			log[log.length - 1].mode === mode &&
+			log[log.length - 1].end === null
+		) {
+			let newLog = Object.assign([], log);
+			newLog[newLog.length - 1] = {
+				...newLog[newLog.length - 1],
+				end: playerTime,
+			};
+			return newLog;
+		}
+		if (log.length > 0 && log[log.length - 1].start === playerTime) {
+			let newLog = Object.assign([], log);
+			newLog[newLog.length - 1] = { ...newLog[newLog.length - 1], mode };
+			return newLog;
+		}
+		if (
+			log.length > 0 &&
+			log[log.length - 1].mode !== mode &&
+			log[log.length - 1].end === null
+		) {
+			let newLog = Object.assign([], log);
+			newLog[newLog.length - 1] = {
+				...newLog[newLog.length - 1],
+				end: playerTime,
+			};
+			newLog.push({
+				mode,
+				start: playerTime,
+				end: null,
+			});
+			return newLog;
+		}
+		return [
+			...log,
+			{
+				mode,
+				start: playerTime,
+				end: null,
+			},
+		];
+	};
+
+	useEffect(() => {
+		let player = videoRef.current.getInternalPlayer();
+		switch (keyState.key) {
+			case "1":
+			case "2":
+			case "3":
+			case "4":
+			case "5":
+			case "6":
+			case "7":
+				setLog((log) =>
+					updateLog(log, MODES[parseInt(keyState.key) - 1])
+				);
+				break;
+			case " ":
+				if (player.paused) player.play();
+				else player.pause();
+				break;
+			case "x":
+				setLog((log) => log.slice(0, log.length - 1));
+				break;
+			case "ArrowLeft":
+				player.currentTime = log[log.length - 1].start;
+				setTimeout(() => player.pause(), 100);
+				break;
+			default:
+				break;
+		}
+		return () => {};
+	}, [keyState]);
 
 	return (
 		<div>
@@ -89,18 +149,42 @@ function App() {
 					playing
 				/>
 			</div>
+			<button
+				onClick={() =>
+					download(
+						JSON.stringify(log),
+						"log.json",
+						"application/json"
+					)
+				}
+			>
+				Export
+			</button>
+			<div className="time">
+				Current Time: <b>{time.now.toFixed(2)}</b> /{" "}
+				{time.duration.toFixed(2)}
+			</div>
+			<div className="desc">
+				{MODES.map((e, i) => (
+					<div key={e}>
+						<b>{i + 1}</b> - <i>{e}</i>
+					</div>
+				))}
+			</div>
+			{log.length > 0 && (
+				<div className="current_mode">
+					Current Mode: <b>{log[log.length - 1].mode}</b>
+				</div>
+			)}
 			<div className="modes">
-				{MODES.map((e, i) => {
-					return (
-						<Mode
-							key={e}
-							title={e}
-							keyState={keyState.key}
-							trigger={i + 1}
-							video={videoRef}
-						/>
-					);
-				})}
+				{log.length > 0 &&
+					log.map((e) => {
+						return (
+							<div key={Math.random()}>
+								{e.mode} :: {e.start} :: {e.end}
+							</div>
+						);
+					})}
 			</div>
 		</div>
 	);
