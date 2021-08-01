@@ -29,3 +29,6 @@ parser:
     -
       name: FAUL
       density: 0.8
+    -
+      name: SHOOT
+      density: 0.9

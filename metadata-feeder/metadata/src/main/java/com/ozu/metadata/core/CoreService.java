@@ -64,7 +64,7 @@ public class CoreService {
                 Thread.sleep(sleep);
                 closestEventIndex++;
                 metaDataDto=null;
-                time+= (double)sleep/1000;
+                time = this.roundTwoDecimal(time + (double)sleep/1000);
             }catch(IOException  ex){
                 log.info("Client closed the connection.");
                 break;
