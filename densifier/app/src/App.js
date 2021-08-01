@@ -24,7 +24,12 @@ function App() {
 	const videoRef = useRef(null);
 
 	const download = (data, filename, type) => {
-		var file = new Blob([data], { type: type });
+		let csvData=""
+		data.forEach(mode => {
+			console.log(mode.start);
+			csvData=csvData+Math.round((mode.start) * 100) / 100+","+Math.round(1000*(mode.end-mode.start))+","+mode.mode+"\n";
+		});
+		var file = new Blob([csvData], { type: type });
 		if (window.navigator.msSaveOrOpenBlob)
 			// IE10+
 			window.navigator.msSaveOrOpenBlob(file, filename);
@@ -152,9 +157,9 @@ function App() {
 			<button
 				onClick={() =>
 					download(
-						JSON.stringify(log),
-						"log.json",
-						"application/json"
+						log,
+						"log.csv",
+						"text/csv"
 					)
 				}
 			>
