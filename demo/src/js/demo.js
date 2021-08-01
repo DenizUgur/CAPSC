@@ -4,14 +4,14 @@ const metadataConf = {
 	seperator: "-",
 };
 const CHART_COLORS = {
-	red: 'rgb(255, 99, 132)',
-	orange: 'rgb(255, 159, 64)',
-	yellow: 'rgb(255, 205, 86)',
-	green: 'rgb(75, 192, 192)',
-	blue: 'rgb(54, 162, 235)',
-	purple: 'rgb(153, 102, 255)',
-	grey: 'rgb(201, 203, 207)'
-  }
+	red: "rgb(255, 99, 132)",
+	orange: "rgb(255, 159, 64)",
+	yellow: "rgb(255, 205, 86)",
+	green: "rgb(75, 192, 192)",
+	blue: "rgb(54, 162, 235)",
+	purple: "rgb(153, 102, 255)",
+	grey: "rgb(201, 203, 207)",
+};
 const formVariables = {
 	networkProfiles: [
 		{
@@ -35,19 +35,19 @@ const formVariables = {
 			val: 0,
 			label: "BCN1",
 			fileNamePart: "bcn",
-			url:"https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd"
+			url: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
 		},
 		{
 			val: 1,
 			label: "BCN2",
 			fileNamePart: "bcn2",
-			url:"https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd"
+			url: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
 		},
 		{
 			val: 2,
 			label: "BCN3",
 			fileNamePart: "bcn3",
-			url:"https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd"
+			url: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
 		},
 	],
 	algorithms: [
@@ -83,7 +83,8 @@ const playersSpace = $("#playersSpace");
 const contentSpace = $("section[class='content']");
 let playerContext = null;
 let demoContext = {};
-let chartContext ={};
+let chartContext = {};
+let timeoutContext = {};
 
 function initPage() {
 	const urlParams = new URLSearchParams(window.location.search);
@@ -311,8 +312,8 @@ function initPlayers() {
 	initCharts();
 	for (let i = 1; i < 3; i++) {
 		let player = dashjs.MediaPlayer().create();
-		player.initialize(document.querySelector("#video"+i), null, false);
-		playerContext["player"+i]=player;
+		player.initialize(document.querySelector("#video" + i), null, false);
+		playerContext["player" + i] = player;
 	}
 	player1 = playerContext.player1;
 	player1
@@ -347,12 +348,10 @@ function initPlayers() {
 				}
 			}
 		});
-
 }
 
-
 function readyForDemo() {
-	let progressBar = $(".progress").remove()
+	let progressBar = $(".progress").remove();
 	let startButtonContent = `
 		<div id="demoButtonSpace" class="row justify-content-center">
 			<button
@@ -364,12 +363,85 @@ function readyForDemo() {
 		</div>
 	`;
 	$("#playersSpace > .card-body").prepend(startButtonContent);
-	$("#startDemo").click(()=>{
-	  $("#demoButtonSpace").remove();
-	  startDemo();
+	$("#startDemo").click(() => {
+		$("#demoButtonSpace").remove();
+		startDemo();
 	});
 }
+
+function doJump() {
+	if (document.querySelector("#seekForm").reportValidity()) {
+		let selectedWallclockTime = $("#seekForm input[type='number']").val();
+		demoContext = {
+			1: {
+				isInitiallyStarted: false,
+			},
+			2: {
+				isInitiallyStarted: false,
+			},
+		};
+		for (var prop in timeoutContext) {
+			if (Object.prototype.hasOwnProperty.call(timeoutContext, prop)) {
+				clearTimeout(timeoutContext[prop]);
+			}
+		}
+		for (let index = 1; index < 3; index++) {
+			playerContext["player"+index].pause();
+			playerContext["player"+index].seek(0);
+			
+		}
+		for (var playerId in chartContext) {
+			if (Object.prototype.hasOwnProperty.call(chartContext, playerId)) {
+				for (var chartId in chartContext[playerId]) {
+					if (Object.prototype.hasOwnProperty.call(chartContext[playerId], chartId)) {
+						let chartObj = chartContext[playerId][chartId];
+						console.log(chartObj);
+						chartObj.data.labels = [];
+						chartObj.data.datasets.forEach((ds)=>{
+							ds.data=[];
+						})
+						chartObj.update();
+		
+					}
+				}
+
+			}
+		}
+		for (let index = 1; index < 3; index++) {				
+			processInterval(index, playerContext.alg1Metadata.testResult.intervalMetrics.findIndex((m)=>{
+				return selectedWallclockTime<=m.at;
+			}));}
+	}
+}
 function startDemo() {
+	let seekFormContent = `
+	<form id="seekForm">
+		<div class="row justify-content-center">
+			<div class="col-sm-12" style="max-width:300px;">
+				<div class="input-group input-group-sm">
+					<input required type="number" min="${
+						playerContext.alg1Metadata.testResult.intervalMetrics[0]
+							.at
+					}" max="${
+		playerContext.alg1Metadata.testResult.intervalMetrics[
+			playerContext.alg1Metadata.testResult.intervalMetrics.length - 1
+		].at
+	}" placeholder="WallClock Time"class="form-control">
+					<span class="input-group-append">
+						<button type="button" class="btn btn-info btn-flat">Jump!</button>
+					</span>
+				</div>
+			</div>
+		</div>
+	</form>
+	`;
+
+	$("#playersSpace > .card-body").prepend(seekFormContent);
+	$("#seekForm button").click(doJump);
+	$( "#seekForm" ).submit(function( event ) {
+		event.preventDefault();
+		doJump();
+	});
 	let url = playerContext.selectedVideo.url;
 	let promise1 = playerContext.player1
 		.getOfflineController()
@@ -394,10 +466,12 @@ function startDemo() {
 				isInitiallyStarted: false,
 			},
 		};
-		setTimeout(()=>{
-			processInterval(2, 0);
-			processInterval(1, 0);
-		},1000)
+		timeoutContext = {
+			initialTimeout: setTimeout(() => {
+				processInterval(2, 0);
+				processInterval(1, 0);
+			}, 1000),
+		};
 	});
 }
 function processInterval(playerIndex, index) {
@@ -417,27 +491,42 @@ function processInterval(playerIndex, index) {
 		let currentMetadata = algMetadata.testResult.intervalMetrics[index];
 		let nextMetadata = algMetadata.testResult.intervalMetrics[index + 1];
 
-
-		chartContext[playerIndex].bufferChart.data.labels.push(currentMetadata.at);
-		chartContext[playerIndex].bufferChart.data.datasets[0].data.push(currentMetadata.mediaBuffer);
-		chartContext[playerIndex].bufferChart.data.datasets[1].data.push(currentMetadata.liveLatency);
-		chartContext[playerIndex].eventChart.data.labels.push(currentMetadata.at);
+		chartContext[playerIndex].bufferChart.data.labels.push(
+			currentMetadata.at
+		);
+		chartContext[playerIndex].bufferChart.data.datasets[0].data.push(
+			currentMetadata.mediaBuffer
+		);
+		chartContext[playerIndex].bufferChart.data.datasets[1].data.push(
+			currentMetadata.liveLatency
+		);
+		chartContext[playerIndex].eventChart.data.labels.push(
+			currentMetadata.at
+		);
 		chartContext[playerIndex].bwChart.data.labels.push(currentMetadata.at);
-		if(currentMetadata["latestEvent"]!=null){
-			chartContext[playerIndex].eventChart.data.datasets[0].data.push(currentMetadata.latestEvent.density);
-		}else{
+		if (currentMetadata["latestEvent"] != null) {
+			chartContext[playerIndex].eventChart.data.datasets[0].data.push(
+				currentMetadata.latestEvent.density
+			);
+		} else {
 			chartContext[playerIndex].eventChart.data.datasets[0].data.push(0);
 		}
 
-		chartContext[playerIndex].rateChart.data.labels.push(currentMetadata.at);
-		chartContext[playerIndex].rateChart.data.datasets[0].data.push(currentMetadata.playbackRate);
-		if(currentMetadata.bitrate){
-			chartContext[playerIndex].bwChart.data.datasets[0].data.push(currentMetadata.bitrate.download);
-		}else{
- 			chartContext[playerIndex].bwChart.data.datasets[0].data.push(null);
+		chartContext[playerIndex].rateChart.data.labels.push(
+			currentMetadata.at
+		);
+		chartContext[playerIndex].rateChart.data.datasets[0].data.push(
+			currentMetadata.playbackRate
+		);
+		if (currentMetadata.bitrate) {
+			chartContext[playerIndex].bwChart.data.datasets[0].data.push(
+				currentMetadata.bitrate.download
+			);
+		} else {
+			chartContext[playerIndex].bwChart.data.datasets[0].data.push(null);
 		}
 
-		if(chartContext[playerIndex].bufferChart.data.labels.length>=100){
+		if (chartContext[playerIndex].bufferChart.data.labels.length >= 100) {
 			chartContext[playerIndex].bufferChart.data.labels.shift();
 			chartContext[playerIndex].eventChart.data.labels.shift();
 			chartContext[playerIndex].rateChart.data.labels.shift();
@@ -452,56 +541,60 @@ function processInterval(playerIndex, index) {
 		chartContext[playerIndex].eventChart.update();
 		chartContext[playerIndex].rateChart.update();
 		chartContext[playerIndex].bwChart.update();
-		
-		if (demoContext[playerIndex].isInitiallyStarted) {
 
-			if(currentMetadata.playbackRate!= demoContext[playerIndex].playbackRate){
+		if (demoContext[playerIndex].isInitiallyStarted) {
+			if (
+				currentMetadata.playbackRate !=
+				demoContext[playerIndex].playbackRate
+			) {
 				player.setPlaybackRate(currentMetadata.playbackRate);
-				demoContext[playerIndex]={
+				demoContext[playerIndex] = {
 					...demoContext[playerIndex],
-					playbackRate:currentMetadata.playbackRate
-				}
+					playbackRate: currentMetadata.playbackRate,
+				};
 			}
 
-			if(currentMetadata.isPlaying!= demoContext[playerIndex].isPlaying){
-				if(currentMetadata.isPlaying == 1){
+			if (
+				currentMetadata.isPlaying != demoContext[playerIndex].isPlaying
+			) {
+				if (currentMetadata.isPlaying == 1) {
 					console.log(playerIndex + " play");
 					player.play();
-					demoContext[playerIndex]={
+					demoContext[playerIndex] = {
 						...demoContext[playerIndex],
-						isPlaying:1
-					}
-				}else{
+						isPlaying: 1,
+					};
+				} else {
 					console.log(playerIndex + " pause");
 					player.pause();
-					demoContext[playerIndex]={
+					demoContext[playerIndex] = {
 						...demoContext[playerIndex],
-						isPlaying:0
-					}
+						isPlaying: 0,
+					};
 				}
 			}
-
 		} else {
 			if (currentMetadata.videoTime > 0) {
-
 				console.log(playerIndex + " seek " + currentMetadata.videoTime);
 				console.log(playerIndex + " duration 1 " + player.duration());
 				player.seek(currentMetadata.videoTime);
-				player.play();
+				if(currentMetadata.isPlaying){
+					player.play();
+				}
 				console.log(playerIndex + " duration 2 " + player.duration());
 				demoContext[playerIndex] = {
 					...demoContext[playerIndex],
 					isInitiallyStarted: true,
-					isPlaying:1,
-					playbackRate:currentMetadata.playbackRate
+					isPlaying: currentMetadata.isPlaying,
+					playbackRate: currentMetadata.playbackRate,
 				};
 			}
 		}
-		setTimeout(() => {
+		timeoutContext[playerIndex] = setTimeout(() => {
 			processInterval(playerIndex, index + 1);
 		}, 1000 * (nextMetadata.at - currentMetadata.at));
 	} else {
-		console.log("demo is finished.")
+		console.log("demo is finished.");
 		playerContext.player1.pause();
 		playerContext.player2.pause();
 	}
@@ -534,140 +627,162 @@ function downloadContent(player, url) {
 
 function initCharts() {
 	for (let i = 1; i < 3; i++) {
-		let bufferChart = new Chart($("#chart-buffer-"+ i).get(0).getContext("2d"), {
-			type: "line",
-			data: {
-				labels: [
-				],
-				datasets: [
-					{
-						label: "Buffer Level",
-						borderColor: CHART_COLORS.blue,
-						fill:false,
-						data: [],
+		let bufferChart = new Chart(
+			$("#chart-buffer-" + i)
+				.get(0)
+				.getContext("2d"),
+			{
+				type: "line",
+				data: {
+					labels: [],
+					datasets: [
+						{
+							label: "Buffer Level",
+							borderColor: CHART_COLORS.blue,
+							fill: false,
+							data: [],
+						},
+						{
+							label: "Latency",
+							borderColor: CHART_COLORS.red,
+							fill: false,
+							data: [],
+						},
+					],
+				},
+				options: {
+					type: "line",
+					responsive: true,
+
+					scales: {
+						xAxes: [
+							{
+								scaleLabel: {
+									display: true,
+									labelString: "Wallclock Time(sec)",
+								},
+							},
+						],
+						yAxes: [
+							{
+								scaleLabel: {
+									display: true,
+									labelString: "sec",
+								},
+							},
+						],
 					},
-					{
-						label: "Latency",
-						borderColor: CHART_COLORS.red,
-						fill:false,
-						data: [],
-					}
-				],
-			},
-			options: {
-				type: 'line',
-				responsive: true,
+				},
+			}
+		);
 
-				scales: {
-					xAxes: [{
-						scaleLabel: {
-						  display: true,
-						  labelString: 'Wallclock Time(sec)'
-						}
-					}],
-					yAxes: [{
-						scaleLabel: {
-						  display: true,
-						  labelString: 'sec'
-						}
-					}]
-				  }
-			},
-		});
-
-		let eventChart = new Chart($("#chart-event-"+ i).get(0).getContext("2d"), {
-			type: "line",
-			data: {
-				labels: [
-				],
-				datasets: [
-					{
-						label: "Event Density",
-						borderColor: CHART_COLORS.orange,
-						fill:false,
-						stepped: true,
-						data: [],
-					}
-				],
-			},
-			options: {
-				type: 'line',
-				scales: {
-					xAxes: [{
-						scaleLabel: {
-						  display: true,
-						  labelString: 'Wallclock Time(sec)'
-						}
-					}]
-				  }
-			},
-		});
-		let rateChart = new Chart($("#chart-rate-"+ i).get(0).getContext("2d"), {
-			type: "line",
-			data: {
-				labels: [
-				],
-				datasets: [
-					{
-						label: "PlaybackRate",
-						borderColor: CHART_COLORS.green,
-						fill:false,
-						stepped: true,
-						data: [],
-					}
-				],
-			},
-			options: {
-				type: 'line',
-				scales: {
-					xAxes: [{
-						scaleLabel: {
-						  display: true,
-						  labelString: 'Wallclock Time(sec)'
-						}
-					}]
-				  },
-			},
-		});
-		let bwChart = new Chart($("#chart-bw-"+ i).get(0).getContext("2d"), {
-			type: "line",
-			data: {
-				labels: [
-				],
-				datasets: [
-					{
-						label: "Bandwith",
-						borderColor: CHART_COLORS.purple,
-						fill:false,
-						stepped: true,
-						data: [],
-					}
-				],
-			},
-			options: {
-				type: 'line',
-				scales: {
-					xAxes: [{
-						scaleLabel: {
-						  display: true,
-						  labelString: 'Wallclock Time(sec)'
-						}
-					}]
-				  },
-			},
-		});
+		let eventChart = new Chart(
+			$("#chart-event-" + i)
+				.get(0)
+				.getContext("2d"),
+			{
+				type: "line",
+				data: {
+					labels: [],
+					datasets: [
+						{
+							label: "Event Density",
+							borderColor: CHART_COLORS.orange,
+							fill: false,
+							stepped: true,
+							data: [],
+						},
+					],
+				},
+				options: {
+					type: "line",
+					scales: {
+						xAxes: [
+							{
+								scaleLabel: {
+									display: true,
+									labelString: "Wallclock Time(sec)",
+								},
+							},
+						],
+					},
+				},
+			}
+		);
+		let rateChart = new Chart(
+			$("#chart-rate-" + i)
+				.get(0)
+				.getContext("2d"),
+			{
+				type: "line",
+				data: {
+					labels: [],
+					datasets: [
+						{
+							label: "PlaybackRate",
+							borderColor: CHART_COLORS.green,
+							fill: false,
+							stepped: true,
+							data: [],
+						},
+					],
+				},
+				options: {
+					type: "line",
+					scales: {
+						xAxes: [
+							{
+								scaleLabel: {
+									display: true,
+									labelString: "Wallclock Time(sec)",
+								},
+							},
+						],
+					},
+				},
+			}
+		);
+		let bwChart = new Chart(
+			$("#chart-bw-" + i)
+				.get(0)
+				.getContext("2d"),
+			{
+				type: "line",
+				data: {
+					labels: [],
+					datasets: [
+						{
+							label: "Bandwith",
+							borderColor: CHART_COLORS.purple,
+							fill: false,
+							stepped: true,
+							data: [],
+						},
+					],
+				},
+				options: {
+					type: "line",
+					scales: {
+						xAxes: [
+							{
+								scaleLabel: {
+									display: true,
+									labelString: "Wallclock Time(sec)",
+								},
+							},
+						],
+					},
+				},
+			}
+		);
 		chartContext[i] = {
-			bufferChart:bufferChart,
-			eventChart:eventChart,
-			rateChart:rateChart,
-			bwChart:bwChart
-		}
+			bufferChart: bufferChart,
+			eventChart: eventChart,
+			rateChart: rateChart,
+			bwChart: bwChart,
+		};
 	}
-	
-
-	
 }
-
 
 function onFormSubmit() {
 	configurationForm.submit();
