@@ -266,7 +266,7 @@ function initPlayers() {
 				</div>
 				<div class="col-sm-3" >
 					<div class="chart">
-						<canvas id="chart-event-1" style=" max-height: 250px; max-width:  100%;"></canvas>
+						<canvas id="chart-buffer-1" style=" max-height: 250px; max-width:  100%;"></canvas>
 					</div>
 				</div>
 				<div class="col-sm-3" >
@@ -276,19 +276,29 @@ function initPlayers() {
 				</div>
 				<div class="col-sm-3" >
 					<div class="chart">
-						<canvas id="chart-event-2" style=" max-height: 250px; max-width:  100%;"></canvas>
+						<canvas id="chart-buffer-2" style=" max-height: 250px; max-width: 100%;"></canvas>
 					</div>
 				</div>
 			</div>
 			<div class="row mt-3">
-				<div class="col-sm-6" >
+				<div class="col-sm-3" >
 					<div class="chart">
-						<canvas id="chart-buffer-1" style=" max-height: 250px; max-width: 100%;"></canvas>
+						<canvas id="chart-event-1" style=" max-height: 250px; max-width: 100%;"></canvas>
 					</div>
 				</div>
-				<div class="col-sm-6" >
+				<div class="col-sm-3" >
 					<div class="chart">
-						<canvas id="chart-buffer-2" style=" max-height: 250px; max-width: 100%;"></canvas>
+						<canvas id="chart-bw-1" style=" max-height: 250px; max-width:  100%;"></canvas>
+					</div>
+				</div>
+				<div class="col-sm-3" >
+					<div class="chart">
+						<canvas id="chart-event-2" style=" max-height: 250px; max-width: 100%;"></canvas>
+					</div>
+				</div>
+				<div class="col-sm-3" >
+					<div class="chart">
+						<canvas id="chart-bw-2" style=" max-height: 250px; max-width: 100%;"></canvas>
 					</div>
 				</div>
 			</div>
@@ -412,6 +422,7 @@ function processInterval(playerIndex, index) {
 		chartContext[playerIndex].bufferChart.data.datasets[0].data.push(currentMetadata.mediaBuffer);
 		chartContext[playerIndex].bufferChart.data.datasets[1].data.push(currentMetadata.liveLatency);
 		chartContext[playerIndex].eventChart.data.labels.push(currentMetadata.at);
+		chartContext[playerIndex].bwChart.data.labels.push(currentMetadata.at);
 		if(currentMetadata["latestEvent"]!=null){
 			chartContext[playerIndex].eventChart.data.datasets[0].data.push(currentMetadata.latestEvent.density);
 		}else{
@@ -420,19 +431,27 @@ function processInterval(playerIndex, index) {
 
 		chartContext[playerIndex].rateChart.data.labels.push(currentMetadata.at);
 		chartContext[playerIndex].rateChart.data.datasets[0].data.push(currentMetadata.playbackRate);
+		if(currentMetadata.bitrate){
+			chartContext[playerIndex].bwChart.data.datasets[0].data.push(currentMetadata.bitrate.download);
+		}else{
+ 			chartContext[playerIndex].bwChart.data.datasets[0].data.push(null);
+		}
 
 		if(chartContext[playerIndex].bufferChart.data.labels.length>=100){
 			chartContext[playerIndex].bufferChart.data.labels.shift();
 			chartContext[playerIndex].eventChart.data.labels.shift();
 			chartContext[playerIndex].rateChart.data.labels.shift();
+			chartContext[playerIndex].bwChart.data.labels.shift();
 			chartContext[playerIndex].bufferChart.data.datasets[0].data.shift();
 			chartContext[playerIndex].bufferChart.data.datasets[1].data.shift();
 			chartContext[playerIndex].eventChart.data.datasets[0].data.shift();
 			chartContext[playerIndex].rateChart.data.datasets[0].data.shift();
+			chartContext[playerIndex].bwChart.data.datasets[0].data.shift();
 		}
 		chartContext[playerIndex].bufferChart.update();
 		chartContext[playerIndex].eventChart.update();
 		chartContext[playerIndex].rateChart.update();
+		chartContext[playerIndex].bwChart.update();
 		
 		if (demoContext[playerIndex].isInitiallyStarted) {
 
@@ -482,7 +501,9 @@ function processInterval(playerIndex, index) {
 			processInterval(playerIndex, index + 1);
 		}, 1000 * (nextMetadata.at - currentMetadata.at));
 	} else {
-		console.log("demo is finished.");
+		console.log("demo is finished.")
+		playerContext.player1.pause();
+		playerContext.player2.pause();
 	}
 }
 
@@ -535,18 +556,22 @@ function initCharts() {
 			},
 			options: {
 				type: 'line',
-				options: {
-				  responsive: true,
-				  plugins: {
-					legend: {
-					  position: 'top',
-					},
-					title: {
-					  display: false,
-					  text: 'Chart.js Line Chart'
-					}
+				responsive: true,
+
+				scales: {
+					xAxes: [{
+						scaleLabel: {
+						  display: true,
+						  labelString: 'Wallclock Time(sec)'
+						}
+					}],
+					yAxes: [{
+						scaleLabel: {
+						  display: true,
+						  labelString: 'sec'
+						}
+					}]
 				  }
-				},
 			},
 		});
 
@@ -567,18 +592,14 @@ function initCharts() {
 			},
 			options: {
 				type: 'line',
-				options: {
-				  responsive: true,
-				  plugins: {
-					legend: {
-					  position: 'top',
-					},
-					title: {
-					  display: false,
-					  text: 'Chart.js Line Chart'
-					}
+				scales: {
+					xAxes: [{
+						scaleLabel: {
+						  display: true,
+						  labelString: 'Wallclock Time(sec)'
+						}
+					}]
 				  }
-				},
 			},
 		});
 		let rateChart = new Chart($("#chart-rate-"+ i).get(0).getContext("2d"), {
@@ -598,24 +619,48 @@ function initCharts() {
 			},
 			options: {
 				type: 'line',
-				options: {
-				  responsive: true,
-				  plugins: {
-					legend: {
-					  position: 'top',
-					},
-					title: {
-					  display: false,
-					  text: 'Chart.js Line Chart'
+				scales: {
+					xAxes: [{
+						scaleLabel: {
+						  display: true,
+						  labelString: 'Wallclock Time(sec)'
+						}
+					}]
+				  },
+			},
+		});
+		let bwChart = new Chart($("#chart-bw-"+ i).get(0).getContext("2d"), {
+			type: "line",
+			data: {
+				labels: [
+				],
+				datasets: [
+					{
+						label: "Bandwith",
+						borderColor: CHART_COLORS.purple,
+						fill:false,
+						stepped: true,
+						data: [],
 					}
-				  }
-				},
+				],
+			},
+			options: {
+				type: 'line',
+				scales: {
+					xAxes: [{
+						scaleLabel: {
+						  display: true,
+						  labelString: 'Wallclock Time(sec)'
+						}
+					}]
+				  },
 			},
 		});
 		chartContext[i] = {
 			bufferChart:bufferChart,
 			eventChart:eventChart,
-			rateChart:rateChart
+			rateChart:rateChart,
+			bwChart:bwChart
 		}
 	}
 	
