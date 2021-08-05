@@ -93,7 +93,8 @@ if __name__ == "__main__":
             tmp = []
             for at in data["testResult"]["intervalMetrics"]:
                 if "latestEvent" in at:
-                    tmp.append(M(at["latestEvent"]["playerTime"]))
+                    tmp.append(at["latestEvent"]["density"])
+                    # tmp.append(M(at["latestEvent"]["playerTime"]))
                 else:
                     tmp.append(0)
 
