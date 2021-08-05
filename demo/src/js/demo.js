@@ -53,7 +53,7 @@ const formVariables = {
 	algorithms: [
 		{
 			val: 0,
-			label: "Lolp",
+			label: "LoLp",
 			fileNamePart: "LOLP",
 		},
 		{
@@ -205,7 +205,6 @@ function loadMetadata() {
 		metadataConf.seperator +
 		playerContext.selectedPlayer2Alg.fileNamePart +
 		metadataConf.extension;
-
 	$.get(url1)
 		.done((data) => {
 			playerContext = {
@@ -245,61 +244,65 @@ function initPlayers() {
 				<span class="sr-only">40% Complete (success)</span>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-6" >
-					<h4 class="text-center">Player 1</h4>
-					<div class="embed-responsive embed-responsive-16by9" style="max-height: 200px;">
-						<video id="video1"></video>
-					</div> 
-				</div>
-				<div class="col-sm-6">
-					<h4 class="text-center">Player 2</h4>
-					<div class="embed-responsive embed-responsive-16by9" style="max-height: 200px;">
-						<video id="video2"></video>
-					</div>
-				</div>
-			</div>
 			<div class="row mt-3">
-				<div class="col-sm-3" >
-					<div class="chart">
-						<canvas id="chart-rate-1" style=" max-height: 250px; max-width: 100%;"></canvas>
+				<div class="col-sm-6 border border-secondary" >
+					<div class="row">
+						<div class="col-sm-12" >
+							<h4 class="text-center">${playerContext.selectedPlayer1Alg.label}</h4>
+							<div class="embed-responsive embed-responsive-16by9">
+								<video id="video1"></video>
+							</div> 
+						</div> 
+						<div class="col-sm-6" >
+							<div class="chart">
+								<canvas id="chart-rate-1" style=" max-height: 250px; max-width: 100%;"></canvas>
+							</div>
+						</div>
+						<div class="col-sm-6" >
+							<div class="chart">
+								<canvas id="chart-buffer-1" style=" max-height: 250px; max-width:  100%;"></canvas>
+							</div>
+						</div>
+						<div class="col-sm-6" >
+							<div class="chart">
+								<canvas id="chart-event-1" style=" max-height: 250px; max-width: 100%;"></canvas>
+							</div>
+						</div>
+						<div class="col-sm-6" >
+							<div class="chart">
+								<canvas id="chart-bw-1" style=" max-height: 250px; max-width:  100%;"></canvas>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-sm-3" >
-					<div class="chart">
-						<canvas id="chart-buffer-1" style=" max-height: 250px; max-width:  100%;"></canvas>
-					</div>
-				</div>
-				<div class="col-sm-3" >
-					<div class="chart">
-						<canvas id="chart-rate-2" style=" max-height: 250px; max-width: 100%;"></canvas>
-					</div>
-				</div>
-				<div class="col-sm-3" >
-					<div class="chart">
-						<canvas id="chart-buffer-2" style=" max-height: 250px; max-width: 100%;"></canvas>
-					</div>
-				</div>
-			</div>
-			<div class="row mt-3">
-				<div class="col-sm-3" >
-					<div class="chart">
-						<canvas id="chart-event-1" style=" max-height: 250px; max-width: 100%;"></canvas>
-					</div>
-				</div>
-				<div class="col-sm-3" >
-					<div class="chart">
-						<canvas id="chart-bw-1" style=" max-height: 250px; max-width:  100%;"></canvas>
-					</div>
-				</div>
-				<div class="col-sm-3" >
-					<div class="chart">
-						<canvas id="chart-event-2" style=" max-height: 250px; max-width: 100%;"></canvas>
-					</div>
-				</div>
-				<div class="col-sm-3" >
-					<div class="chart">
-						<canvas id="chart-bw-2" style=" max-height: 250px; max-width: 100%;"></canvas>
+				<div class="col-sm-6 border border-secondary">
+					<div class="row">
+						<div class="col-sm-12" >
+							<h4 class="text-center">${playerContext.selectedPlayer2Alg.label}</h4>
+							<div class="embed-responsive embed-responsive-16by9">
+								<video id="video2"></video>
+							</div>
+						</div>
+						<div class="col-sm-6" >
+							<div class="chart">
+								<canvas id="chart-rate-2" style=" max-height: 250px; max-width: 100%;"></canvas>
+							</div>
+						</div>
+						<div class="col-sm-6" >
+							<div class="chart">
+								<canvas id="chart-buffer-2" style=" max-height: 250px; max-width: 100%;"></canvas>
+							</div>
+						</div>
+						<div class="col-sm-6" >
+							<div class="chart">
+								<canvas id="chart-event-2" style=" max-height: 250px; max-width: 100%;"></canvas>
+							</div>
+						</div>
+						<div class="col-sm-6" >
+							<div class="chart">
+								<canvas id="chart-bw-2" style=" max-height: 250px; max-width: 100%;"></canvas>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -386,31 +389,39 @@ function doJump() {
 			}
 		}
 		for (let index = 1; index < 3; index++) {
-			playerContext["player"+index].pause();
-			playerContext["player"+index].seek(0);
-			
+			playerContext["player" + index].pause();
+			playerContext["player" + index].seek(0);
 		}
 		for (var playerId in chartContext) {
 			if (Object.prototype.hasOwnProperty.call(chartContext, playerId)) {
 				for (var chartId in chartContext[playerId]) {
-					if (Object.prototype.hasOwnProperty.call(chartContext[playerId], chartId)) {
+					if (
+						Object.prototype.hasOwnProperty.call(
+							chartContext[playerId],
+							chartId
+						)
+					) {
 						let chartObj = chartContext[playerId][chartId];
 						console.log(chartObj);
 						chartObj.data.labels = [];
-						chartObj.data.datasets.forEach((ds)=>{
-							ds.data=[];
-						})
+						chartObj.data.datasets.forEach((ds) => {
+							ds.data = [];
+						});
 						chartObj.update();
-		
 					}
 				}
-
 			}
 		}
-		for (let index = 1; index < 3; index++) {				
-			processInterval(index, playerContext.alg1Metadata.testResult.intervalMetrics.findIndex((m)=>{
-				return selectedWallclockTime<=m.at;
-			}));}
+		for (let index = 1; index < 3; index++) {
+			processInterval(
+				index,
+				playerContext.alg1Metadata.testResult.intervalMetrics.findIndex(
+					(m) => {
+						return selectedWallclockTime <= m.at;
+					}
+				)
+			);
+		}
 	}
 }
 function startDemo() {
@@ -426,7 +437,7 @@ function startDemo() {
 		playerContext.alg1Metadata.testResult.intervalMetrics[
 			playerContext.alg1Metadata.testResult.intervalMetrics.length - 1
 		].at
-	}" placeholder="WallClock Time"class="form-control">
+	}" placeholder="Session Time"class="form-control">
 					<span class="input-group-append">
 						<button type="button" class="btn btn-info btn-flat">Jump!</button>
 					</span>
@@ -438,7 +449,7 @@ function startDemo() {
 
 	$("#playersSpace > .card-body").prepend(seekFormContent);
 	$("#seekForm button").click(doJump);
-	$( "#seekForm" ).submit(function( event ) {
+	$("#seekForm").submit(function (event) {
 		event.preventDefault();
 		doJump();
 	});
@@ -578,7 +589,7 @@ function processInterval(playerIndex, index) {
 				console.log(playerIndex + " seek " + currentMetadata.videoTime);
 				console.log(playerIndex + " duration 1 " + player.duration());
 				player.seek(currentMetadata.videoTime);
-				if(currentMetadata.isPlaying){
+				if (currentMetadata.isPlaying) {
 					player.play();
 				}
 				console.log(playerIndex + " duration 2 " + player.duration());
@@ -637,13 +648,13 @@ function initCharts() {
 					labels: [],
 					datasets: [
 						{
-							label: "Buffer Level",
+							label: "Buffer Level(s)",
 							borderColor: CHART_COLORS.blue,
 							fill: false,
 							data: [],
 						},
 						{
-							label: "Latency",
+							label: "Latency(s)",
 							borderColor: CHART_COLORS.red,
 							fill: false,
 							data: [],
@@ -659,15 +670,7 @@ function initCharts() {
 							{
 								scaleLabel: {
 									display: true,
-									labelString: "Wallclock Time(sec)",
-								},
-							},
-						],
-						yAxes: [
-							{
-								scaleLabel: {
-									display: true,
-									labelString: "sec",
+									labelString: "Session Time (s)",
 								},
 							},
 						],
@@ -701,7 +704,7 @@ function initCharts() {
 							{
 								scaleLabel: {
 									display: true,
-									labelString: "Wallclock Time(sec)",
+									labelString: "Session Time (s)",
 								},
 							},
 						],
@@ -734,7 +737,7 @@ function initCharts() {
 							{
 								scaleLabel: {
 									display: true,
-									labelString: "Wallclock Time(sec)",
+									labelString: "Session Time (s)",
 								},
 							},
 						],
@@ -767,7 +770,7 @@ function initCharts() {
 							{
 								scaleLabel: {
 									display: true,
-									labelString: "Wallclock Time(sec)",
+									labelString: "Session Time (s)",
 								},
 							},
 						],
