@@ -1,14 +1,32 @@
 import fs from "fs";
 
 // Profiles are in bytes/sec
-export const NETWORK_PROFILES = [ "lte","twitch"];
+export const NETWORK_PROFILES = ["lte"];
 
-export const applyNetworkProfile = (page, preset) => {
+const offsetNetworkProfile = (data, offset) => {
+	let beforeOffsetData = [];
+	let offsetData = [];
+	let currentTime = 0;
+
+	for (const step of data) {
+		if (currentTime >= offset) {
+			offsetData.push(step);
+		} else {
+			beforeOffsetData.push(step);
+		}
+		currentTime += step.duration;
+	}
+
+	return offsetData.concat(beforeOffsetData);
+};
+
+export const applyNetworkProfile = (page, preset, offset) => {
 	if (!NETWORK_PROFILES.includes(preset)) {
 		throw new Error("Unknown network profile");
 	}
-	let preset_data = JSON.parse(
-		fs.readFileSync(`config/profiles/${preset}.json`)
+	let preset_data = offsetNetworkProfile(
+		JSON.parse(fs.readFileSync(`config/profiles/${preset}.json`)),
+		offset
 	);
 
 	(async (page, data) => {
