@@ -26,7 +26,19 @@ const formVariables = {
 			label: "BCN SHORT",
 			fileNamePart: "bcn-short",
 			url: "videos/bcn-short/video.mpd",
-		}
+		},
+		{
+			val: 1,
+			label: "BCN2 SHORT",
+			fileNamePart: "bcn2-short",
+			url: "videos/bcn2-short/video.mpd",
+		},
+		{
+			val: 2,
+			label: "BCN3 SHORT",
+			fileNamePart: "bcn3-short",
+			url: "videos/bcn3-short/video.mpd",
+		},
 	],
 	algorithms: [
 		{
@@ -597,7 +609,11 @@ function processInterval(playerIndex, index) {
 			if (currentMetadata.videoTime > 0) {
 				console.log(playerIndex + " seek " + currentMetadata.videoTime);
 				console.log(playerIndex + " duration 1 " + player.duration());
-				player.seek(currentMetadata.videoTime);
+				if(currentMetadata.latestEvent){
+					player.seek(currentMetadata.latestEvent.playerTime);
+				}else{
+					player.seek(currentMetadata.videoTime);
+				}
 				if (currentMetadata.isPlaying) {
 					player.play();
 				}
