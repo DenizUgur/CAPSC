@@ -18,42 +18,20 @@ const formVariables = {
 			val: 0,
 			label: "LTE",
 			fileNamePart: "lte",
-		},
-		{
-			val: 1,
-			label: "Twitch",
-			fileNamePart: "twitch",
-		},
-		{
-			val: 2,
-			label: "Cascade",
-			fileNamePart: "cascade",
-		},
+		}
 	],
 	videos: [
 		{
 			val: 0,
-			label: "BCN1",
-			fileNamePart: "bcn",
-			url: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
-		},
-		{
-			val: 1,
-			label: "BCN2",
-			fileNamePart: "bcn2",
-			url: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
-		},
-		{
-			val: 2,
-			label: "BCN3",
-			fileNamePart: "bcn3",
-			url: "https://dash.akamaized.net/akamai/bbb_30fps/bbb_30fps.mpd",
-		},
+			label: "BCN SHORT",
+			fileNamePart: "bcn-short",
+			url: "videos/bcn-short/video.mpd",
+		}
 	],
 	algorithms: [
 		{
 			val: 0,
-			label: "LoLp",
+			label: "LoL+",
 			fileNamePart: "LOLP",
 		},
 		{
@@ -253,6 +231,18 @@ function initPlayers() {
 								<video id="video1"></video>
 							</div> 
 						</div> 
+						<div class="col-sm-3" >
+							<p><strong>Playback Rate: </strong><span id="currentPlayback-1">0</span></p>
+						</div>
+						<div class="col-sm-3" >
+							<p><strong>Event Density: </strong><span id="currentEventDensity-1">0</span></p>
+						</div> 
+						<div class="col-sm-3" >
+							<p><strong>Buffer Level: </strong><span id="currentBuffer-1">0</span>s</p>
+						</div>
+						<div class="col-sm-3" >
+							<p><strong>Latency: </strong><span id="currentLatency-1">0</span>s</p>
+						</div> 
 						<div class="col-sm-6" >
 							<div class="chart">
 								<canvas id="chart-rate-1" style=" max-height: 250px; max-width: 100%;"></canvas>
@@ -283,6 +273,18 @@ function initPlayers() {
 								<video id="video2"></video>
 							</div>
 						</div>
+						<div class="col-sm-3" >
+							<p><strong>Playback Rate: </strong><span id="currentPlayback-2">0</span></p>
+						</div>
+						<div class="col-sm-3" >
+							<p><strong>Event Density: </strong><span id="currentEventDensity-2">0</span></p>
+						</div> 
+						<div class="col-sm-3" >
+							<p><strong>Buffer Level: </strong><span id="currentBuffer-2">0</span>s</p>
+						</div>
+						<div class="col-sm-3" >
+							<p><strong>Latency: </strong><span id="currentLatency-2">0</span>s</p>
+						</div> 
 						<div class="col-sm-6" >
 							<div class="chart">
 								<canvas id="chart-rate-2" style=" max-height: 250px; max-width: 100%;"></canvas>
@@ -326,7 +328,7 @@ function initPlayers() {
 			let selectedVideoRecord = player1
 				.getOfflineController()
 				.getAllRecords()
-				.find((od) => od.originalUrl == url);
+				.find((od) => od.originalUrl.includes(url));
 			if (selectedVideoRecord == null) {
 				console.log("Selected video not found in memory");
 				downloadContent(player1, url);
@@ -343,8 +345,9 @@ function initPlayers() {
 					);
 					player1
 						.getOfflineController()
-						.deleteRecord(selectedVideoRecord.id);
-					downloadContent(player1, url);
+						.deleteRecord(selectedVideoRecord.id).then(()=>{
+							downloadContent(player1, url);
+						});
 				} else {
 					updateProgressBar(100);
 					readyForDemo();
@@ -465,7 +468,7 @@ function startDemo() {
 		let selectedVideoRecord = playerContext.player2
 			.getOfflineController()
 			.getAllRecords()
-			.find((od) => od.originalUrl == url);
+			.find((od) => od.originalUrl.includes(url));
 
 		playerContext.player1.attachSource(selectedVideoRecord.url);
 		playerContext.player2.attachSource(selectedVideoRecord.url);
@@ -503,35 +506,41 @@ function processInterval(playerIndex, index) {
 		let nextMetadata = algMetadata.testResult.intervalMetrics[index + 1];
 
 		chartContext[playerIndex].bufferChart.data.labels.push(
-			currentMetadata.at
+			currentMetadata.at.toFixed(2)
 		);
 		chartContext[playerIndex].bufferChart.data.datasets[0].data.push(
 			currentMetadata.mediaBuffer
 		);
+		$("#currentBuffer-"+playerIndex).text(currentMetadata.mediaBuffer);
 		chartContext[playerIndex].bufferChart.data.datasets[1].data.push(
 			currentMetadata.liveLatency
 		);
+		$("#currentLatency-"+playerIndex).text(currentMetadata.liveLatency);
 		chartContext[playerIndex].eventChart.data.labels.push(
-			currentMetadata.at
+			currentMetadata.at.toFixed(2)
 		);
-		chartContext[playerIndex].bwChart.data.labels.push(currentMetadata.at);
+		chartContext[playerIndex].bwChart.data.labels.push(currentMetadata.at.toFixed(2));
 		if (currentMetadata["latestEvent"] != null) {
 			chartContext[playerIndex].eventChart.data.datasets[0].data.push(
 				currentMetadata.latestEvent.density
 			);
+
+		$("#currentEventDensity-"+playerIndex).text(currentMetadata.latestEvent.density);
 		} else {
 			chartContext[playerIndex].eventChart.data.datasets[0].data.push(0);
+			$("#currentEventDensity-"+playerIndex).text(0);
 		}
 
 		chartContext[playerIndex].rateChart.data.labels.push(
-			currentMetadata.at
+			currentMetadata.at.toFixed(2)
 		);
 		chartContext[playerIndex].rateChart.data.datasets[0].data.push(
 			currentMetadata.playbackRate
 		);
+		$("#currentPlayback-"+playerIndex).text(currentMetadata.playbackRate.toFixed(2));
 		if (currentMetadata.bitrate) {
 			chartContext[playerIndex].bwChart.data.datasets[0].data.push(
-				currentMetadata.bitrate.download
+				currentMetadata.bitrate.download * 8 / 1000000
 			);
 		} else {
 			chartContext[playerIndex].bwChart.data.datasets[0].data.push(null);
@@ -621,17 +630,17 @@ function downloadContent(player, url) {
 		dashjs.MediaPlayer.events.OFFLINE_RECORD_LOADEDMETADATA,
 		function (e) {
 			player.getOfflineController().startRecord(e.id, e.mediaInfos);
-			console.log(e.id);
 			let progressBarInterval = setInterval(function () {
 				let perc = player
 					.getOfflineController()
 					.getRecordProgression(e.id);
+					console.log(e.id + " perc "+ perc);
 				updateProgressBar(perc);
 				if (perc >= 100) {
 					readyForDemo();
 					clearInterval(progressBarInterval);
 				}
-			}, 200);
+			}, 1000);
 		}
 	);
 }
@@ -662,6 +671,7 @@ function initCharts() {
 					],
 				},
 				options: {
+					tooltips:{enabled:false},
 					type: "line",
 					responsive: true,
 
@@ -671,6 +681,13 @@ function initCharts() {
 								scaleLabel: {
 									display: true,
 									labelString: "Session Time (s)",
+								},
+							},
+						],
+						yAxes: [
+							{
+								ticks: {
+									stepSize: 0.5,
 								},
 							},
 						],
@@ -698,6 +715,7 @@ function initCharts() {
 					],
 				},
 				options: {
+					tooltips:{enabled:false},
 					type: "line",
 					scales: {
 						xAxes: [
@@ -705,6 +723,16 @@ function initCharts() {
 								scaleLabel: {
 									display: true,
 									labelString: "Session Time (s)",
+								}
+							},
+						],
+
+						yAxes: [
+							{
+								ticks: {
+									suggestedMin: 0,
+									stepSize: 0.25,
+									suggestedMax: 1,
 								},
 							},
 						],
@@ -731,6 +759,7 @@ function initCharts() {
 					],
 				},
 				options: {
+					tooltips:{enabled:false},
 					type: "line",
 					scales: {
 						xAxes: [
@@ -738,6 +767,15 @@ function initCharts() {
 								scaleLabel: {
 									display: true,
 									labelString: "Session Time (s)",
+								},
+							},
+						],
+						yAxes: [
+							{
+								ticks: {
+									suggestedMin: 0.6,
+									stepSize: 0.2,
+									suggestedMax: 1.4,
 								},
 							},
 						],
@@ -755,7 +793,7 @@ function initCharts() {
 					labels: [],
 					datasets: [
 						{
-							label: "Bandwith",
+							label: "Bandwith(Mbps)",
 							borderColor: CHART_COLORS.purple,
 							fill: false,
 							stepped: true,
@@ -764,6 +802,7 @@ function initCharts() {
 					],
 				},
 				options: {
+					tooltips:{enabled:false},
 					type: "line",
 					scales: {
 						xAxes: [
@@ -771,6 +810,14 @@ function initCharts() {
 								scaleLabel: {
 									display: true,
 									labelString: "Session Time (s)",
+								},
+							},
+						],
+						yAxes: [
+							{
+								ticks: {
+									suggestedMin: 0,
+									stepSize: 0.5
 								},
 							},
 						],
