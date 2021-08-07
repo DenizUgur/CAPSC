@@ -41,8 +41,13 @@ async function master() {
 	const tests = [
 		{
 			videoFile: "bcn-short.mp4",
-			testingDuration: 150,
-			networkOffset: 120,
+			testingDuration: 120,
+			networkOffset: 90,
+		},
+		{
+			videoFile: "bcn3-short.mp4",
+			testingDuration: 120,
+			networkOffset: 90,
 		},
 		{
 			videoFile: "bcn.mp4",

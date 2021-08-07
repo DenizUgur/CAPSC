@@ -8,7 +8,7 @@ V_SIZE_4=768x432
 V_SIZE_5=1280x720
 V_SIZE_6=1920x1080
 
-ffmpeg -i bcn-short.mp4 \
+ffmpeg -i videos/bcn3-short.mp4 \
      -c:v libx264 -keyint_min $GOP_SIZE -g $GOP_SIZE -pix_fmt yuv420p \
      -map v:0 -s:0 $V_SIZE_3 -b:v:0 500k \
      -init_seg_name init\$RepresentationID\$.\$ext\$ -media_seg_name chunk\$RepresentationID\$-\$Number%05d\$.\$ext\$ \
@@ -17,4 +17,4 @@ ffmpeg -i bcn-short.mp4 \
      -frag_type every_frame \
      -seg_duration 10 \
      -preset ultrafast \
-     -f dash videos/bcn-short/video.mpd
+     -f dash videos/bcn3-short/video.mpd

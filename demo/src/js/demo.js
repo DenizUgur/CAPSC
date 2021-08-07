@@ -18,6 +18,11 @@ const formVariables = {
 			val: 0,
 			label: "LTE",
 			fileNamePart: "lte",
+		},
+		{
+			val: 1,
+			label: "Twitch",
+			fileNamePart: "twitch",
 		}
 	],
 	videos: [
