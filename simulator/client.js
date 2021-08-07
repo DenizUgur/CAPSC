@@ -40,23 +40,31 @@ if (!fs.existsSync(process.env.RESULT_OUTPUT_DIR)) {
 async function master() {
 	const tests = [
 		{
+			videoFile: "bcn-short.mp4",
+			testingDuration: 150,
+			networkOffset: 120,
+		},
+		{
 			videoFile: "bcn.mp4",
 			testingDuration: 300,
+			disable: true,
 		},
 		{
 			videoFile: "bcn2.mp4",
 			testingDuration: 300,
+			disable: true,
 		},
 		{
 			videoFile: "bcn3.mp4",
 			testingDuration: 300,
-		}
+			disable: true,
+		},
 	];
 
-	//Populate Tests
-
+	// Populate Tests
 	const populatedTests = [];
 	for (const test of tests) {
+		if (test.disable) continue;
 		for (const networkProfile of NETWORK_PROFILES) {
 			for (const dashjsProfileKey of DASHJS_PRESETS_KEYS) {
 				populatedTests.push({
@@ -65,7 +73,10 @@ async function master() {
 					dashPreset: DASHJS_PRESETS[dashjsProfileKey],
 					dashPresetName: dashjsProfileKey,
 				});
-				console.log(`Adding ${test.videoFile} ${networkProfile} ${dashjsProfileKey}`.yellow)
+				console.log(
+					`Adding ${test.videoFile} ${networkProfile} ${dashjsProfileKey}`
+						.yellow
+				);
 			}
 		}
 	}
@@ -149,7 +160,11 @@ async function worker() {
 				window.player.updateSettings(preset);
 				console.log("DashJS preset rules are applied.");
 			}, job.data.dashPreset);
-			applyNetworkProfile(page, job.data.newtorkPreset);
+			applyNetworkProfile(
+				page,
+				job.data.newtorkPreset,
+				job.data.networkOffset
+			);
 
 			console.info(
 				`Waiting for ${job.data.testingDuration} seconds`.bgRed.white

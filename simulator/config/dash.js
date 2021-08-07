@@ -1,4 +1,4 @@
-export const DASHJS_PRESETS_KEYS = [ "LOLP" ,"APR","DEFAULT"];
+export const DASHJS_PRESETS_KEYS = ["LOLP", "APR", "DEFAULT"];
 export const DASHJS_PRESETS = {
 	APR: {
 		debug: {
