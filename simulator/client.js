@@ -160,7 +160,6 @@ async function worker() {
 			await page.setCacheEnabled(false);
 			await page.goto(url.toString());
 
-			job.data.dashPreset.streaming.videoEventSteamURL = `http://localhost:2323/stream?media=${encoder.videoName}`;
 			await page.evaluate((preset) => {
 				window.player.updateSettings(preset);
 				console.log("DashJS preset rules are applied.");

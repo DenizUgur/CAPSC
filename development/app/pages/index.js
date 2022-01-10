@@ -5,6 +5,7 @@ import styles from "../styles/Home.module.css";
 
 export default function Home() {
   const [state, setState] = useState(0);
+  const [density, setDensity] = useState(0);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -12,9 +13,8 @@ export default function Home() {
     player.initialize(ref.current, "/content/app.mpd", true);
     player.updateSettings({
       streaming: {
-        videoEventSteamURL: "http://192.168.1.100:2323/stream",
         lowLatencyEnabled: true,
-        liveDelay: 2.0,
+        liveDelay: 3.0,
         liveCatchup: {
           mode: "liveCatchupModeLoLP",
           minDrift: 0.2,
@@ -26,6 +26,9 @@ export default function Home() {
 
     player.on("playbackProgress", (e) => {
       setState(player.getCurrentLiveLatency());
+
+      if (window._globalLatestEvent)
+        setDensity(window._globalLatestEvent.density);
     });
 
     return () => {};
@@ -47,7 +50,7 @@ export default function Home() {
           muted
         ></video>
         <div className={styles.latency}>
-          <span className={styles.delayBig}>{state}</span>s
+          <span className={styles.delayBig}>{state}</span>s :: DENSITY {density}
         </div>
       </main>
     </div>
