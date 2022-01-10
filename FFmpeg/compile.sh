@@ -1,6 +1,8 @@
 #!/bin/bash
 # Prepare environment
 BASE=$(pwd)
+export PATH="$BASE/bin:$PATH"
+export PKG_CONFIG_PATH="/usr/local/opt/opencv@2/lib/pkgconfig:$BASE/build/lib/pkgconfig"
 
 # Build FFmpeg
 cd $BASE/FFmpeg
@@ -11,6 +13,7 @@ cd $BASE/FFmpeg
     --extra-cflags="-I$BASE/build/include -march=native" \
     --extra-ldflags="-L$BASE/build/lib" \
     --extra-libs="-lpthread -lm" \
+    --ld="g++" \
     --bindir="$BASE/bin" \
     --enable-gnutls \
     --enable-libass \
@@ -19,6 +22,7 @@ cd $BASE/FFmpeg
     --enable-libvorbis \
     --enable-gpl \
     --enable-libx264 \
+    --enable-libopencv \
     --enable-nonfree
 
 make -j8
