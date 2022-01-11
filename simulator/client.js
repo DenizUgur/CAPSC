@@ -1,6 +1,7 @@
 // Worker related
-import throng from "throng";
 import Queue from "bull";
+import throng from "throng";
+import { createClient } from "redis";
 
 // Simulation
 import puppeteer from "puppeteer";
@@ -40,29 +41,11 @@ if (!fs.existsSync(process.env.RESULT_OUTPUT_DIR)) {
 async function master() {
 	const tests = [
 		{
-			videoFile: "bcn-short.mp4",
-			testingDuration: 120,
+			videoFile: "match3.mp4",
+			testingDuration: 240,
 			networkOffset: 90,
-		},
-		{
-			videoFile: "bcn3-short.mp4",
-			testingDuration: 120,
-			networkOffset: 90,
-		},
-		{
-			videoFile: "bcn.mp4",
-			testingDuration: 300,
-			disable: true,
-		},
-		{
-			videoFile: "bcn2.mp4",
-			testingDuration: 300,
-			disable: true,
-		},
-		{
-			videoFile: "bcn3.mp4",
-			testingDuration: 300,
-			disable: true,
+			mediaTime: 3319,
+			splitFile: true,
 		},
 	];
 
@@ -70,21 +53,39 @@ async function master() {
 	const populatedTests = [];
 	for (const test of tests) {
 		if (test.disable) continue;
+		const mediaTimeRounded =
+			test.mediaTime - (test.mediaTime % test.testingDuration);
+
 		for (const networkProfile of NETWORK_PROFILES) {
 			for (const dashjsProfileKey of DASHJS_PRESETS_KEYS) {
-				populatedTests.push({
-					...test,
-					newtorkPreset: networkProfile,
-					dashPreset: DASHJS_PRESETS[dashjsProfileKey],
-					dashPresetName: dashjsProfileKey,
-				});
-				console.log(
-					`Adding ${test.videoFile} ${networkProfile} ${dashjsProfileKey}`
-						.yellow
-				);
+				for (
+					let startOffset = 0;
+					startOffset < mediaTimeRounded;
+					startOffset += test.testingDuration
+				) {
+					populatedTests.push({
+						...test,
+						newtorkPreset: networkProfile,
+						dashPreset: DASHJS_PRESETS[dashjsProfileKey],
+						dashPresetName: dashjsProfileKey,
+						startOffset,
+					});
+
+					console.log(
+						`Adding ${test.videoFile} ${networkProfile} ${dashjsProfileKey} at ${startOffset} second(s) offset`
+							.yellow
+					);
+
+					if (!test.splitFile) break;
+				}
 			}
 		}
 	}
+
+	//Clean Redis
+	const client = createClient();
+	await client.connect();
+	await client.flushAll();
 
 	//Load Populated Tests
 	for (const test of populatedTests) {
@@ -119,7 +120,7 @@ async function master() {
 			);
 		}
 		if (populatedTests.length == completed + failed) {
-			console.info("All jobs has been processed!".bgGreen.bold.white);
+			console.info("All jobs have been processed!".bgGreen.bold.black);
 			process.exit(0);
 		}
 	});
@@ -134,20 +135,23 @@ async function worker() {
 		// Start the browser
 		const browser = await puppeteer.launch({
 			headless: false,
-			executablePath: "google-chrome",
-			devtools: true,
+			executablePath:
+				"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
 		});
 
 		try {
-			const encoder = new FFmpeg(job.data.videoFile);
+			const encoder = new FFmpeg(
+				job.data.videoFile,
+				job.data.startOffset
+			);
 			console.info("Starting encoding process".green);
 			encoder.run();
 
-			// Wait for second segment
-			console.info(`Waiting for second segment file`.bgRed.white);
+			// Wait for first segment
+			console.info(`Waiting for first segment file`.bgRed.white);
 			let now = Date.now();
-			while (!fs.existsSync(`${encoder.outdir}/chunk0-00002.m4s`)) {
-				if (Date.now() - now > 40 * 1000) {
+			while (!fs.existsSync(`${encoder.outDir}/chunk0-00001.m4s`)) {
+				if (Date.now() - now > 60 * 1000) {
 					await encoder.terminate();
 					throw new Error("Manifest timeout!");
 				}
@@ -197,8 +201,8 @@ async function worker() {
 
 			let resultFileName = `${process.env.RESULT_OUTPUT_DIR}/${
 				job.data.videoFile.split(".")[0]
-			}-${job.data.newtorkPreset}-${
-				job.data.dashPresetName
+			}-${job.data.newtorkPreset}-${job.data.dashPresetName}-${
+				job.data.startOffset
 			}-${jobStartDate.getTime()}.json`;
 			fs.writeFileSync(resultFileName, JSON.stringify(result));
 
@@ -216,4 +220,4 @@ const sleep = (duration) => {
 	});
 };
 
-throng({ master, worker, count: 3 });
+throng({ master, worker, count: 1 });

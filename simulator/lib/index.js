@@ -4,35 +4,26 @@ import { nanoid } from "nanoid";
 import kill from "tree-kill";
 
 class FFmpeg {
-	constructor(infile) {
-		this.videoName = infile.split(".")[0];
+	constructor(inFile, startOffset) {
+		this.videoName = inFile.split(".")[0];
+		this.startOffset = startOffset;
 		this.name = `${this.videoName}_${nanoid()}`;
-		this.infile = `${process.env.INPUT_DIR}/${infile}`;
-		this.outdir = `${process.env.COMMON_OUTPUT_DIR}/${this.name}`;
-		this.state = "IDLE";
+		this.inFile = `${process.env.INPUT_DIR}/${inFile}`;
+		this.outDir = `${process.env.COMMON_OUTPUT_DIR}/${this.name}`;
 	}
 
 	run() {
 		this.process = spawn("/bin/sh", [
 			`${process.env.SCRIPTS_DIR}/ingest.sh`,
-			this.infile,
+			this.inFile,
 			this.name,
+			this.startOffset,
 		]);
-
-		this.process.stdout.on("data", (data) => {
-			this.state = "RUNNING";
-		});
-		this.process.stderr.on("data", (data) => {
-			this.state = "CRASHED";
-		});
-		this.process.on("exit", async (data) => {
-			this.state = "FINISHED";
-		});
 	}
 
 	async terminate() {
 		kill(this.process.pid, "SIGINT");
-		await fs.rm(this.outdir, { recursive: true });
+		await fs.rm(this.outDir, { recursive: true });
 	}
 }
 

@@ -5,32 +5,6 @@ import os
 import img2pdf
 import glob
 import json
-import yaml
-
-
-class Metadata:
-    def __init__(self, video):
-        self.data = []
-        with open(f"../metadata-feeder/metadata/in/{video}.csv") as fp:
-            for line in fp:
-                tmp = line.split("\n")[0].split(",")
-                self.data.append([float(tmp[0]), float(tmp[1]), tmp[2]])
-        self.config = yaml.load(
-            open("../metadata-feeder/metadata/src/main/resources/application.yml"),
-            Loader=yaml.FullLoader,
-        )["parser"]["event-densities"]
-
-    def __get_density__(self, type):
-        for event in self.config:
-            if event["name"] == type:
-                return event["density"]
-        return 0
-
-    def __call__(self, time):
-        for f, e, t in self.data:
-            if f <= time < f + e / 1000:
-                return self.__get_density__(t)
-        return 0
 
 
 if __name__ == "__main__":
@@ -41,11 +15,18 @@ if __name__ == "__main__":
     os.mkdir("tmp/zip/pdf")
     os.mkdir("tmp/zip/csv")
 
+    videos, networks = set(), set()
+    methods, offsets = set(), set()
+
     for fi, file in enumerate(glob.glob("results/*")):
         comps = file.split("/")[1].split("-")
-        video, network, method = comps[0], comps[1], comps[2]
-        print(f"Processing file #{fi} M:{method} N:{network}")
-        M = Metadata(video)
+        video, network, method, offset = comps[0], comps[1], comps[2], comps[3]
+        print(f"Processing file #{fi} M:{method} N:{network} O:{offset}")
+
+        videos.add(video)
+        networks.add(network)
+        methods.add(method)
+        offsets.add(offset)
 
         with open(file, "r") as fp:
             data = json.load(fp)
@@ -94,7 +75,6 @@ if __name__ == "__main__":
             for at in data["testResult"]["intervalMetrics"]:
                 if "latestEvent" in at:
                     tmp.append(at["latestEvent"]["density"])
-                    # tmp.append(M(at["latestEvent"]["playerTime"]))
                 else:
                     tmp.append(0)
 
@@ -102,6 +82,27 @@ if __name__ == "__main__":
                 [d["at"] for d in data["testResult"]["intervalMetrics"]],
                 tmp,
                 label="Event Density",
+            )
+
+            score_ed2, score_ed0, score_all = 0, 0, 0
+            total_ed2, total_ed0, total_all = 0, 0, 0
+            for i, d in enumerate(data["testResult"]["intervalMetrics"]):
+                pb = d["playbackRate"]
+                ed = tmp[i]
+
+                if ed == 2:
+                    score_ed2 += abs(1 - pb)
+                    total_ed2 += 1
+                else:
+                    score_ed0 += abs(1 - pb)
+                    total_ed0 += 1
+                score_all += abs(1 - pb)
+                total_all += 1
+            
+            additonal_metrics = "ALL: %{:.2f} ED2: %{:.2f} ED0: %{:.2f}".format(
+                100 * score_all / total_all if total_all > 0 else -1,
+                100 * score_ed2 / total_ed2 if total_ed2 > 0 else -1,
+                100 * score_ed0 / total_ed0 if total_ed0 > 0 else -1
             )
 
             playback.grid("on")
@@ -182,10 +183,12 @@ if __name__ == "__main__":
                     quality.axvline(event["at"], c="red", linewidth=1, alpha=0.4)
 
             fig.suptitle(
-                "{} {} {}".format(
+                "{} {} {} {}\n{}".format(
                     data["job"]["videoFile"],
                     data["job"]["newtorkPreset"],
                     data["job"]["dashPresetName"],
+                    data["job"]["startOffset"],
+                    additonal_metrics
                 )
             )
 
@@ -193,7 +196,7 @@ if __name__ == "__main__":
             plt.savefig(file_name + ".png", dpi=200)
 
             # Optimize
-            result_name = f"{file_name}.{video}.{network}.{method}"
+            result_name = f"{file_name}.{video}.{network}.{method}.{offset}"
             im = Image.open(file_name + ".png").convert("RGB")
             im.save(
                 f"{result_name}.jpeg",
@@ -205,11 +208,11 @@ if __name__ == "__main__":
             plt.close()
 
             tmp = []
-            with open(f"tmp/zip/csv/{video}.{network}.{method}.csv", "w") as result_fp:
+            with open(f"tmp/zip/csv/{video}.{network}.{method}.{offset}.csv", "w") as result_fp:
                 for i, interval in enumerate(data["testResult"]["intervalMetrics"]):
                     event = 0
                     if "latestEvent" in interval:
-                        event = M(interval["latestEvent"]["playerTime"])
+                        event = interval["latestEvent"]["density"]
 
                     result_fp.write(
                         ",".join(
@@ -230,17 +233,21 @@ if __name__ == "__main__":
                     )
                     result_fp.write("\n")
 
-    for m in ["APR", "DEFAULT", "LOLP"]:
+    for m in list(methods):
         with open(f"tmp/zip/pdf/results-{m}.pdf", "wb") as f:
             f.write(img2pdf.convert(glob.glob(f"tmp/*{m}*.jpeg")))
 
-    for n in ["twitch", "lte"]:
+    for n in list(networks):
         with open(f"tmp/zip/pdf/results-{n}.pdf", "wb") as f:
             f.write(img2pdf.convert(glob.glob(f"tmp/*{n}*.jpeg")))
 
-    for v in ["bcn", "bcn2", "bcn3"]:
+    for v in list(videos):
         with open(f"tmp/zip/pdf/results-{v}.pdf", "wb") as f:
             f.write(img2pdf.convert(glob.glob(f"tmp/*{v}*.jpeg")))
+
+    for o in list(offsets):
+        with open(f"tmp/zip/pdf/results-{o}.pdf", "wb") as f:
+            f.write(img2pdf.convert(glob.glob(f"tmp/*{o}*.jpeg")))
 
     with open(f"tmp/zip/pdf/results-all.pdf", "wb") as f:
         f.write(img2pdf.convert(glob.glob("tmp/*.jpeg")))
