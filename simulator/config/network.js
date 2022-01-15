@@ -20,21 +20,28 @@ const offsetNetworkProfile = (data, offset) => {
 	return offsetData.concat(beforeOffsetData);
 };
 
-export const applyNetworkProfile = (page, preset, offset) => {
+export const applyNetworkProfile = (
+	page,
+	preset,
+	presetOffset,
+	throttleOffset
+) => {
 	if (!NETWORK_PROFILES.includes(preset)) {
 		throw new Error("Unknown network profile");
 	}
+
 	let preset_data = offsetNetworkProfile(
 		JSON.parse(fs.readFileSync(`config/profiles/${preset}.json`)),
-		offset
+		presetOffset
 	);
 
-	(async (page, data) => {
+	(async (page, data, throttleOffset) => {
 		const sleep = (duration) => {
 			return new Promise((resolve, _) => {
 				setTimeout(() => resolve(), duration * 1000);
 			});
 		};
+
 		let scale = 1.0;
 		switch (preset) {
 			case "cascade":
@@ -47,23 +54,30 @@ export const applyNetworkProfile = (page, preset, offset) => {
 				scale = 0.4;
 				break;
 		}
+
 		try {
+			let pos = 0;
 			while (!page.isClosed()) {
 				for (const step of data) {
 					if (page.isClosed()) break;
-					//console.log(step.data)
+
 					step.data = {
 						...step.data,
 						download: step.data.download * scale,
 						upload: step.data.upload * scale,
 					};
-					await page.emulateNetworkConditions(step.data);
+
+					if (pos >= throttleOffset)
+						await page.emulateNetworkConditions(step.data);
+
 					await page.evaluate((data) => {
 						window.networkConditions = data;
 					}, step.data);
+
 					await sleep(step.duration);
+					pos += step.duration;
 				}
 			}
 		} catch (_) {}
-	})(page, preset_data);
+	})(page, preset_data, throttleOffset);
 };

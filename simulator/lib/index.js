@@ -13,12 +13,16 @@ class FFmpeg {
 	}
 
 	run() {
-		this.process = spawn("/bin/sh", [
-			`${process.env.SCRIPTS_DIR}/ingest.sh`,
-			this.inFile,
-			this.name,
-			this.startOffset,
-		]);
+		this.process = spawn(
+			"/bin/sh",
+			[
+				`${process.env.SCRIPTS_DIR}/ingest.sh`,
+				this.inFile,
+				this.name,
+				this.startOffset,
+			],
+			{ stdio: "ignore" }
+		);
 	}
 
 	async terminate() {

@@ -24,26 +24,39 @@ dotenv.config();
 // Setup Queue
 const queue = new Queue("work");
 
-if (!fs.existsSync(process.env.COMMON_OUTPUT_DIR)) {
-	fs.mkdirSync(process.env.COMMON_OUTPUT_DIR);
-} else {
-	fs.rmSync(process.env.COMMON_OUTPUT_DIR, { force: true, recursive: true });
-	fs.mkdirSync(process.env.COMMON_OUTPUT_DIR);
-}
-
-if (!fs.existsSync(process.env.RESULT_OUTPUT_DIR)) {
-	fs.mkdirSync(process.env.RESULT_OUTPUT_DIR);
-} else {
-	fs.rmSync(process.env.RESULT_OUTPUT_DIR, { force: true, recursive: true });
-	fs.mkdirSync(process.env.RESULT_OUTPUT_DIR);
-}
-
 async function master() {
+	// Clean working environment
+	if (!fs.existsSync(process.env.COMMON_OUTPUT_DIR)) {
+		fs.mkdirSync(process.env.COMMON_OUTPUT_DIR);
+	} else {
+		fs.rmSync(process.env.COMMON_OUTPUT_DIR, {
+			force: true,
+			recursive: true,
+		});
+		fs.mkdirSync(process.env.COMMON_OUTPUT_DIR);
+	}
+
+	if (!fs.existsSync(process.env.RESULT_OUTPUT_DIR)) {
+		fs.mkdirSync(process.env.RESULT_OUTPUT_DIR);
+	} else {
+		fs.rmSync(process.env.RESULT_OUTPUT_DIR, {
+			force: true,
+			recursive: true,
+		});
+		fs.mkdirSync(process.env.RESULT_OUTPUT_DIR);
+	}
+
+	// Clean Redis
+	const client = createClient();
+	await client.connect();
+	await client.flushAll();
+
 	const tests = [
 		{
-			videoFile: "match3.mp4",
+			videoFile: "match.mp4",
 			testingDuration: 240,
-			networkOffset: 90,
+			networkPresetOffset: 90,
+			networkThrottleOffset: 5,
 			mediaTime: 3319,
 			splitFile: true,
 		},
@@ -82,12 +95,7 @@ async function master() {
 		}
 	}
 
-	//Clean Redis
-	const client = createClient();
-	await client.connect();
-	await client.flushAll();
-
-	//Load Populated Tests
+	// Load Populated Tests
 	for (const test of populatedTests) {
 		queue.add(test, { attempts: 3 });
 	}
@@ -168,10 +176,12 @@ async function worker() {
 				window.player.updateSettings(preset);
 				console.log("DashJS preset rules are applied.");
 			}, job.data.dashPreset);
+
 			applyNetworkProfile(
 				page,
 				job.data.newtorkPreset,
-				job.data.networkOffset
+				job.data.networkPresetOffset,
+				job.data.networkThrottleOffset
 			);
 
 			console.info(

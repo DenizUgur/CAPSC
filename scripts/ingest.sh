@@ -18,7 +18,7 @@ fi
 
 rm -rf $TARGET && mkdir -p $TARGET
 
-GOP_SIZE=50
+GOP_SIZE=60
 PRESET=ultrafast
 V_SIZE_1=960x540
 V_SIZE_2=1280x720
@@ -26,7 +26,7 @@ V_SIZE_2=1280x720
 $FFMPEG \
      -ss $STREAM_OFFSET \
      -stream_loop -1 -re -i $SOURCE \
-     -c:v libx264 -keyint_min $GOP_SIZE -g $GOP_SIZE -pix_fmt yuv420p \
+     -c:v libx264 -keyint_min $GOP_SIZE -g $GOP_SIZE -pix_fmt yuv420p -r 30 \
      -vf "sa=snooker:0" \
      -map v:0 -s:0 $V_SIZE_2 -b:v:0 500k \
      -init_seg_name init\$RepresentationID\$.\$ext\$ -media_seg_name chunk\$RepresentationID\$-\$Number%05d\$.\$ext\$ \
