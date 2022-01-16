@@ -51,7 +51,7 @@ export const applyNetworkProfile = (
 				scale = 0.5;
 				break;
 			case "twitch":
-				scale = 0.4;
+				scale = 0.6;
 				break;
 		}
 
@@ -69,6 +69,12 @@ export const applyNetworkProfile = (
 
 					if (pos >= throttleOffset)
 						await page.emulateNetworkConditions(step.data);
+					else
+						await page.emulateNetworkConditions({
+							download: 1e6,
+							upload: 1e6,
+							latency: 0,
+						});
 
 					await page.evaluate((data) => {
 						window.networkConditions = data;

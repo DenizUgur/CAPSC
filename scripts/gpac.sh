@@ -1,3 +1,4 @@
 #!/bin/bash
-cd $(pwd)/development
-forever $(pwd)/gpac-dash.js -chunk-media-segments -cors
+BASE=$(dirname "$0")
+cd $BASE/../development
+forever ./gpac-dash.js -chunk-media-segments -cors

@@ -16,6 +16,9 @@ import {
 // Misc
 import fs from "fs";
 import colors from "colors";
+import waitOn from "wait-on";
+import kill from "tree-kill";
+import { spawn } from "child_process";
 
 // Configure
 import dotenv from "dotenv";
@@ -25,6 +28,14 @@ dotenv.config();
 const queue = new Queue("work");
 
 async function master() {
+	// Check root access
+	if (process.getuid && process.getuid() !== 0) {
+		console.error(
+			"You must run this simulator with root access".bgRed.white
+		);
+		process.exit(0);
+	}
+
 	// Clean working environment
 	if (!fs.existsSync(process.env.COMMON_OUTPUT_DIR)) {
 		fs.mkdirSync(process.env.COMMON_OUTPUT_DIR);
@@ -51,18 +62,56 @@ async function master() {
 	await client.connect();
 	await client.flushAll();
 
+	// Start GPAC
+	console.log("Starting GPAC".bgBlack.yellow.bold);
+	const gpac_process = spawn(
+		"/bin/sh",
+		[`${process.env.SCRIPTS_DIR}/gpac.sh`],
+		{ stdio: false }
+	);
+
+	// Start NGINX
+	console.log("Starting NGINX".bgBlack.yellow.bold);
+	const nginx_process = spawn(
+		"/bin/sh",
+		[`${process.env.SCRIPTS_DIR}/server.sh`],
+		{ stdio: false }
+	);
+
+	await waitOn({
+		resources: [
+			"http://localhost:80", // Nginx
+			"http://localhost:8000", // Gpac
+			"http://localhost:3000", // Next.js
+		],
+		validateStatus: (status) => {
+			return status >= 200 && status < 500;
+		},
+	});
+	console.log("All services started".bgGreen.black.bold);
+
+	// Listen Ctrl+C for graceful shutdown
+	process.on("SIGINT", () => {
+		console.log(
+			"\rReceived SIGINT. Killing services and exiting".bgWhite.black.bold
+		);
+		kill(gpac_process.pid, "SIGINT");
+		kill(nginx_process.pid, "SIGINT");
+		process.exit(0);
+	});
+
+	// Populate Tests
 	const tests = [
 		{
 			videoFile: "match.mp4",
-			testingDuration: 240,
-			networkPresetOffset: 90,
+			testingDuration: 120,
+			networkPresetOffset: 0,
 			networkThrottleOffset: 5,
 			mediaTime: 3319,
 			splitFile: true,
 		},
 	];
 
-	// Populate Tests
 	const populatedTests = [];
 	for (const test of tests) {
 		if (test.disable) continue;
@@ -111,6 +160,8 @@ async function master() {
 		);
 		if (populatedTests.length == completed + failed) {
 			console.info("All jobs has been processed!".bgGreen.bold.white);
+			kill(gpac_process.pid, "SIGINT");
+			kill(nginx_process.pid, "SIGINT");
 			process.exit(0);
 		}
 	});
@@ -145,6 +196,7 @@ async function worker() {
 			headless: false,
 			executablePath:
 				"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+			args: ["--window-size=840,525", "--window-position=840,0"],
 		});
 
 		try {

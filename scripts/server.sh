@@ -1,8 +1,9 @@
 #!/bin/bash
+BASE=$(dirname "$0")
 # Start NGINX
-sudo nginx -c $(pwd)/config/nginx.conf -s stop >> /dev/null
-sudo nginx -c $(pwd)/config/nginx.conf
+nginx -c $BASE/../config/nginx.conf -s stop >> /dev/null
+nginx -c $BASE/../config/nginx.conf
 
 # Start Next.js
 echo http://localhost/tv
-npm --prefix $(pwd)/development/app run dev
+npm --prefix $BASE/../development/app run dev

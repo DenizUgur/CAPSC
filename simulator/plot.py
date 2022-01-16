@@ -50,7 +50,7 @@ if __name__ == "__main__":
                 [d["isPlaying"] for d in data["testResult"]["intervalMetrics"]],
                 label="Playing",
             )
-            interval.axhline(data["job"]["dashPreset"]["streaming"]["liveDelay"])
+            interval.axhline(data["job"]["dashPreset"]["streaming"]["liveDelay"], linestyle=":", c="black")
             interval.grid("on")
             interval.legend()
 
@@ -68,27 +68,50 @@ if __name__ == "__main__":
             playback.plot(
                 [d["at"] for d in data["testResult"]["intervalMetrics"]],
                 [d["playbackRate"] for d in data["testResult"]["intervalMetrics"]],
-                label="Playback Rate",
+                label="Playback Rate", c="black"
             )
 
             tmp = []
             for at in data["testResult"]["intervalMetrics"]:
                 if "latestEvent" in at:
-                    tmp.append(at["latestEvent"]["density"])
-                else:
-                    tmp.append(0)
+                    density = at["latestEvent"]["density"]
+                    if len(tmp) == 0:
+                        tmp.append({"density": density, "at_from": at["at"], "at_to": at["at"]})
+                        continue
 
-            playback.plot(
-                [d["at"] for d in data["testResult"]["intervalMetrics"]],
-                tmp,
-                label="Event Density",
-            )
+                    if tmp[-1]["density"] == density:
+                        tmp[-1]["at_to"] = at["at"]
+                    else:
+                        tmp.append({"density": density, "at_from": at["at"], "at_to": at["at"]})
+
+            first_y = True
+            first_g = True
+            first_r = True
+            for at in tmp:
+                if at["density"] == 1:
+                    if first_y:
+                        playback.axvspan(at["at_from"], at["at_to"], facecolor="y", alpha=0.5, label="Transition")
+                        first_y = False
+                    else:
+                        playback.axvspan(at["at_from"], at["at_to"], facecolor="y", alpha=0.5)
+                elif at["density"] == 2:
+                    if first_g:
+                        playback.axvspan(at["at_from"], at["at_to"], facecolor="g", alpha=0.5, label="Movement")
+                        first_g = False
+                    else:
+                        playback.axvspan(at["at_from"], at["at_to"], facecolor="g", alpha=0.5)
+                else:
+                    if first_r:
+                        playback.axvspan(at["at_from"], at["at_to"], facecolor="r", alpha=0.1, label="No Movement")
+                        first_r = False
+                    else:
+                        playback.axvspan(at["at_from"], at["at_to"], facecolor="r", alpha=0.1)
 
             score_ed2, score_ed0, score_all = 0, 0, 0
             total_ed2, total_ed0, total_all = 0, 0, 0
             for i, d in enumerate(data["testResult"]["intervalMetrics"]):
                 pb = d["playbackRate"]
-                ed = tmp[i]
+                ed = d["latestEvent"]["density"] if "latestEvent" in d else 0
 
                 if ed == 2:
                     score_ed2 += abs(1 - pb)
@@ -170,6 +193,7 @@ if __name__ == "__main__":
                 label="Predicted Bandwidth",
             )
             quality.grid("on")
+            quality.set_ylim((0, max(networkModified) * 2))
             quality.legend()
 
             for event in data["testResult"]["playbackEvents"]:

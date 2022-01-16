@@ -28,7 +28,7 @@ $FFMPEG \
      -stream_loop -1 -re -i $SOURCE \
      -c:v libx264 -keyint_min $GOP_SIZE -g $GOP_SIZE -pix_fmt yuv420p -r 30 \
      -vf "sa=snooker:0" \
-     -map v:0 -s:0 $V_SIZE_2 -b:v:0 500k \
+     -map v:0 -s:0 $V_SIZE_2 \
      -init_seg_name init\$RepresentationID\$.\$ext\$ -media_seg_name chunk\$RepresentationID\$-\$Number%05d\$.\$ext\$ \
      -adaptation_sets "id=0,streams=v" \
      -use_template 1 -use_timeline 0 \
