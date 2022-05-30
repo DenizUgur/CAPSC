@@ -91,32 +91,69 @@ async function master() {
 	console.log("All services started".bgGreen.black.bold);
 
 	// Listen Ctrl+C for graceful shutdown
-	process.on("SIGINT", () => {
+	const graceful_exit = () => {
 		console.log(
 			"\rReceived SIGINT. Killing services and exiting".bgWhite.black.bold
 		);
 		kill(gpac_process.pid, "SIGINT");
 		kill(nginx_process.pid, "SIGINT");
 		process.exit(0);
-	});
+	};
+	process.on("SIGINT", graceful_exit);
 
 	// Populate Tests
+	const single_shot = true;
 	const tests = [
 		{
 			videoFile: "match.mp4",
-			testingDuration: 120,
-			networkPresetOffset: 0,
+			testingDuration: 90,
+			networkPresetOffset: 10,
 			networkThrottleOffset: 5,
-			mediaTime: 3319,
+			startOffset: 915,
+			mediaTime: 90,
+			splitFile: false,
+			disabled: false,
+		},
+		{
+			videoFile: "match2.mp4",
+			testingDuration: 90,
+			networkPresetOffset: 10,
+			networkThrottleOffset: 5,
+			startOffset: 0,
+			mediaTime: 90 * 10,
 			splitFile: true,
+			disabled: true,
 		},
 	];
 
 	const populatedTests = [];
 	for (const test of tests) {
-		if (test.disable) continue;
-		const mediaTimeRounded =
-			test.mediaTime - (test.mediaTime % test.testingDuration);
+		if (test.disabled) continue;
+
+		if (
+			(test.mediaTime > test.startOffset &&
+				test.mediaTime - test.startOffset < test.testingDuration) ||
+			test.mediaTime < test.testingDuration
+		) {
+			console.log(
+				`Requested testingDuration is not possible with current mediaTime and startOffset`
+					.bgRed.white.bold
+			);
+			graceful_exit();
+		}
+
+		const mediaTime =
+			test.mediaTime < test.startOffset
+				? test.mediaTime
+				: test.mediaTime - test.startOffset;
+		const mediaTimeRounded = mediaTime - (mediaTime % test.testingDuration);
+
+		if (mediaTime % test.testingDuration != 0)
+			console.log(
+				`mediaTime rounded down by ${
+					mediaTime % test.testingDuration
+				} seconds`.bgBlack.yellow
+			);
 
 		for (const networkProfile of NETWORK_PROFILES) {
 			for (const dashjsProfileKey of DASHJS_PRESETS_KEYS) {
@@ -130,7 +167,7 @@ async function master() {
 						newtorkPreset: networkProfile,
 						dashPreset: DASHJS_PRESETS[dashjsProfileKey],
 						dashPresetName: dashjsProfileKey,
-						startOffset,
+						startOffset: startOffset + test.startOffset,
 					});
 
 					console.log(
@@ -140,7 +177,9 @@ async function master() {
 
 					if (!test.splitFile) break;
 				}
+				if (single_shot) break;
 			}
+			if (single_shot) break;
 		}
 	}
 

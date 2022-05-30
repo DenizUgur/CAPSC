@@ -9,6 +9,7 @@ from tqdm import tqdm
 from multiprocessing import Pool
 import multiprocessing as mp
 
+
 def worker(args):
     fi, file = args
     comps = file.split("/")[1].split("-")
@@ -36,16 +37,18 @@ def worker(args):
             [d["isPlaying"] for d in data["testResult"]["intervalMetrics"]],
             label="Playing",
         )
-        interval.axhline(data["job"]["dashPreset"]["streaming"]["liveDelay"], linestyle=":", c="black")
+        interval.axhline(
+            data["job"]["dashPreset"]["streaming"]["liveDelay"],
+            linestyle=":",
+            c="black",
+        )
         interval.grid("on")
         interval.legend()
 
         playbackModified = []
         prData = data["testResult"]["playbackRateChanges"]
         for i, prChange in enumerate(prData):
-            playbackModified.append(
-                (prChange["at"] - 0.001, prData[i - 1]["event"])
-            )
+            playbackModified.append((prChange["at"] - 0.001, prData[i - 1]["event"]))
             playbackModified.append((prChange["at"], prChange["event"]))
         playbackModified.append(
             (data["job"]["testingDuration"], playbackModified[-1][1])
@@ -54,7 +57,8 @@ def worker(args):
         playback.plot(
             [d["at"] for d in data["testResult"]["intervalMetrics"]],
             [d["playbackRate"] for d in data["testResult"]["intervalMetrics"]],
-            label="Playback Rate", c="black"
+            label="Playback Rate",
+            c="black",
         )
 
         tmp = []
@@ -62,13 +66,17 @@ def worker(args):
             if "latestEvent" in at:
                 density = at["latestEvent"]["density"]
                 if len(tmp) == 0:
-                    tmp.append({"density": density, "at_from": at["at"], "at_to": at["at"]})
+                    tmp.append(
+                        {"density": density, "at_from": at["at"], "at_to": at["at"]}
+                    )
                     continue
 
                 if tmp[-1]["density"] == density:
                     tmp[-1]["at_to"] = at["at"]
                 else:
-                    tmp.append({"density": density, "at_from": at["at"], "at_to": at["at"]})
+                    tmp.append(
+                        {"density": density, "at_from": at["at"], "at_to": at["at"]}
+                    )
 
         first_y = True
         first_g = True
@@ -76,22 +84,46 @@ def worker(args):
         for at in tmp:
             if at["density"] == 1:
                 if first_y:
-                    playback.axvspan(at["at_from"], at["at_to"], facecolor="y", alpha=0.5, label="Transition")
+                    playback.axvspan(
+                        at["at_from"],
+                        at["at_to"],
+                        facecolor="y",
+                        alpha=0.5,
+                        label="Transition",
+                    )
                     first_y = False
                 else:
-                    playback.axvspan(at["at_from"], at["at_to"], facecolor="y", alpha=0.5)
+                    playback.axvspan(
+                        at["at_from"], at["at_to"], facecolor="y", alpha=0.5
+                    )
             elif at["density"] == 2:
                 if first_g:
-                    playback.axvspan(at["at_from"], at["at_to"], facecolor="g", alpha=0.5, label="Movement")
+                    playback.axvspan(
+                        at["at_from"],
+                        at["at_to"],
+                        facecolor="g",
+                        alpha=0.5,
+                        label="Movement",
+                    )
                     first_g = False
                 else:
-                    playback.axvspan(at["at_from"], at["at_to"], facecolor="g", alpha=0.5)
+                    playback.axvspan(
+                        at["at_from"], at["at_to"], facecolor="g", alpha=0.5
+                    )
             else:
                 if first_r:
-                    playback.axvspan(at["at_from"], at["at_to"], facecolor="r", alpha=0.1, label="No Movement")
+                    playback.axvspan(
+                        at["at_from"],
+                        at["at_to"],
+                        facecolor="r",
+                        alpha=0.1,
+                        label="No Movement",
+                    )
                     first_r = False
                 else:
-                    playback.axvspan(at["at_from"], at["at_to"], facecolor="r", alpha=0.1)
+                    playback.axvspan(
+                        at["at_from"], at["at_to"], facecolor="r", alpha=0.1
+                    )
 
         score_ed2, score_ed0, score_all, score_pb = 0, 0, 0, 0
         total_ed2, total_ed0, total_all, total_pb = 0, 0, 0, 0
@@ -112,16 +144,23 @@ def worker(args):
                 total_ed0 += 1
             score_all += abs(1 - pb)
             total_all += 1
-        
+
+        additonal_metrics_raw = [
+            100 * score_all / total_all if total_all > 0 else -1,
+            100 * score_ed2 / total_ed2 if total_ed2 > 0 else -1,
+            100 * score_ed0 / total_ed0 if total_ed0 > 0 else -1,
+            score_pb,
+            total_pb,
+            100 * score_pb / total_pb,
+            int(score_pb / 0.25),
+            int(total_pb / 0.25),
+            100 * score_pb / total_pb,
+        ]
         additonal_metrics = """ALL: %{:.2f} ED2: %{:.2f} ED0: %{:.2f} (only played frames)
         Stall duration {:.2f}/{:.2f} (%{:.2f})
         Stall count {}/{} (%{:.2f})
         """.format(
-            100 * score_all / total_all if total_all > 0 else -1,
-            100 * score_ed2 / total_ed2 if total_ed2 > 0 else -1,
-            100 * score_ed0 / total_ed0 if total_ed0 > 0 else -1,
-            score_pb, total_pb, 100 * score_pb / total_pb,
-            int(score_pb / 0.25), int(total_pb / 0.25), 100 * score_pb / total_pb
+            *additonal_metrics_raw
         )
 
         playback.grid("on")
@@ -136,9 +175,7 @@ def worker(args):
             qualityModified.append(
                 (qlChange["at"], qlChange["bitrateDetail"]["bitrate"])
             )
-        qualityModified.append(
-            (data["job"]["testingDuration"], qualityModified[-1][1])
-        )
+        qualityModified.append((data["job"]["testingDuration"], qualityModified[-1][1]))
 
         networkModified = []
         prev = None
@@ -208,7 +245,7 @@ def worker(args):
                 data["job"]["newtorkPreset"],
                 data["job"]["dashPresetName"],
                 data["job"]["startOffset"],
-                additonal_metrics
+                additonal_metrics,
             )
         )
 
@@ -227,8 +264,44 @@ def worker(args):
         # plt.show()
         plt.close()
 
+        with open(
+            f"tmp/scores/{video}.{network}.{method}.{offset}.score", "w"
+        ) as score_fp:
+            score_fp.write(
+                ",".join(
+                    map(
+                        str,
+                        [
+                            data["job"]["videoFile"],
+                            data["job"]["newtorkPreset"],
+                            data["job"]["dashPresetName"],
+                            data["job"]["startOffset"],
+                            *additonal_metrics_raw,
+                        ],
+                    )
+                )
+            )
+
         tmp = []
-        with open(f"tmp/zip/csv/{video}.{network}.{method}.{offset}.csv", "w") as result_fp:
+        with open(
+            f"tmp/zip/csv/{video}.{network}.{method}.{offset}.csv", "w"
+        ) as result_fp:
+            result_fp.write(
+                ",".join(
+                    [
+                        "at",
+                        "liveLatency",
+                        "mediaBuffer",
+                        "playbackRate",
+                        "eventDensity",
+                        "networkProfile",
+                        "predictedBW",
+                        "isPlaying",
+                    ]
+                )
+            )
+            result_fp.write("\n")
+
             for i, interval in enumerate(data["testResult"]["intervalMetrics"]):
                 event = 0
                 if "latestEvent" in interval:
@@ -258,6 +331,7 @@ if __name__ == "__main__":
     if os.path.exists("tmp/"):
         shutil.rmtree("tmp/")
     os.mkdir("tmp/")
+    os.mkdir("tmp/scores")
     os.mkdir("tmp/zip")
     os.mkdir("tmp/zip/pdf")
     os.mkdir("tmp/zip/csv")
@@ -276,6 +350,32 @@ if __name__ == "__main__":
         networks.add(comps[1])
         methods.add(comps[2])
         offsets.add(comps[3])
+
+    with open("tmp/zip/csv/scores.csv", "w") as sp:
+        sp.write(
+            ",".join(
+                [
+                    "videoFile",
+                    "newtorkPreset",
+                    "dashPresetName",
+                    "startOffset",
+                    "scoreAll",
+                    "scoreED2",
+                    "scoreED0",
+                    "stallDuration",
+                    "stallDurationOver",
+                    "stallDurationPercentage",
+                    "stallCount",
+                    "stallCountOver",
+                    "stallCountPercentage",
+                ]
+            )
+        )
+        sp.write("\n")
+        for file in glob.glob("tmp/scores/*"):
+            with open(file, "r") as fp:
+                sp.write(fp.read())
+                sp.write("\n")
 
     for m in list(methods):
         with open(f"tmp/zip/pdf/results-{m}.pdf", "wb") as f:

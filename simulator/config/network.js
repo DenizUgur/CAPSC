@@ -1,7 +1,7 @@
 import fs from "fs";
 
 // Profiles are in bytes/sec
-export const NETWORK_PROFILES = ["twitch"];
+export const NETWORK_PROFILES = ["lte", "twitch"];
 
 const offsetNetworkProfile = (data, offset) => {
 	let beforeOffsetData = [];
@@ -48,10 +48,10 @@ export const applyNetworkProfile = (
 				scale = 0.5;
 				break;
 			case "lte":
-				scale = 0.5;
+				scale = 0.75;
 				break;
 			case "twitch":
-				scale = 0.6;
+				scale = 0.75;
 				break;
 		}
 
