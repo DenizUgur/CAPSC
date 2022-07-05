@@ -28,22 +28,28 @@ const formVariables = {
 	videos: [
 		{
 			val: 0,
-			label: "BCN SHORT",
-			fileNamePart: "bcn-short",
-			url: "videos/bcn-short/video.mpd",
+			label: "MATCH 1",
+			fileNamePart: "match",
+			url: "videos/match/video.mpd",
 		},
 		{
 			val: 1,
-			label: "BCN2 SHORT",
-			fileNamePart: "bcn2-short",
-			url: "videos/bcn2-short/video.mpd",
+			label: "MATCH 1 (VISUALIZED)",
+			fileNamePart: "match-visualized",
+			url: "videos/match-visualized/video.mpd",
 		},
 		{
 			val: 2,
-			label: "BCN3 SHORT",
-			fileNamePart: "bcn3-short",
-			url: "videos/bcn3-short/video.mpd",
+			label: "MATCH 2",
+			fileNamePart: "match2",
+			url: "videos/match2/video.mpd",
 		},
+		{
+			val: 3,
+			label: "MATCH 2 (VISUALIZED)",
+			fileNamePart: "match2-visualized",
+			url: "videos/match2-visualized/video.mpd",
+		}
 	],
 	algorithms: [
 		{
@@ -53,7 +59,7 @@ const formVariables = {
 		},
 		{
 			val: 1,
-			label: "CAPSC",
+			label: "A-CAPSC",
 			fileNamePart: "APR",
 		},
 		{
