@@ -102,14 +102,14 @@ async function master() {
 	process.on("SIGINT", graceful_exit);
 
 	// Populate Tests
-	const single_shot = true;
+	const single_shot = { network: false, dashjs_preset: false };
 	const tests = [
 		{
 			videoFile: "match.mp4",
 			testingDuration: 90,
 			networkPresetOffset: 10,
 			networkThrottleOffset: 5,
-			startOffset: 915,
+			startOffset: 180,
 			mediaTime: 90,
 			splitFile: false,
 			disabled: false,
@@ -119,10 +119,10 @@ async function master() {
 			testingDuration: 90,
 			networkPresetOffset: 10,
 			networkThrottleOffset: 5,
-			startOffset: 0,
-			mediaTime: 90 * 10,
-			splitFile: true,
-			disabled: true,
+			startOffset: 180,
+			mediaTime: 90,
+			splitFile: false,
+			disabled: false,
 		},
 	];
 
@@ -177,9 +177,9 @@ async function master() {
 
 					if (!test.splitFile) break;
 				}
-				if (single_shot) break;
+				if (single_shot.dashjs_preset) break;
 			}
-			if (single_shot) break;
+			if (single_shot.network) break;
 		}
 	}
 
