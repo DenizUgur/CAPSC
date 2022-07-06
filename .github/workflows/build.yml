@@ -35,9 +35,11 @@ jobs:
             - name: Build image and push to GitHub Container Registry
               uses: docker/build-push-action@v3
               with:
-                  cache: cache
                   push: true
                   tags: ghcr.io/denizugur/capsc:latest
+                  cache-from: type=local,src=/tmp/.buildx-cache
+                  cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
 
             - name: Inspect image
-              run: echo ${{ steps.docker_build.outputs.digest }}
+              run: |
+                docker buildx imagetools inspect ghcr.io/denizugur/capsc:latest

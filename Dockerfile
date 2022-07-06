@@ -75,7 +75,7 @@ RUN cd FFmpeg && \
     ./configure \
     --prefix="/build" \
     --pkg-config-flags="--static" \
-    --extra-cflags="-I/build/include -march=native" \
+    --extra-cflags="-I/build/include" \
     --extra-ldflags="-L/build/lib" \
     --extra-libs="-lpthread -lm" \
     --ld="g++" \
