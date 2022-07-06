@@ -10,11 +10,33 @@ There are two main factors that determine the viewer experience during the live 
 ## Table of Contents
 
 - `demo/` contains the source code for our [demo page](http://streaming.university/demo/mmsys21-capsc/)
-- `densifier/` contains an example web page for creating event density files for metadata-feeder to use.
-- `development/` contains the development environment. It is needed by the simulator and provides example code for several metrics. This directory also contains GPAC-Dash server that streams chunks to the client.
-- `metadata-feeder/` contains the Java server that feeds CAPSC the event densities.
+- `server/` contains the web server. It is needed by the simulator and provides example code for several metrics. This directory also contains GPAC-Dash server that streams chunks to the client.
 - `scripts/` contains some scripts to start development environment
 - `simulator/` contains the utilities needed to benchmark CAPSC
+
+## Demo
+
+We have included a docker image for you to test our system live.
+
+If you want to build the image yourself, execute the following:
+
+```bash
+docker build -t capsc .
+```
+
+To run the image, execute the following:
+
+```bash
+docker run -p 80:80 \ # web server will be accesible on port 80
+	   --rm \ # remove the container after it is stopped
+	   -it \ # Interactive mode. Needed for Ctrl^C to work.
+	   -v "$PWD:/home" \ # You need to map a location to be able to use your video files
+	   -w "/home" \ # If you want to use your own video files
+	   --name capsc-demo \ # Optional: If you want to name the container
+	   ghcr.io/denizugur/capsc \ # Chanege it to `capsc` if you built the image yourself
+	   <path to input file> # A file to stream. Must be relative to current working directory
+	   <true or false> # Set to true if you want to display the visualizations over the video
+```
 
 ## Citation
 

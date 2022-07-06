@@ -1,9 +1,9 @@
 #!/bin/bash
-BASE=$(dirname "$0")
-# Start NGINX
-nginx -c $BASE/../config/nginx.conf -s stop >> /dev/null
-nginx -c $BASE/../config/nginx.conf
+BASE=$(pwd)
 
-# Start Next.js
-echo http://localhost/tv
-npm --prefix $BASE/../development/app run dev
+# Start NGINX
+nginx -s stop >/dev/null 2>&1
+nginx -c $BASE/config/nginx.dev.conf
+
+# Start React
+BROWSER=none npm --prefix $BASE/server/app run start

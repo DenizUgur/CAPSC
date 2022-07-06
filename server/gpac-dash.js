@@ -464,9 +464,9 @@ var onRequest = function (req, res) {
 
 	// we send the files as they come, except for segments for which we send fragment by fragment
 	if (filename === "") {
-		filename = `${__dirname}${parsed_url.path.slice(0, parsed_url.path.lastIndexOf("/"))}`; 
+		filename = `${process.cwd()}${parsed_url.path.slice(0, parsed_url.path.lastIndexOf("/"))}`; 
 	}
-	filename = `${__dirname}/${filename}`;
+	filename = `${process.cwd()}/${filename}`;
 	let existingM4s=false;
 	try {
 		fStat = fs.statSync(filename);

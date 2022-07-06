@@ -6,7 +6,7 @@ FFMPEG_BIN=$BASE/../FFmpeg/bin
 FFMPEG=$FFMPEG_BIN/ffmpeg
 
 SOURCE=$(realpath $1)
-TARGET=$(realpath $BASE/../development/content/$STREAM_NAME)
+TARGET=$(realpath $BASE/../server/content/$STREAM_NAME)
 
 if [ -z $STREAM_NAME ]; then
      STREAM_NAME=app
