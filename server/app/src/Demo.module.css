@@ -1,0 +1,51 @@
+.container {
+	min-height: 100vh;
+	max-height: 100vh;
+	padding: 0 0.5rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.metrics {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.metrics div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+}
+
+.metrics div span {
+	font-weight: 300;
+	font-size: 1.5rem;
+}
+
+.metrics div p {
+	font-weight: 500;
+	font-size: 2rem;
+	margin: 1rem;
+}
+
+.main {
+	padding: 0rem 0;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.header {
+	text-align: center;
+	font-size: larger;
+}
+
+video {
+	border: 2px solid black;
+}
