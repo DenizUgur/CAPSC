@@ -1,9 +1,11 @@
 #!/bin/bash
-BASE=$(pwd)
+BASE=$(dirname $0)
+
+NGINX_CONF=$(realpath $BASE/../config/nginx.dev.conf)
 
 # Start NGINX
 nginx -s stop >/dev/null 2>&1
-nginx -c $BASE/config/nginx.dev.conf
+nginx -c $NGINX_CONF
 
 # Start React
-BROWSER=none npm --prefix $BASE/server/app run start
+BROWSER=none npm --prefix $BASE/../server/app run start

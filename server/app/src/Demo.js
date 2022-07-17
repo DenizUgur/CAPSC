@@ -102,7 +102,7 @@ export default function Demo() {
 						</p>
 					</div>
 					<div>
-						<span>Desnity (0-2)</span>
+						<span>Density (0-2)</span>
 						<p
 							style={{
 								color: state.density === 2 ? "green" : "red",

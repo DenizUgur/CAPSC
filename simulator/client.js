@@ -82,7 +82,7 @@ async function master() {
 		resources: [
 			"http://localhost:80", // Nginx
 			"http://localhost:8000", // Gpac
-			"http://localhost:3000", // Next.js
+			"http://localhost:3000", // React
 		],
 		validateStatus: (status) => {
 			return status >= 200 && status < 500;
@@ -232,7 +232,7 @@ async function worker() {
 
 		// Start the browser
 		const browser = await puppeteer.launch({
-			headless: false,
+			headless: true,
 			executablePath:
 				"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
 			args: ["--window-size=840,525", "--window-position=840,0"],
