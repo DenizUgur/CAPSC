@@ -139,5 +139,8 @@ COPY ./config/nginx.prod.conf /etc/nginx/nginx.conf
 COPY --from=node-builder /server/gpac-dash /usr/local/bin/
 COPY --from=node-builder /server/app/build /opt/server
 
+# Copy network profiles
+COPY ./simulator/config/profiles /opt/profiles
+
 COPY ./scripts/entrypoint.sh /opt/entrypoint.sh
 ENTRYPOINT [ "/opt/entrypoint.sh" ]

@@ -16,6 +16,7 @@ function usage() {
 	console.log("-segment-marker <4cc>  marker for end of segment (default eods)");
 	console.log("-no-marker-write       strip marker of the generated bitstream (default false)");
 	console.log("-cors                  add CORS header for all domains")
+	console.log("-use-network-profile   specify the network profile to use (default: not used)");
 	console.log("-use-watch             uses watch instead of watchFile (default: false)");
 	console.log("-quality-log-file      name of a file in which the latest quality requested is logged (default: no log), experimental");
 	console.log("-incoming-log-file     name of a file in which all requests are logged (default: no log)");
@@ -32,6 +33,7 @@ var port = 8000;
 var quality_log_file = null;
 var incoming_log_file = null;
 var logLevel = 0;
+var networkProfile = null;
 
 /* Boolean controlling the sending of segments fragment-by-fragment as HTTP chunks, 
    requires MP4Box or DashCast to use -segment-marker eods */
@@ -91,9 +93,51 @@ function reportEvent(type, event, filename) {
 	reportMessage(logLevels.DEBUG_BASIC, type + " event (" + event + ") on " + filename + " (size " + file_size + ")");
 }
 
+let prevTime = null;
+let sessionStartTime = null;
+function throttleBandwidth(response, fileData) {
+	let presetOffset = 10;
+	let throttleOffset = 5;
+
+	if (sessionStartTime == null || prevTime + 30 * 1000 < getTime())
+		sessionStartTime = getTime();
+	prevTime = getTime();
+
+	let current_duration = getTime() - sessionStartTime;
+	current_duration /= 1000;
+
+	let networkProfile_i = parseInt(
+		(current_duration + presetOffset) % networkProfile.length
+	);
+	let targetRate =
+		(networkProfile[networkProfile_i].data.download * 8) / 1000;
+	targetRate *= 0.75;
+
+	let totalDuration = (getTime() - response.startTime) / 1000;
+	let size = (8 * fileData.total_sent) / 1000;
+	let targetDuration = size / targetRate;
+
+	let skipFlag =
+		totalDuration < 1 || size < 1000 || current_duration < throttleOffset;
+	if (totalDuration < targetDuration && !skipFlag) {
+		var diff = targetDuration - totalDuration;
+		var clamp = Math.min(diff, 0.2);
+		let targetTime = totalDuration + clamp;
+		while (true) {
+			totalDuration = (getTime() - response.startTime) / 1000;
+			if (totalDuration >= targetTime) {
+				break;
+			}
+		}
+	}
+}
+
 function sendAndUpdateBuffer(response, message, fileData, endpos, noWrite) {
 	var tmpBuffer;
 	fileData.total_sent += endpos;
+
+	if (networkProfile != null) throttleBandwidth(response, fileData);
+
 	reportMessage(sendMediaSegmentsFragmented ? logLevels.INFO : logLevels.DEBUG_BASIC,
 		"sendMediaSegmentsFragmented: " + sendMediaSegmentsFragmented + " File " + fileData.filename + ", sending " + message + " data from " + fileData.next_byte_to_send + " to " + (endpos - 1) + " in " + (getTime() - response.startTime) + " ms (total_sent: " + fileData.total_sent + ") at utc " + getTime());
 	tmpBuffer = fileData.buffer.slice(fileData.next_byte_to_send, endpos);
@@ -559,6 +603,19 @@ process.argv.splice(1).forEach(function (val, index, array) {
 		sendMediaSegmentsFragmented = true;
 	} else if (val === "-cors") {
 		allowCors = true;
+	} else if (val === "-use-network-profile") {
+		try {
+			const profilesPath =
+				process.env["NODE_ENV"] == "development"
+					? "../simulator/config/profiles"
+					: "/opt/profiles";
+			networkProfile = require(`${profilesPath}/${
+				array[index + 1]
+			}.json`);
+		} catch {
+			console.error("Network profile not found");
+			process.exit(-1);
+		}
 	} else if (val === "-use-watch") {
 		use_watchFile = false;
 	} else if (val === "-quality-log-file") {

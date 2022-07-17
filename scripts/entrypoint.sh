@@ -1,6 +1,38 @@
 #!/bin/bash
-INPUT_FILE=$1
-VISUALIZATION=$2
+POSITIONAL_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+    -i | --input)
+        INPUT_FILE="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -n | --network-profile)
+        NETWORK_PROFILE="-use-network-profile $2"
+        shift # past argument
+        shift # past value
+        ;;
+    -v | --visualization)
+        VISUALIZATION=YES
+        shift # past argument
+        ;;
+    -h | --help)
+        echo "Usage: ./entrypoint.sh [-i | --input <input-file>] [-n | --network-profile <network-profile>] [-v | --visualization]"
+        exit 0
+        ;;
+    -* | --*)
+        echo "Unknown option $1"
+        exit 1
+        ;;
+    *)
+        POSITIONAL_ARGS+=("$1") # save positional arg
+        shift                   # past argument
+        ;;
+    esac
+done
+
+set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 
 if [ -z $INPUT_FILE ]; then
     echo "No input file specified"
@@ -18,7 +50,7 @@ nginx
 
 # Start GPAC
 cd /opt
-(gpac-dash -chunk-media-segments -cors &) >/dev/null 2>&1
+(gpac-dash -chunk-media-segments -cors $NETWORK_PROFILE &) >/dev/null 2>&1
 
 # Show banner
 figlet "A-CAPSC Demonstration"
