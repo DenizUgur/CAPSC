@@ -107,7 +107,8 @@ function throttleBandwidth(response, fileData) {
 	current_duration /= 1000;
 
 	let networkProfile_i = parseInt(
-		(current_duration + presetOffset) % networkProfile.length
+		((current_duration + presetOffset) / networkProfile[0].duration) %
+			networkProfile.length
 	);
 	let targetRate =
 		(networkProfile[networkProfile_i].data.download * 8) / 1000;

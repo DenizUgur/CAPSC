@@ -18,7 +18,7 @@ while [[ $# -gt 0 ]]; do
         shift # past argument
         ;;
     -h | --help)
-        echo "Usage: ./entrypoint.sh [-i | --input <input-file>] [-n | --network-profile <network-profile>] [-v | --visualization]"
+        echo "Usage: ./entrypoint.sh [-i | --input <input-file>] [-n | --network-profile cascade|lte|twitch] [-v | --visualization]"
         exit 0
         ;;
     -* | --*)
