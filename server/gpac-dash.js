@@ -486,6 +486,12 @@ var onRequest = function (req, res) {
 	var notFound = false;
 	var fStat;
 
+	if (req.url == "/status") {
+		res.writeHead(200, { "Content-Type": "text/plain" });
+		res.end("OK");
+		return;
+	}
+
 	if (incoming_log_file && (req.url.slice(-3) === "mpd")) {
 		fs.appendFile(incoming_log_file, (new Date()) + ": Incoming request from " + req.socket.remoteAddress + " for URL: " + req.url + " with headers: " + JSON.stringify(req.headers) + "\n");
 	}

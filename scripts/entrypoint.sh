@@ -50,7 +50,16 @@ nginx
 
 # Start GPAC
 cd /opt
-(gpac-dash -chunk-media-segments -cors $NETWORK_PROFILE &) >/dev/null 2>&1
+(gpac-dash -chunk-media-segments -cors $NETWORK_PROFILE &) 1>/dev/null
+
+# Check if GPAC is running
+sleep 1
+curl -s http://localhost:8000/status | grep -q "OK"
+
+if [ $? -ne 0 ]; then
+    echo "GPAC failed to launch, check your arguments"
+    exit 1
+fi
 
 # Show banner
 figlet "A-CAPSC Demonstration"

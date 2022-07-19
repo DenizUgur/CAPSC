@@ -125,7 +125,7 @@ EXPOSE 80
 
 # Install Node.js & NGINX
 RUN apt-get update && \
-    apt-get install --no-install-recommends -y nginx figlet && \
+    apt-get install --no-install-recommends -y nginx figlet curl && \
     rm -rf /var/lib/apt/lists/*
 
 COPY --from=ffmpeg-builder /libraries/usr/lib /usr/lib/x86_64-linux-gnu/
